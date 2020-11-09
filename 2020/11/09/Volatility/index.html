@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    volatility |
+    
+    sharun&#39;s blogs</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Volatility" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      volatility
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/11/09/Volatility/" class="article-date">
+  <time datetime="2020-11-09T06:57:19.292Z" itemprop="datePublished">2020-11-09</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MISC/">MISC</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h3 id="自用总结"><a href="#自用总结" class="headerlink" title="自用总结"></a>自用总结</h3><h3 id="简单描述"><a href="#简单描述" class="headerlink" title="简单描述#"></a>简单描述<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E7%AE%80%E5%8D%95%E6%8F%8F%E8%BF%B0">#</a></h3><p>Volatility是一款开源内存取证框架，能够对导出的内存镜像进行分析，通过获取内核数据结构，使用插件获取内存的详细情况以及系统的运行状态。</p>
+<p>特点：</p>
+<ul>
+<li>开源：Python编写，易于和基于python的主机防御框架集成。</li>
+<li>支持多平台：Windows，Mac，Linux全支持</li>
+<li>易于扩展：通过插件来扩展Volatility的分析能力<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址#"></a>项目地址<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80">#</a></h3>&lt;–more–&gt;<br><a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></li>
+</ul>
+<h3 id="Kali安装"><a href="#Kali安装" class="headerlink" title="Kali安装#"></a>Kali安装<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#kali%E5%AE%89%E8%A3%85">#</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install volatility</span><br><span class="line">volatility -h</span><br><span class="line"># 部分报错可能kali版本过低</span><br></pre></td></tr></table></figure>
+<h3 id="常用模块"><a href="#常用模块" class="headerlink" title="常用模块#"></a>常用模块<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97">#</a></h3><table>
+<thead>
+<tr>
+<th align="left">插件名称</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">amcache</td>
+<td align="left">查看AmCache应用程序痕迹信息</td>
+</tr>
+<tr>
+<td align="left">apihooks</td>
+<td align="left">检测内核及进程的内存空间中的API hook</td>
+</tr>
+<tr>
+<td align="left">atoms</td>
+<td align="left">列出会话及窗口站atom表</td>
+</tr>
+<tr>
+<td align="left">atomscan</td>
+<td align="left">Atom表的池扫描(Pool scanner)</td>
+</tr>
+<tr>
+<td align="left">auditpol</td>
+<td align="left">列出注册表HKLMSECURITYPolicyPolAdtEv的审计策略信息</td>
+</tr>
+<tr>
+<td align="left">bigpools</td>
+<td align="left">使用BigPagePoolScanner转储大分页池(big page pools)</td>
+</tr>
+<tr>
+<td align="left">bioskbd</td>
+<td align="left">从实时模式内存中读取键盘缓冲数据(早期电脑可以读取出BIOS开机密码)</td>
+</tr>
+<tr>
+<td align="left">cachedump</td>
+<td align="left">获取内存中缓存的域帐号的密码哈希</td>
+</tr>
+<tr>
+<td align="left">callbacks</td>
+<td align="left">打印全系统通知例程</td>
+</tr>
+<tr>
+<td align="left">clipboard</td>
+<td align="left">提取Windows剪贴板中的内容</td>
+</tr>
+<tr>
+<td align="left">cmdline</td>
+<td align="left">显示进程命令行参数</td>
+</tr>
+<tr>
+<td align="left">cmdscan</td>
+<td align="left">提取执行的命令行历史记录（扫描_COMMAND_HISTORY信息）</td>
+</tr>
+<tr>
+<td align="left">connections</td>
+<td align="left">打印系统打开的网络连接(仅支持Windows XP 和2003)</td>
+</tr>
+<tr>
+<td align="left">connscan</td>
+<td align="left">打印TCP连接信息</td>
+</tr>
+<tr>
+<td align="left">consoles</td>
+<td align="left">提取执行的命令行历史记录（扫描_CONSOLE_INFORMATION信息）</td>
+</tr>
+<tr>
+<td align="left">crashinfo</td>
+<td align="left">提取崩溃转储信息</td>
+</tr>
+<tr>
+<td align="left">deskscan</td>
+<td align="left">tagDESKTOP池扫描(Poolscaner)</td>
+</tr>
+<tr>
+<td align="left">devicetree</td>
+<td align="left">显示设备树信息</td>
+</tr>
+<tr>
+<td align="left">dlldump</td>
+<td align="left">从进程地址空间转储动态链接库</td>
+</tr>
+<tr>
+<td align="left">dlllist</td>
+<td align="left">打印每个进程加载的动态链接库列表</td>
+</tr>
+<tr>
+<td align="left">driverirp</td>
+<td align="left">IRP hook驱动检测</td>
+</tr>
+<tr>
+<td align="left">drivermodule</td>
+<td align="left">关联驱动对象至内核模块</td>
+</tr>
+<tr>
+<td align="left">driverscan</td>
+<td align="left">驱动对象池扫描</td>
+</tr>
+<tr>
+<td align="left">dumpcerts</td>
+<td align="left">提取RAS私钥及SSL公钥</td>
+</tr>
+<tr>
+<td align="left">dumpfiles</td>
+<td align="left">提取内存中映射或缓存的文件</td>
+</tr>
+<tr>
+<td align="left">dumpregistry</td>
+<td align="left">转储内存中注册表信息至磁盘</td>
+</tr>
+<tr>
+<td align="left">editbox</td>
+<td align="left">查看Edit编辑控件信息 (Listbox正在实验中)</td>
+</tr>
+<tr>
+<td align="left">envars</td>
+<td align="left">显示进程的环境变量</td>
+</tr>
+<tr>
+<td align="left">eventhooks</td>
+<td align="left">打印Windows事件hook详细信息</td>
+</tr>
+<tr>
+<td align="left">evtlogs</td>
+<td align="left">提取Windows事件日志（仅支持XP/2003)</td>
+</tr>
+<tr>
+<td align="left">filescan</td>
+<td align="left">提取文件对象（file objects）池信息</td>
+</tr>
+<tr>
+<td align="left">gahti</td>
+<td align="left">转储用户句柄（handle）类型信息</td>
+</tr>
+<tr>
+<td align="left">gditimers</td>
+<td align="left">打印已安装的GDI计时器(timers)及回调(callbacks)</td>
+</tr>
+<tr>
+<td align="left">gdt</td>
+<td align="left">显示全局描述符表(Global Deor Table)</td>
+</tr>
+<tr>
+<td align="left">getservicesids</td>
+<td align="left">获取注册表中的服务名称并返回SID信息</td>
+</tr>
+<tr>
+<td align="left">getsids</td>
+<td align="left">打印每个进程的SID信息</td>
+</tr>
+<tr>
+<td align="left">handles</td>
+<td align="left">打印每个进程打开的句柄的列表</td>
+</tr>
+<tr>
+<td align="left">hashdump</td>
+<td align="left">转储内存中的Windows帐户密码哈希(LM/NTLM)</td>
+</tr>
+<tr>
+<td align="left">hibinfo</td>
+<td align="left">转储休眠文件信息</td>
+</tr>
+<tr>
+<td align="left">hivedump</td>
+<td align="left">打印注册表配置单元信息</td>
+</tr>
+<tr>
+<td align="left">hivelist</td>
+<td align="left">打印注册表配置单元列表</td>
+</tr>
+<tr>
+<td align="left">hivescan</td>
+<td align="left">注册表配置单元池扫描</td>
+</tr>
+<tr>
+<td align="left">hpakextract</td>
+<td align="left">从HPAK文件（Fast Dump格式）提取物理内存数据</td>
+</tr>
+<tr>
+<td align="left">hpakinfo</td>
+<td align="left">查看HPAK文件属性及相关信息</td>
+</tr>
+<tr>
+<td align="left">idt</td>
+<td align="left">显示中断描述符表(Interrupt Deor Table)</td>
+</tr>
+<tr>
+<td align="left">iehistory</td>
+<td align="left">重建IE缓存及访问历史记录</td>
+</tr>
+<tr>
+<td align="left">imagecopy</td>
+<td align="left">将物理地址空间导出原生DD镜像文件</td>
+</tr>
+<tr>
+<td align="left">imageinfo</td>
+<td align="left">查看/识别镜像信息</td>
+</tr>
+<tr>
+<td align="left">impscan</td>
+<td align="left">扫描对导入函数的调用</td>
+</tr>
+<tr>
+<td align="left">joblinks</td>
+<td align="left">打印进程任务链接信息</td>
+</tr>
+<tr>
+<td align="left">kdbgscan</td>
+<td align="left">搜索和转储潜在KDBG值</td>
+</tr>
+<tr>
+<td align="left">kpcrscan</td>
+<td align="left">搜索和转储潜在KPCR值</td>
+</tr>
+<tr>
+<td align="left">ldrmodules</td>
+<td align="left">检测未链接的动态链接DLL</td>
+</tr>
+<tr>
+<td align="left">lsadump</td>
+<td align="left">从注册表中提取LSA密钥信息（已解密）</td>
+</tr>
+<tr>
+<td align="left">machoinfo</td>
+<td align="left">转储Mach-O 文件格式信息</td>
+</tr>
+<tr>
+<td align="left">malfind</td>
+<td align="left">查找隐藏的和插入的代码</td>
+</tr>
+<tr>
+<td align="left">mbrparser</td>
+<td align="left">扫描并解析潜在的主引导记录(MBR)</td>
+</tr>
+<tr>
+<td align="left">memdump</td>
+<td align="left">转储进程的可寻址内存</td>
+</tr>
+<tr>
+<td align="left">memmap</td>
+<td align="left">打印内存映射</td>
+</tr>
+<tr>
+<td align="left">messagehooks</td>
+<td align="left">桌面和窗口消息钩子的线程列表</td>
+</tr>
+<tr>
+<td align="left">mftparser</td>
+<td align="left">扫描并解析潜在的MFT条目</td>
+</tr>
+<tr>
+<td align="left">moddump</td>
+<td align="left">转储内核驱动程序到可执行文件的示例</td>
+</tr>
+<tr>
+<td align="left">modscan</td>
+<td align="left">内核模块池扫描</td>
+</tr>
+<tr>
+<td align="left">modules</td>
+<td align="left">打印加载模块的列表</td>
+</tr>
+<tr>
+<td align="left">multiscan</td>
+<td align="left">批量扫描各种对象</td>
+</tr>
+<tr>
+<td align="left">mutantscan</td>
+<td align="left">对互斥对象池扫描</td>
+</tr>
+<tr>
+<td align="left">notepad</td>
+<td align="left">查看记事本当前显示的文本</td>
+</tr>
+<tr>
+<td align="left">objtypescan</td>
+<td align="left">扫描窗口对象类型对象</td>
+</tr>
+<tr>
+<td align="left">patcher</td>
+<td align="left">基于页面扫描的补丁程序内存</td>
+</tr>
+<tr>
+<td align="left">poolpeek</td>
+<td align="left">可配置的池扫描器插件</td>
+</tr>
+<tr>
+<td align="left">printkey</td>
+<td align="left">打印注册表项及其子项和值</td>
+</tr>
+<tr>
+<td align="left">privs</td>
+<td align="left">显示进程权限</td>
+</tr>
+<tr>
+<td align="left">procdump</td>
+<td align="left">进程转储到一个可执行文件示例</td>
+</tr>
+<tr>
+<td align="left">pslist</td>
+<td align="left">按照EPROCESS列表打印所有正在运行的进程</td>
+</tr>
+<tr>
+<td align="left">psscan</td>
+<td align="left">进程对象池扫描</td>
+</tr>
+<tr>
+<td align="left">pstree</td>
+<td align="left">以树型方式打印进程列表</td>
+</tr>
+<tr>
+<td align="left">psxview</td>
+<td align="left">查找带有隐藏进程的所有进程列表</td>
+</tr>
+<tr>
+<td align="left">qemuinfo</td>
+<td align="left">转储Qemu 信息</td>
+</tr>
+<tr>
+<td align="left">raw2dmp</td>
+<td align="left">将物理内存原生数据转换为windbg崩溃转储格式</td>
+</tr>
+<tr>
+<td align="left">screenshot</td>
+<td align="left">基于GDI Windows的虚拟屏幕截图保存</td>
+</tr>
+<tr>
+<td align="left">servicediff</td>
+<td align="left">Windows服务列表(ala Plugx)</td>
+</tr>
+<tr>
+<td align="left">sessions</td>
+<td align="left">_MM_SESSION_SPACE的详细信息列表(用户登录会话)</td>
+</tr>
+<tr>
+<td align="left">shellbags</td>
+<td align="left">打印Shellbags信息</td>
+</tr>
+<tr>
+<td align="left">shimcache</td>
+<td align="left">解析应用程序兼容性Shim缓存注册表项</td>
+</tr>
+<tr>
+<td align="left">shutdowntime</td>
+<td align="left">从内存中的注册表信息获取机器关机时间</td>
+</tr>
+<tr>
+<td align="left">sockets</td>
+<td align="left">打印已打开套接字列表</td>
+</tr>
+<tr>
+<td align="left">sockscan</td>
+<td align="left">TCP套接字对象池扫描</td>
+</tr>
+<tr>
+<td align="left">ssdt</td>
+<td align="left">显示SSDT条目</td>
+</tr>
+<tr>
+<td align="left">strings</td>
+<td align="left">物理到虚拟地址的偏移匹配(需要一些时间，带详细信息)</td>
+</tr>
+<tr>
+<td align="left">svcscan</td>
+<td align="left">Windows服务列表扫描</td>
+</tr>
+<tr>
+<td align="left">symlinkscan</td>
+<td align="left">符号链接对象池扫描</td>
+</tr>
+<tr>
+<td align="left">thrdscan</td>
+<td align="left">线程对象池扫描</td>
+</tr>
+<tr>
+<td align="left">threads</td>
+<td align="left">调查_ETHREAD 和_KTHREADs</td>
+</tr>
+<tr>
+<td align="left">timeliner</td>
+<td align="left">创建内存中的各种痕迹信息的时间线</td>
+</tr>
+<tr>
+<td align="left">timers</td>
+<td align="left">打印内核计时器及关联模块的DPC</td>
+</tr>
+<tr>
+<td align="left">truecryptmaster</td>
+<td align="left">恢复TrueCrypt 7.1a主密钥</td>
+</tr>
+<tr>
+<td align="left">truecryptpassphrase</td>
+<td align="left">查找并提取TrueCrypt密码</td>
+</tr>
+<tr>
+<td align="left">truecryptsummary</td>
+<td align="left">TrueCrypt摘要信息</td>
+</tr>
+<tr>
+<td align="left">unloadedmodules</td>
+<td align="left">打印卸载的模块信息列表</td>
+</tr>
+<tr>
+<td align="left">userassist</td>
+<td align="left">打印注册表中UserAssist相关信息</td>
+</tr>
+<tr>
+<td align="left">userhandles</td>
+<td align="left">转储用户句柄表</td>
+</tr>
+<tr>
+<td align="left">vaddump</td>
+<td align="left">转储VAD数据为文件</td>
+</tr>
+<tr>
+<td align="left">vadinfo</td>
+<td align="left">转储VAD信息</td>
+</tr>
+<tr>
+<td align="left">vadtree</td>
+<td align="left">以树形方式显示VAD树信息</td>
+</tr>
+<tr>
+<td align="left">vadwalk</td>
+<td align="left">显示遍历VAD树</td>
+</tr>
+<tr>
+<td align="left">vboxinfo</td>
+<td align="left">转储Virtualbox信息（虚拟机）</td>
+</tr>
+<tr>
+<td align="left">verinfo</td>
+<td align="left">打印PE镜像中的版本信息</td>
+</tr>
+<tr>
+<td align="left">vmwareinfo</td>
+<td align="left">转储VMware VMSS/VMSN 信息</td>
+</tr>
+<tr>
+<td align="left">volshell</td>
+<td align="left">内存镜像中的shell</td>
+</tr>
+<tr>
+<td align="left">windows</td>
+<td align="left">打印桌面窗口(详细信息)</td>
+</tr>
+<tr>
+<td align="left">wintree</td>
+<td align="left">Z顺序打印桌面窗口树</td>
+</tr>
+<tr>
+<td align="left">wndscan</td>
+<td align="left">池扫描窗口站</td>
+</tr>
+<tr>
+<td align="left">yarascan</td>
+<td align="left">以Yara签名扫描进程或内核内存</td>
+</tr>
+</tbody></table>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令#"></a>常用命令<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">#</a></h3><table>
+<thead>
+<tr>
+<th align="left">功能</th>
+<th align="left">命令行及参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">查看进程列表</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 pslist</td>
+</tr>
+<tr>
+<td align="left">查看进程列表（树形）</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 pstree</td>
+</tr>
+<tr>
+<td align="left">查看进程列表(psx视图)</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 psxview</td>
+</tr>
+<tr>
+<td align="left">查看网络通讯连接</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 netscan</td>
+</tr>
+<tr>
+<td align="left">查看加载的动态链接库</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 dlllist</td>
+</tr>
+<tr>
+<td align="left">查看SSDT表</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 ssdt</td>
+</tr>
+<tr>
+<td align="left">查看UserAssist痕迹</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 userassist</td>
+</tr>
+<tr>
+<td align="left">查看ShimCache痕迹</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 shimcache</td>
+</tr>
+<tr>
+<td align="left">查看ShellBags</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 shellbags</td>
+</tr>
+<tr>
+<td align="left">查看服务列表</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 svcscan</td>
+</tr>
+<tr>
+<td align="left">查看Windows帐户hash</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 hashdump</td>
+</tr>
+<tr>
+<td align="left">查看最后关机时间</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 shutdowntime</td>
+</tr>
+<tr>
+<td align="left">查看IE历史记录</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 iehistory</td>
+</tr>
+<tr>
+<td align="left">提取注册表数据</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 dumpregistry</td>
+</tr>
+<tr>
+<td align="left">解析MFT记录</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 mftparser</td>
+</tr>
+<tr>
+<td align="left">导出MFT记录,恢复文件</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 mftparser –output-file=mftverbose.txt -D mftoutput</td>
+</tr>
+<tr>
+<td align="left">获取TrueCrypt密钥信息</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 truecryptmaster</td>
+</tr>
+<tr>
+<td align="left">获取TrueCrypt密码信息</td>
+<td align="left">Vol.exe -f Win7_SP1_x86.vmem –profile=Win7SP1x86 truecryptpassphras</td>
+</tr>
+</tbody></table>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章#"></a>参考文章<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0">#</a></h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>Volatility入门指令篇：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name imageinfo</span><br><span class="line">volatility -f name pslist --profile&#x3D;WinXPSP2x86   </span><br><span class="line">列举进程：</span><br><span class="line">volatility -f name  --profile&#x3D;Win7SP1x64 volshell</span><br><span class="line">dt(&quot;_PEB&quot;) </span><br><span class="line">查看进程环境块境块</span><br></pre></td></tr></table></figure>
+
+<p><strong>hivedump打印出注册表中的数据 ：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;Win7SP1x64 hivelist</span><br><span class="line">列举缓存在内存的注册表</span><br><span class="line">volatility -f name  --profile&#x3D;WinXPSP2x86 hivedump -o 注册表的 virtual 地址</span><br><span class="line">volatility -f windows.vmem --profile&#x3D;Win7SP1x64 dumpregistry -o 注册表的 virtual 地址-D .</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>显示每个进程的加载dll列表</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Volatility -f name -profile &#x3D; Win7SP0x86 dlllist&gt; dlllist.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取SAM表中的用户：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 printkey -K &quot;SAM\Domains\Account\Users\Names&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>登陆账户系统</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 printkey -K &quot;SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>userassist键值包含系统或桌面执行文件的信息，如名称、路径、执行次数、最后一次执行时间等</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 userassist</span><br></pre></td></tr></table></figure>
+
+<p><strong>将内存中的某个进程数据以 dmp 的格式保存出来</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 -p [PID] -D [dump 出的文件保存的目录]</span><br></pre></td></tr></table></figure>
+
+<p><strong>提取内存中保留的 cmd 命令使用情况</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 cmdscan</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取到当时的网络连接情况</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 netscan</span><br></pre></td></tr></table></figure>
+
+<p>获取 IE 浏览器的使用情况 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 iehistory</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取内存中的系统密码，可以使用 hashdump 将它提取出来</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 hashdump -y （注册表 system 的 virtual 地址 ）-s （SAM 的 virtual 地址）</span><br><span class="line">volatility -f WIN-BU6IJ7FI9RU-20190927-152050.raw--profile&#x3D;Win7SP1x86_23418  hashdump -y 0x93fb7440 -s 0x93fc41e8 </span><br><span class="line">0x93fc41e8 0x030cf1e8 \SystemRoot\System32\Config\SAM</span><br><span class="line"></span><br><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 hashdump -y 0xe1035b60 -s 0xe16aab60</span><br><span class="line">volatility -f name --profile&#x3D;WinXPSP2x86 timeliner</span><br></pre></td></tr></table></figure>
+
+<p><strong>对文件查找及dumo提取某个进程：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;Win7SP1x64 memdump -D . -p 2872</span><br><span class="line">strings -e l .&#x2F;2872.dmp | grep flag</span><br><span class="line">volatility attachment.vmem -f Win7SP1x64--profile&#x3D;Win7SP0x64 dumpfiles -Q 0xfffffa8002ffe550   -n --dump-dir&#x3D;.&#x2F;</span><br></pre></td></tr></table></figure>
+<p>0xfffffa8002f8f7c0   1148                0xc           0x100020 File             \Device\HarddiskVolume1\Windows\System32<br>0xfffffa8002f9adf0   1148               0xd4           0x100001 File             \Device\KsecDD</p>
+<p>0xfffffa80032e6e90   1148              0x16c           0x100080 File             \Device\Nsi</p>
+<p>0xfffffa80032e3f20   1148              0x1c0           0x120089 File             \Device\HarddiskVolume1\Windows\Registration\R000000000006.clb</p>
+<p>0xfffffa80032e9f20   1148              0x1e8           0x12019f File             \Device\00000040</p>
+<p>0xfffffa80032f4970   1148              0x2d8           0x120089 File             \Device\HarddiskVolume1\Windows\System32\zh-CN\KernelBase.dll.mui</p>
+<p>0xfffffa8003429c80   1148              0x3f8           0x16019f File             \Device\Afd\Endpoint</p>
+<p>0xfffffa8002ffe550   1148              0x4dc           0x12019f File             \Device\NamedPipe\wkssvc</p>
+<p><strong>HASH匹配用户账户名密码：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hash, 然后使用john filename --format&#x3D;NT破解</span><br></pre></td></tr></table></figure>
+
+<p><strong>安全进程扫描</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;Win7SP1x64 psscan</span><br></pre></td></tr></table></figure>
+
+<p><strong>Flag字符串扫描：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings -e l 2616.dmp | grep flag</span><br></pre></td></tr></table></figure>
+
+<p><strong>查找图片：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name--profile&#x3D;Win7SP1x64 filescan | grep -E &#39;jpg|png|jpeg|bmp|gif</span><br><span class="line">volatility -f name --profile&#x3D;Win7SP1x64 netscan</span><br></pre></td></tr></table></figure>
+
+<p><strong>注册表解析</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;Win7SP1x64hivelist</span><br><span class="line">volatility -f name --profile&#x3D;Win7SP1x64  -o 0xfffff8a000024010 printkey -K &quot;ControlSet001\Control;&quot;</span><br><span class="line">hivedump打印出注册表中的数据 ：</span><br><span class="line">volatility -f name  --profile&#x3D;WinXPSP2x86 hivedump -o 注册表的 virtual 地址</span><br></pre></td></tr></table></figure>
+
+<p><strong>复制、剪切版：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;Win7SP1x64 clipboard</span><br><span class="line">volatility -f name --profile&#x3D;Win7SP1x64 dlllist -p 3820</span><br></pre></td></tr></table></figure>
+
+<p><strong>Dump所有进程：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">volatility -f name --profile&#x3D;Win7SP1x64 memdump -n chrome -D .</span><br><span class="line">利用字符串查找download</span><br><span class="line">python vol.py -f name --profile&#x3D;Win7SP1x86 shimcache</span><br></pre></td></tr></table></figure>
+
+<p><strong>svcscan查看服务</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python vol.py -f name --profile&#x3D;Win7SP1x86 svcscan</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">modules 查看内核驱动</span><br><span class="line">modscan、driverscan 可查看一些隐藏的内核驱动</span><br><span class="line">ShimCache来识别应用程序兼容性问题。跟踪文件路径，大小，最后修改时间和最后“执行”时间.</span><br></pre></td></tr></table></figure>
+
+<p>volatility -f memory–profile=WinXPSP2x86 dumpfiles -Q 0x00000000053e9658 –dump-dir=./</p>
+<p>mftparser：扫描内存中潜在的主文件表（MFT）条目（使用“FILE”和“BAAD”签名），并打印出当前某些属性的信息：$ FILE_NAME($ FN)，$ STANDARD_INFORMATION($ SI)，$FN和$SI属性来自$ATTRIBUTE_LIST，$OBJECT_ID(仅限默认输出)和常驻$DATA</p>
+<h2 id="参考文章-1"><a href="#参考文章-1" class="headerlink" title="参考文章#"></a>参考文章<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0">#</a></h2><p><a target="_blank" rel="noopener" href="http://www.secist.com/archives/2076.html">DumpIt.exe 进程(opens new window)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/26763.html">Volatility基本介绍(opens new window)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sesefadou/p/11804566.html">基本命令(opens new window)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Kevinhanser/article/details/80013033?utm_source=blogxgwz5">组合命令(opens new window)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/0x4D75/p/11161822.html">进阶命令(opens new window)</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1378638">基础题型和基本取证(opens new window)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/124690.html">利用Volatility进行Windows内存取证分析(opens new window)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/350272484_100124117">windows取证(opens new window)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cqupt_chen/article/details/7771417">内存取证(opens new window)</a></p>
+<h2 id="从题目学习Volatility取证"><a href="#从题目学习Volatility取证" class="headerlink" title="从题目学习Volatility取证#"></a>从题目学习Volatility取证<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E4%BB%8E%E9%A2%98%E7%9B%AE%E5%AD%A6%E4%B9%A0volatility%E5%8F%96%E8%AF%81">#</a></h2><h3 id="四川省高校CTF大赛-安恒杯-Play-with-Cookie"><a href="#四川省高校CTF大赛-安恒杯-Play-with-Cookie" class="headerlink" title="四川省高校CTF大赛[安恒杯] - Play with Cookie#"></a>四川省高校CTF大赛[安恒杯] - Play with Cookie<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E5%9B%9B%E5%B7%9D%E7%9C%81%E9%AB%98%E6%A0%A1ctf%E5%A4%A7%E8%B5%9B-%E5%AE%89%E6%81%92%E6%9D%AF-play-with-cookie">#</a></h3><p>文件描述：得到了master key file 的和靶机镜像文件，需要找到里面的flag</p>
+<h4 id="了解基本架构"><a href="#了解基本架构" class="headerlink" title="了解基本架构#"></a>了解基本架构<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E4%BA%86%E8%A7%A3%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84">#</a></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo volatility -f Cookie.raw imageinfo</span><br></pre></td></tr></table></figure>
+<p>得到的关键信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Win7SP1x86</span><br><span class="line">mage date and time : 2020-02-11 12:11:51 UTC+0000</span><br></pre></td></tr></table></figure>
+<p>关键看Suggested Profile(s)项，这里是工具判断该镜像的架构，同时也会提供相应架构的命令用于分析该镜像，本题中可能性最大的架构是Win7SP1x86，然后在调用命令时加上–profile=Win7SP1x86就可以了</p>
+<h4 id="敏感信息获取"><a href="#敏感信息获取" class="headerlink" title="敏感信息获取#"></a>敏感信息获取<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96">#</a></h4><p><code>获取所有使用的进程号的信息</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 pslist　&gt; pslist.txt　</span><br></pre></td></tr></table></figure>
+
+<p><code>查看一下是否含有flag文件</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 filescan | grep &quot;doc|docx|rtf&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 filescan | grep &quot;jpg|jpeg|png|tif|gif|bmp&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 filescan | grep &#39;flag|ctf&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 filescan | grep &quot;Desktop&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">C:\home\kali\桌面&gt; volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 filescan | grep &quot;Desktop&quot;</span><br><span class="line">Volatility Foundation Volatility Framework 2.6</span><br><span class="line">0x000000003e423038      1      0 R--rwd \Device\HarddiskVolume1\Users\Cookie\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Accessories\Accessibility\Desktop.ini</span><br><span class="line">0x000000003e486038      1      0 R--rwd \Device\HarddiskVolume1\Users\Cookie\Desktop\desktop.ini</span><br><span class="line">0x000000003e4ebb08      1      0 R--rwd \Device\HarddiskVolume1\Users\Public\Desktop\desktop.ini</span><br><span class="line">0x000000003e51c3a0      1      0 R--rwd \Device\HarddiskVolume1\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories\System Tools\Desktop.ini</span><br><span class="line">0x000000003e5789e0      1      1 R--rw- \Device\HarddiskVolume1\Users\Cookie\Desktop</span><br><span class="line">0x000000003e5f1668      2      1 R--rwd \Device\HarddiskVolume1\Users\Cookie\Desktop</span><br><span class="line">0x000000003e628400      1      0 R--rwd \Device\HarddiskVolume1\Users\root\AppData\Roaming\Microsoft\Windows\SendTo\Desktop.ini</span><br><span class="line">0x000000003e663160      1      0 R--rwd \Device\HarddiskVolume1\Windows\assembly\Desktop.ini</span><br><span class="line">0x000000003e66a228      1      1 RW-rw- \Device\HarddiskVolume1\Users\Cookie\Desktop\WIN-I0396FOVLRF-20200211-121148.raw</span><br><span class="line">0x000000003e671d28      8      0 R--r-d \Device\HarddiskVolume1\Users\Cookie\Desktop\DumpIt.exe</span><br><span class="line">0x000000003e69ef80      1      0 R--rwd \Device\HarddiskVolume1\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories\Accessibility\Desktop.ini</span><br><span class="line">0x000000003e6a9d28      2      1 R--rwd \Device\HarddiskVolume1\Users\Public\Desktop</span><br><span class="line">0x000000003e6aacb8      1      0 R--rwd \Device\HarddiskVolume1\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories\Desktop.ini</span><br><span class="line">0x000000003e6ff950      8      0 R--r-d \Device\HarddiskVolume1\Users\Cookie\Desktop\DumpIt.exe</span><br><span class="line">0x000000003e70d308      1      0 R--rwd \Device\HarddiskVolume1\Windows\Media\Desktop.ini</span><br><span class="line">0x000000003e73af80      1      0 R--rwd \Device\HarddiskVolume1\Users\Cookie\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Maintenance\Desktop.ini</span><br><span class="line">0x000000003e90e718      1      0 R--rwd \Device\HarddiskVolume1\Users\Cookie\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Accessories\System Tools\Desktop.ini</span><br><span class="line">0x000000003e919910      1      0 R--rwd \Device\HarddiskVolume1\Users\Cookie\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Accessories\Desktop.ini</span><br><span class="line">0x000000003e93f578      1      0 R--rwd \Device\HarddiskVolume1\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories\Tablet PC\Desktop.ini</span><br><span class="line">0x000000003e95bc98      1      0 R--rwd \Device\HarddiskVolume1\ProgramData\Microsoft\Windows\Start Menu\Programs\Maintenance\Desktop.ini</span><br><span class="line">0x000000003eb33bc8      2      1 R--rwd \Device\HarddiskVolume1\Users\Cookie\Desktop</span><br><span class="line">0x000000003f3f55c0      2      1 R--rwd \Device\HarddiskVolume1\Users\Public\Desktop</span><br><span class="line">0x000000003f9871d8      1      0 R--rwd \Device\HarddiskVolume1\Users\root\Desktop\desktop.ini</span><br><span class="line">0x000000003fca7630      1      0 R--rwd \Device\HarddiskVolume1\Users\Cookie\AppData\Roaming\Microsoft\Windows\SendTo\Desktop.ini</span><br></pre></td></tr></table></figure>
+<p>这是查看raw文件中的桌面文件，没有得到有用的信息，只得知了是Cookie用户</p>
+<p><code>查看一下他的电脑截图</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.rwa --profile&#x3D;Win7SP1x86 screenshot --dump-dir&#x3D;.&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>只得到了一个页面信息，提示正在使用的进程是DUMpit.exe</p>
+<p><code>看一下用户信息</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 printkey -K &quot;SAM\Domains\Account\Users\Names&quot;</span><br></pre></td></tr></table></figure>
+<p>只有基本的几个用户</p>
+<p><code>看一下他的命令行输出了什么</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 cmdline</span><br></pre></td></tr></table></figure>
+
+<p>可以看到一些cmd信息和进程号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line">Volatility Foundation Volatility Framework 2.6</span><br><span class="line">************************************************************************</span><br><span class="line">System pid:      4</span><br><span class="line">************************************************************************</span><br><span class="line">smss.exe pid:    272</span><br><span class="line">Command line : \SystemRoot\System32\smss.exe</span><br><span class="line">************************************************************************</span><br><span class="line">csrss.exe pid:    360</span><br><span class="line">Command line : %SystemRoot%\system32\csrss.exe ObjectDirectory&#x3D;\Windows SharedSection&#x3D;1024,12288,512 Windows&#x3D;On SubSystemType&#x3D;Windows ServerDll&#x3D;basesrv,1 ServerDll&#x3D;winsrv:UserServerDllInitialization,3 ServerDll&#x3D;winsrv:ConServerDllInitialization,2 ServerDll&#x3D;sxssrv,4 ProfileControl&#x3D;Off MaxRequestThreads&#x3D;16</span><br><span class="line">************************************************************************</span><br><span class="line">wininit.exe pid:    412</span><br><span class="line">Command line : wininit.exe</span><br><span class="line">************************************************************************</span><br><span class="line">csrss.exe pid:    420</span><br><span class="line">Command line : %SystemRoot%\system32\csrss.exe ObjectDirectory&#x3D;\Windows SharedSection&#x3D;1024,12288,512 Windows&#x3D;On SubSystemType&#x3D;Windows ServerDll&#x3D;basesrv,1 ServerDll&#x3D;winsrv:UserServerDllInitialization,3 ServerDll&#x3D;winsrv:ConServerDllInitialization,2 ServerDll&#x3D;sxssrv,4 ProfileControl&#x3D;Off MaxRequestThreads&#x3D;16</span><br><span class="line">************************************************************************</span><br><span class="line">winlogon.exe pid:    480</span><br><span class="line">Command line : winlogon.exe</span><br><span class="line">************************************************************************</span><br><span class="line">services.exe pid:    520</span><br><span class="line">Command line : C:\Windows\system32\services.exe</span><br><span class="line">************************************************************************</span><br><span class="line">lsass.exe pid:    528</span><br><span class="line">Command line : C:\Windows\system32\lsass.exe</span><br><span class="line">************************************************************************</span><br><span class="line">lsm.exe pid:    536</span><br><span class="line">Command line : C:\Windows\system32\lsm.exe</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:    636</span><br><span class="line">Command line : C:\Windows\system32\svchost.exe -k DcomLaunch</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:    716</span><br><span class="line">Command line : C:\Windows\system32\svchost.exe -k RPCSS</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:    808</span><br><span class="line">Command line : C:\Windows\System32\svchost.exe -k LocalServiceNetworkRestricted</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:    844</span><br><span class="line">Command line : C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:    876</span><br><span class="line">Command line : C:\Windows\system32\svchost.exe -k netsvcs</span><br><span class="line">************************************************************************</span><br><span class="line">audiodg.exe pid:    956</span><br><span class="line">Command line : C:\Windows\system32\AUDIODG.EXE 0x2e8</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:   1036</span><br><span class="line">Command line : C:\Windows\system32\svchost.exe -k LocalService</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:   1132</span><br><span class="line">Command line : C:\Windows\system32\svchost.exe -k NetworkService</span><br><span class="line">************************************************************************</span><br><span class="line">spoolsv.exe pid:   1280</span><br><span class="line">Command line : C:\Windows\System32\spoolsv.exe</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:   1376</span><br><span class="line">Command line : C:\Windows\system32\svchost.exe -k LocalServiceNoNetwork</span><br><span class="line">************************************************************************</span><br><span class="line">VGAuthService. pid:   1560</span><br><span class="line">Command line : &quot;C:\Program Files\VMware\VMware Tools\VMware VGAuth\VGAuthService.exe&quot;</span><br><span class="line">************************************************************************</span><br><span class="line">vmtoolsd.exe pid:   1584</span><br><span class="line">Command line : &quot;C:\Program Files\VMware\VMware Tools\vmtoolsd.exe&quot;</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:   1824</span><br><span class="line">Command line : C:\Windows\system32\svchost.exe -k bthsvcs</span><br><span class="line">************************************************************************</span><br><span class="line">dllhost.exe pid:    128</span><br><span class="line">Command line : C:\Windows\system32\dllhost.exe &#x2F;Processid:&#123;02D4B3F1-FD88-11D1-960D-00805FC79235&#125;</span><br><span class="line">************************************************************************</span><br><span class="line">msdtc.exe pid:    596</span><br><span class="line">Command line : C:\Windows\System32\msdtc.exe</span><br><span class="line">************************************************************************</span><br><span class="line">WmiPrvSE.exe pid:    920</span><br><span class="line">Command line : C:\Windows\system32\wbem\wmiprvse.exe</span><br><span class="line">************************************************************************</span><br><span class="line">taskhost.exe pid:   2096</span><br><span class="line">Command line : &quot;taskhost.exe&quot;</span><br><span class="line">************************************************************************</span><br><span class="line">dwm.exe pid:   2188</span><br><span class="line">Command line : &quot;C:\Windows\system32\Dwm.exe&quot;</span><br><span class="line">************************************************************************</span><br><span class="line">explorer.exe pid:   2216</span><br><span class="line">Command line : C:\Windows\Explorer.EXE</span><br><span class="line">************************************************************************</span><br><span class="line">vm3dservice.ex pid:   2404</span><br><span class="line">Command line : &quot;C:\Windows\System32\vm3dservice.exe&quot; -u</span><br><span class="line">************************************************************************</span><br><span class="line">vmtoolsd.exe pid:   2412</span><br><span class="line">Command line : &quot;C:\Program Files\VMware\VMware Tools\vmtoolsd.exe&quot; -n vmusr</span><br><span class="line">************************************************************************</span><br><span class="line">SearchIndexer. pid:   2584</span><br><span class="line">Command line : C:\Windows\system32\SearchIndexer.exe &#x2F;Embedding</span><br><span class="line">************************************************************************</span><br><span class="line">WmiPrvSE.exe pid:   2764</span><br><span class="line">Command line : C:\Windows\system32\wbem\wmiprvse.exe</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:   3224</span><br><span class="line">Command line : C:\Windows\system32\svchost.exe -k LocalServiceAndNoImpersonation</span><br><span class="line">************************************************************************</span><br><span class="line">sppsvc.exe pid:   3272</span><br><span class="line">Command line : C:\Windows\system32\sppsvc.exe</span><br><span class="line">************************************************************************</span><br><span class="line">svchost.exe pid:   3344</span><br><span class="line">Command line : C:\Windows\System32\svchost.exe -k secsvcs</span><br><span class="line">************************************************************************</span><br><span class="line">taskhost.exe pid:   2924</span><br><span class="line">Command line : taskhost.exe $(Arg0)</span><br><span class="line">************************************************************************</span><br><span class="line">SearchProtocol pid:   3520</span><br><span class="line">Command line : &quot;C:\Windows\system32\SearchProtocolHost.exe&quot; Global\UsGthrFltPipeMssGthrPipe5_ Global\UsGthrCtrlFltPipeMssGthrPipe5 1 -2147483646 &quot;Software\Microsoft\Windows Search&quot; &quot;Mozilla&#x2F;4.0 (compatible; MSIE 6.0; Windows NT; MS Search 4.0 Robot)&quot; &quot;C:\ProgramData\Microsoft\Search\Data\Temp\usgthrsvc&quot; &quot;DownLevelDaemon&quot; </span><br><span class="line">************************************************************************</span><br><span class="line">SearchFilterHo pid:   2692</span><br><span class="line">Command line : &quot;C:\Windows\system32\SearchFilterHost.exe&quot; 0 532 536 544 65536 540 </span><br><span class="line">************************************************************************</span><br><span class="line">DumpIt.exe pid:   3632</span><br><span class="line">Command line : &quot;C:\Users\Cookie\Desktop\DumpIt.exe&quot; </span><br><span class="line">************************************************************************</span><br><span class="line">conhost.exe pid:   1684</span><br><span class="line">Command line : \??\C:\Windows\system32\conhost.exe</span><br><span class="line">************************************************************************</span><br><span class="line">dllhost.exe pid:   3552</span><br></pre></td></tr></table></figure>
+<p>也没有得到关键的信息<br><code>看一下连接过的网络</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 netscan</span><br></pre></td></tr></table></figure>
+<p>看到在3分钟之后是未知的，回到进程查看一下他干了什么</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 pslist</span><br><span class="line">0x87da3d40 sppsvc.exe             3272    520      4      159      0      0 2020-02-11 12:03:00 UTC+0000                                 </span><br><span class="line">0x87cdbd40 svchost.exe            3344    520      9      310      0      0 2020-02-11 12:03:00 UTC+0000                                 </span><br><span class="line">0x87d65030 taskhost.exe           2924    520      8      181      0      0 2020-02-11 12:09:55 UTC+0000                                 </span><br><span class="line">0x87f2a550 SearchProtocol         3520   2584      7      320      0      0 2020-02-11 12:10:35 UTC+0000           </span><br></pre></td></tr></table></figure>
+
+
+
+<p>这一段3~9分钟之间发生了一些事情让出题人等待了一下，上网查一下这些进程的含义以及使用的用途</p>
+<p>把这个位置的进程dump出来加以分析一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 memdump -p 2924 --dump-dir&#x3D;.&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\home\kali\桌面&gt; volatility -f Cookie.raw --profile&#x3D;Win7SP1x86 memdump -p 2924 --dump-dir&#x3D;.&#x2F;</span><br><span class="line">Volatility Foundation Volatility Framework 2.6</span><br><span class="line">************************************************************************</span><br><span class="line">Writing taskhost.exe [  2924] to 2924.dmp</span><br></pre></td></tr></table></figure>
+<p>得到一个2924.dmp文<br><code>关键字文件查找</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings 2924.dmp | grep flag&#123; ;strings 2924.dmp | grep DASCTF&#123; ;strings 2924.dmp | grep ctf&#123;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\home\kali\桌面&gt; strings 2924.dmp | grep flag&#123; ;strings 2924.dmp | grep DASCTF&#123; ;strings 2924.dmp | grep ctf&#123;</span><br><span class="line">$value &#x3D; &quot;flag&#123;528c8870778d2336fdf512652b74a8aa&#125;&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p>看一下文件里面是什么</p>
+<h3 id="V-amp-N2020-公开赛-内存取证"><a href="#V-amp-N2020-公开赛-内存取证" class="headerlink" title="[V&amp;N2020 公开赛]内存取证#"></a>[V&amp;N2020 公开赛]内存取证<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#v-n2020-%E5%85%AC%E5%BC%80%E8%B5%9B-%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81">#</a></h3><h4 id="查看基本文件架构"><a href="#查看基本文件架构" class="headerlink" title="查看基本文件架构#"></a>查看基本文件架构<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E6%9F%A5%E7%9C%8B%E5%9F%BA%E6%9C%AC%E6%96%87%E4%BB%B6%E6%9E%B6%E6%9E%84">#</a></h4><h4 id="获取有利信息"><a href="#获取有利信息" class="headerlink" title="获取有利信息#"></a>获取有利信息<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E8%8E%B7%E5%8F%96%E6%9C%89%E5%88%A9%E4%BF%A1%E6%81%AF">#</a></h4><p>扫描 记事本文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kali@kali:~&#x2F;桌面$ volatility -f mem.raw --profile&#x3D;Win7SP0x86 filescan | grep not                                                                                                                                                           </span><br><span class="line">Volatility Foundation Volatility Framework 2.6                                                                                                                                                                                             </span><br><span class="line">0x000000001de89cb8      6      0 R--r-d \Device\HarddiskVolume2\Windows\System32\notepad.exe</span><br></pre></td></tr></table></figure>
+<p>dump进程查看文件，发现文件可能被删除</p>
+<h4 id="删除数据恢复"><a href="#删除数据恢复" class="headerlink" title="删除数据恢复#"></a>删除数据恢复<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D">#</a></h4><p>使用命令恢复数据</p>
+<p>得到百度网盘链接和提取码，下载下来一个加密文件</p>
+<p>寻找加密进程</p>
+<p>dump进程下来 使用EFDD解密vol文件</p>
+<p><code>得到密码:uOjFdKu1jsbWI8N51jsbWI8N5</code></p>
+<p>再使用得到的密码TrueCrypt挂载上去解密</p>
+<p>得到一个加密的flag压缩包</p>
+<h4 id="GIMP还原"><a href="#GIMP还原" class="headerlink" title="GIMP还原#"></a>GIMP还原<a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#gimp%E8%BF%98%E5%8E%9F">#</a></h4><p>把 mspaint.exe (pid 2648) dump下来，使用GIMP还原</p>
+<p><code>得到密码 :1YxfCQ6goYBD6Q</code></p>
+<p>打开加密zip文件得到flag</p>
+<p><code>RoarCTF&#123;wm_D0uB1e_TC-cRypt&#125;</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2020/11/09/Volatility/" data-id="ckha71iqm0004af3qax3q82qy" class="article-share-link">
+        Share
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MISC/" rel="tag">MISC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/forensic/" rel="tag">forensic</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/11/09/%E9%93%81%E4%B8%89-WP/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            铁三-WP
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/11/09/hello-world/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">Hello World</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 sharun&#39;s blogs</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="sharun&#39;s blogs"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
