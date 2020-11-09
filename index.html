@@ -69,7 +69,7 @@
     <article id="post-铁三-WP" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/11/09/%E9%93%81%E4%B8%89-WP/" class="article-date">
-  <time datetime="2020-11-09T05:34:32.190Z" itemprop="datePublished">2020-11-09</time>
+  <time datetime="2020-11-09T05:43:31.904Z" itemprop="datePublished">2020-11-09</time>
 </a>
     
   </div>
@@ -78,16 +78,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="取证题目"><a href="#取证题目" class="headerlink" title="取证题目"></a>取证题目</h1><p>1.在   /var/log/httpd/access.log 文件中有蚁剑连接php记录  ，在202011月的log中 有</p>
+        <h1 id="取证题目"><a href="#取证题目" class="headerlink" title="取证题目"></a>取证题目</h1><ol>
+<li>在   /var/log/httpd/access.log 文件中有蚁剑连接php记录  ，在202011月的log中 有</li>
+</ol>
 <p>两个ip 192.168.232.1 和 192.168.232.201(?记不清了)</p>
-<ol>
+<ol start="2">
 <li>有一个ip是扫描路径 对其User-Agent 过滤并计数</li>
 <li>跳过</li>
 <li>在www中 db_connect 找到数据库密码 在mysql数据库找到admin用户名密码admin：admin123</li>
 <li>跳过</li>
 <li>在www中找到manage_user.php 找到操作为 ajax.php?action=（忘了），在log中在m啥啥啥.log中相应的数据包 hacker：hacker2333</li>
 <li>同上，www中 site_啥啥啥.php  I Got Your Site</li>
-<li>好像是查看webshell文件时间 通过log 找到相应文件 用 ll –full-time 查看<h1 id="企业渗透"><a href="#企业渗透" class="headerlink" title="企业渗透"></a>企业渗透</h1></li>
+<li>好像是查看webshell文件时间 通过log 找到相应文件 用 ll –full-time 查看</li>
+<li>查看蚁剑流量,把流量解码就可以,但是这VNC我不会复制出来，没法解码，那怎么办嘛。<h1 id="企业渗透"><a href="#企业渗透" class="headerlink" title="企业渗透"></a>企业渗透</h1></li>
 </ol>
 <p>Web2 扫描发现ftp弱口令 ftp:123456 登录后发现flag2 和web的登录账号密码。</p>
 <p>Web3 访问80端口，发现是原题，时hack the box的题目，访问 cdn-cgi/login,查看源代码发现flag3，利用修改session登录超级管理员权限，然后上传webshell，发现有flag.php 得到flag4</p>
