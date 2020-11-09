@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    算法（一） 枚举法 |
+    
+    sharun&#39;s blogs</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-cnblog_10513965" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      算法（一） 枚举法
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2019/03/11/cnblog_10513965/" class="article-date">
+  <time datetime="2019-03-11T07:20:00.000Z" itemprop="datePublished">2019-03-11</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="这是👉算法（一）-枚举法👈的摘要"><a href="#这是👉算法（一）-枚举法👈的摘要" class="headerlink" title="这是👉算法（一） 枚举法👈的摘要"></a><a href="../../../../2019/03/11/cnblog_10513965/">这是👉算法（一） 枚举法👈的摘要</a></h1><a id="more"></a>
+
+
+<p>枚举法，暴力破解，直接罗列各种情况。</p>
+<p>例1</p>
+<p>题目描述：</p>
+<p>古堡算式福尔摩斯到某古堡探险，看到门上写着一个奇怪的算式：<br>ABCDE * ? = EDCBA<br>他对华生说：”ABCDE 应该代表不同的数字，问号也代表某个数字！”<br>华生：”我猜也是！”<br>于是，两人沉默了好久，还是没有算出合适的结果来。请你利用计算机的优势，找到破解的答案。<br>把 ABCDE 所代表的数字写出来。</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+#include&lt;string.h&gt;
+
+int main()
+
+&#123;
+
+    int a,b,c,d,e,x;
+
+    for(a=0; a&lt;=9; a++)
+
+        for(b=0; b&lt;=9; b++)
+
+            for(c=0; c&lt;=9; c++)
+
+                for(d=0; d&lt;=9; d++)
+
+                    for(e=0; e&lt;=9; e++)
+
+                        for(x=0; x&lt;=9; x++)
+
+                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)
+
+                                if((a*10000+b*1000+c*100+d*10+e)*x==e*10000+d*1000+c*100+b*10+a)
+
+                                    printf(&quot;%d%d%d%d%d&quot;,a,b,c,d,e);
+
+    return 0;
+
+&#125;</code></pre>
+<p>例二</p>
+<p>三羊生瑞气</p>
+<p>观察一下加法算式，一个汉字代表一个数字,求三羊献瑞代表的数字。</p>
+<pre><code>   祥 瑞 生 辉  </code></pre>
+<p>  +   三 羊 献 瑞<br>-——————<br>   三 羊 生 瑞 气</p>
+<pre><code>#include&lt;stdio.h&gt; 
+
+int main()
+&#123;
+    int a,b,c,d,f,g,h;
+    int num1,num2,sum;
+    for(a=2;a&lt;=9;a++)
+        for(b=0;b&lt;=9;b++)
+            for(c=0;c&lt;=9;c++)
+                for(d=0;d&lt;=9;d++)    
+                    for(f=0;f&lt;=9;f++)
+                        for(g=0;g&lt;=9;g++)
+                            for(h=0;h&lt;=9;h++)
+                                if(a!=b &amp;&amp; a!=c &amp;&amp; a!=d &amp;&amp; a!=f &amp;&amp; a!=g &amp;&amp; a!=h
+                                &amp;&amp; b!=c &amp;&amp; b!=d &amp;&amp; b!=f &amp;&amp; b!= g &amp;&amp;b!=h
+                                &amp;&amp; c!=d &amp;&amp; c!=f &amp;&amp; c!= g &amp;&amp; c!=h
+                                &amp;&amp; d!=f &amp;&amp; d!=g &amp;&amp;d!=h
+                                &amp;&amp; f!=g &amp;&amp; f!=h
+                                &amp;&amp; g!=h
+                                &amp;&amp; a!=1 &amp;&amp; b!=1 &amp;&amp; c!=1 &amp;&amp; d!=1 &amp;&amp; f!=1 &amp;&amp; g!=1 &amp;&amp; h!=1)
+                                &#123;
+                                    num1=a*1000 + b*100 + c*10 + d;
+                                    num2=1*1000 + f*100 + g*10 + b;
+                                    sum=1*10000 + f*1000 + c*100 + b*10 + h;
+                                    if(sum==(num1 + num2))
+                                    &#123;
+                                        printf(&quot;1%d%d%d&quot;,f,g,b);
+                                    &#125;                        
+
+                                &#125;
+    return 0;
+&#125; </code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2019/03/11/cnblog_10513965/" data-id="ckhagon4100012d3qgotjavmy" class="article-share-link">
+        Share
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E5%9B%AD/" rel="tag">博客园</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%AC%E5%AE%B6/" rel="tag">搬家</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2019/03/12/cnblog_10515964/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            算法--排序
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/03/05/cnblog_10478098/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">判断闰年</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 sharun&#39;s blogs</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="sharun&#39;s blogs"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

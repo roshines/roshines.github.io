@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    数据恢复之FAT和NTFS |
+    
+    sharun&#39;s blogs</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-cnblog_13331754" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      数据恢复之FAT和NTFS
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/17/cnblog_13331754/" class="article-date">
+  <time datetime="2020-07-17T02:09:00.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="这是👉数据恢复之FAT和NTFS👈的摘要"><a href="#这是👉数据恢复之FAT和NTFS👈的摘要" class="headerlink" title="这是👉数据恢复之FAT和NTFS👈的摘要"></a><a href="../../../../2020/07/17/cnblog_13331754/">这是👉数据恢复之FAT和NTFS👈的摘要</a></h1><a id="more"></a>
+<p>放假了，把这个学期学到的东西整理出来发一下，主要是一些学习笔记和实验之类的。 如果有师弟用的到的话，不要感谢我，感谢楷哥和牟哥<br><img src="https://img2020.cnblogs.com/blog/1619455/202007/1619455-20200717181945570-1889109604.png"></p>
+<h1 id="FAT文件系统-文件系统-放个大佬写的吧，很详细了（平时学的时候我也没做笔记）"><a href="#FAT文件系统-文件系统-放个大佬写的吧，很详细了（平时学的时候我也没做笔记）" class="headerlink" title="FAT文件系统 ## 文件系统 放个大佬写的吧，很详细了（平时学的时候我也没做笔记）"></a>FAT文件系统 ## 文件系统 放个大佬写的吧，很详细了（平时学的时候我也没做笔记）</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/li_wen01/article/details/79929730">https://blog.csdn.net/li_wen01/article/details/79929730</a></p>
+<h3 id="实验操作-DBR结构"><a href="#实验操作-DBR结构" class="headerlink" title="实验操作 DBR结构"></a>实验操作 DBR结构</h3><p><img src="https://uploader.shimo.im/f/F55SUAypobvhxxs3.png!thumbnail" alt="图片"> 总扇区号 8465232<br>每扇区512 每个簇8个扇区 DBR的保留扇区数：34 FAT的个数：2 FAT的扇区数：8251<br><img src="https://uploader.shimo.im/f/b59CK1EYPBsp0y9W.png!thumbnail" alt="图片"><br>Fat2=fat1+fat扇区数 = 34+8251=8285<br><img src="https://uploader.shimo.im/f/8jSYVy5XhWp4e3Xo.png!thumbnail" alt="图片"><br>FDT的位置：=34+2<em>8251=16536<br><img src="https://uploader.shimo.im/f/YnFWgkNFxCxSrhBm.png!thumbnail" alt="图片"> 扔了一个png进去<br><img src="https://uploader.shimo.im/f/8vQIvJxNIWyegtho.png!thumbnail" alt="图片"><br>名称相同。起始簇号0000 0005<br><img src="https://uploader.shimo.im/f/H6lkU49boLr2Giac.png!thumbnail" alt="图片"><br>在fat1找到文件，结束簇号是300 16536+（5-2）</em>8=16560扇区 跳到5号簇，可以看到PNG文件头<br><img src="https://uploader.shimo.im/f/FR1iTKO7UQCvYFMB.png!thumbnail" alt="图片"> 结束簇号 删除文件<br><img src="https://uploader.shimo.im/f/cAeWmGMkzJOpaxeP.png!thumbnail" alt="图片"> 簇表回到原来<br>目录项第一个字节变为E5，其他没有改变<br><img src="https://uploader.shimo.im/f/A6XbzxoL4vdI8uMM.png!thumbnail" alt="图片"><br>数据区没变，把文件直接复制出来<br><img src="https://uploader.shimo.im/f/5f9ZLCCva7TN0Mcx.png!thumbnail" alt="图片"><br>这个是簇号按顺序排列的时候，如果未按顺序，应该按照FAT表项的簇表顺序排列文件内容。<br><img src="https://uploader.shimo.im/f/9YQrDmZYJUvTsqZd.png!thumbnail" alt="图片"> 恢复成功<br><img src="https://uploader.shimo.im/f/xjgZtnYuZY0lyKNx.png!thumbnail" alt="图片"> 用0000覆盖目录区<br>用取证大师成功恢复。。。 <img src="https://uploader.shimo.im/f/wqQ9TW9d7iUiLj7g.png!thumbnail" alt="图片"><br>连我格式化之前的好多东西都恢复出来了，，，<br><img src="https://uploader.shimo.im/f/g315rQKxP73Gl3Fe.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/odRDVji6bO816d7J.png!thumbnail" alt="图片"> 再把图片扔进去，删掉。。<br>就覆盖一个图片头吧 <img src="https://uploader.shimo.im/f/Ob0y4Da5qAUUBDAh.png!thumbnail" alt="图片"><br>嗯，用取证大师没恢复出来，按理说目录里应该有这个文件的吧<br><img src="https://uploader.shimo.im/f/Kyzyv0NTd3OO6ml2.png!thumbnail" alt="图片"> 创建一个文件夹和子文件夹<br><img src="https://uploader.shimo.im/f/Or0og1GHdgKWBSuy.png!thumbnail" alt="图片"> 创建时间毫秒 A2<br>创建时间 61 87 ‭10000 （16）111011 （59）00001 （1） 16.59.1‬ 创建日期 0101000 0101 00010‬<br>2020.5.2 最后访问日期 0101000 0101 00010‬ 2020.5.2 最后修改时间 62 87 ‭10000 （16）111011<br>（59）00010 （2） 16.59.2‬ 最后修改日期 0101000 0101 00010‬ 2020.5.2 文件夹大小为0， 起始簇号0000<br>0005还是在5号簇，把文件扔进去<br><img src="https://uploader.shimo.im/f/cDRymJ9961MuqBzy.png!thumbnail" alt="图片"><br>有一个Son子目录，上级目录在0号簇，根目录 创建时间毫秒 9c 创建时间 65 87 ‭10000 （16）111011 （59）00101 （5）‬<br>创建日期 0101000 0101 00010‬ 2020.5.2 最后访问日期 A2 50 0101000 0101 00010‬ 2020.5.2<br>最后修改时间 66 87 10000 （16）111011 （59）00110 （6）‬ 最后修改日期 A2 50 ‭0101000 0101 00010‬<br>2020.5.2 文件夹大小为0， 簇号 0000 0006 在6号簇，跳到6号 可以看到2E2E的上级目录在5号簇，就是刚刚那个<br>有个1.jpg，簇号132（16）=306（10）在306簇<br><img src="https://uploader.shimo.im/f/BwSMup4tjnXnAqUN.png!thumbnail" alt="图片"> ## 隐藏文件 创建文件<br>在底层找到文件 <img src="https://uploader.shimo.im/f/awkzbWMWjMZdM6pg.png!thumbnail" alt="图片"><br>放到DBR区 <img src="https://uploader.shimo.im/f/L5FNHmfc9omDMzAp.png!thumbnail" alt="图片"><br>放到fat区中 <img src="https://uploader.shimo.im/f/CuvXA4oZxMp3uaQG.png!thumbnail" alt="图片"><br>放到dir中 <img src="https://uploader.shimo.im/f/yaSkJ1Ehd0STuk35.png!thumbnail" alt="图片"><br>data区中 <img src="https://uploader.shimo.im/f/pT2zMZiZOx4drJUS.png!thumbnail" alt="图片"> 覆盖掉文件<br><img src="https://uploader.shimo.im/f/DoV0yLig4wRIWKx2.png!thumbnail" alt="图片"> dir也覆盖掉<br><img src="https://uploader.shimo.im/f/Njsa8U96CYmxrlc0.png!thumbnail" alt="图片"> 看不见文件了<br>上面几个位置的内容还在 但是新建文件后把文件内容覆盖了一半，再新建文件还出错。<br><img src="https://uploader.shimo.im/f/Z6n89wmGL5Fli0XI.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/y4Yviiseq4gQFwV7.png!thumbnail" alt="图片"> 把这个内容删了 fat区<br>只会从之后开始写， <img src="https://uploader.shimo.im/f/lijw2g3J6dipE1iH.png!thumbnail" alt="图片"><br>新建文件，把簇改成坏簇 <img src="https://uploader.shimo.im/f/l9xFO1jaLC53APun.png!thumbnail" alt="图片"><br>删掉dir，文件里看不到了，内容还在坏簇里<br><img src="https://uploader.shimo.im/f/98zC77cr46fTtcI7.png!thumbnail" alt="图片"> ## DBR恢复<br>先查看MBR分区表 <img src="https://uploader.shimo.im/f/4akxICaxD3NcK3pZ.png!thumbnail" alt="图片"><br>-————-第1个分区—————– 000203000C210E138000000000B00400 00<br>020300 磁头号 00000010 2 扇区号 000000 0 柱面号 1100000000 768 0C 210E13 磁头号 00100001<br>33 扇区号 000011 3 柱面号 1000010011 531 地址 00000080 16 =( 128 )10 大小 0004B000 16 =(<br>307200 )10 -————-第2个分区—————–<br>00210F1307FE3F4B80B0040000F80D00 00 210F13 磁头号 00100001 33 扇区号 000011 3 柱面号<br>1100010011 787 07 FE3F4B 磁头号 11111110 254 扇区号 001111 15 柱面号 1101001011 843 地址<br>0004B080 16 =( 307328 )10 大小 000DF800 16 =( 915456 )10<br>跳到128号扇区,查看第一个分区,这应该是损害的FAT分区,分区的DBR被覆盖.<br><img src="https://uploader.shimo.im/f/5x9d5w3AnK4NXKBe.png!thumbnail" alt="图片"> 修复DBR<br>先看看备份DBR怎么样了,备份DBR也被覆盖<br><img src="https://uploader.shimo.im/f/ipZTSwr3aLe1vSYd.png!thumbnail" alt="图片"> 恢复DBR,需要<br>保留扇区数,FAT表个数(通常为2),每FAT表大小扇区数,根目录簇号(通常为2号簇),每扇区数,分区前隐含扇区数及分区大小扇区数.<br>找一下FAT表,搜索”F8FFFF”,这是FAT1<br><img src="https://uploader.shimo.im/f/x47UrGSok9CaW64f.png!thumbnail" alt="图片"> 这是FAT2<br><img src="https://uploader.shimo.im/f/WZPAtQhQZRpmdeUB.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/RpGzd1iwXsRcbdlJ.png!thumbnail" alt="图片"><br>7735-7150=585扇区 FAT1大小为585扇区 7150-128 = 7,022 保留扇区 7022扇区<br>根目录应该在7735+585=8,320扇区<br><img src="https://uploader.shimo.im/f/kHcju4dtrfU1j1QG.png!thumbnail" alt="图片"><br>通过子目录每簇扇区数,查找”2E20202020202020202020”（就是”.”,表示本目录）<br><img src="https://uploader.shimo.im/f/yhTdK5VrppmcoXxP.png!thumbnail" alt="图片"><br>这里有一个,这个目录在8324扇区,目录显示在0x00000003号,既3号簇 根目录在2号簇 (8324-8320)/(3-2)=4 既每簇4扇区<br>找一个FAT分区的DBR,重构DBR<br><img src="https://uploader.shimo.im/f/iIAlQm9jugUPfTAN.png!thumbnail" alt="图片"> # NtFS ##<br>文件系统 <a target="_blank" rel="noopener" href="https://blog.csdn.net/enjoy5512/article/details/50935972/">NTFS文件系统详解</a><br>属性:NTFS中,所有与数据相关的信息都被称为属性,如文件名属性,时间属性,文件内容被称为数据属性.<br>元文件:NTFS文件系统被创建时,同时会建立一些重要的系统信息,用来管理文件系统,这些系统信息是以文件的形式存在的,被称为元文件,以$符号开头,是系统隐藏文件,用户不可直接访问.<br>Dir也不能查看. 逻辑簇号：既对分区内的第一个簇到最后一个簇进行编号，NTFS使用逻辑簇号对簇进行定位。<br>虚拟簇号：既将文件所占用的簇从开头到尾进行编号的，虚拟簇号不要求在物理上是连续的。 ### 实验操作 查看$BOOT<br><img src="https://uploader.shimo.im/f/Dzo9ILR0TnzrpelQ.png!thumbnail" alt="图片"> 每扇区大小 512字节<br>每簇大小 8 扇区 每磁头扇区数 63 每柱面磁头数 255 隐藏扇区数 64 分区大小 8465231簇 $MFT的开始簇号 262144簇<br>$MFTmirr开始簇号 2 262144<em>4096=1073741824 跳转到 262144簇<br><img src="https://uploader.shimo.im/f/0OQP1PyYUZGL2JLk.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/rkUlvhLkFvwfJgff.png!thumbnail" alt="图片"> 根目录在$MFT<br>第6个文件记录，偏移是1024</em>5=5120 1073741824+5120 = ‭1073746944‬ 1073780736 找到文件<br><img src="https://uploader.shimo.im/f/kSgP1OQ7zAlOmZmU.png!thumbnail" alt="图片"> 80 属性为常驻属性<br>修改文件，加大文件 <img src="https://uploader.shimo.im/f/eGF2PqZQzliWbiZQ.png!thumbnail" alt="图片"><br>80属性变为非常驻属性 runlist 0x31 01 c3d804 位置 0x04d8c3 = ‭317635‬ 跳到317635簇<br><img src="https://uploader.shimo.im/f/GmihDaEAo5Q4XzAt.png!thumbnail" alt="图片"> 找到文件内容 删除此文件<br><img src="https://uploader.shimo.im/f/HmMvQFReZx2QBjRE.png!thumbnail" alt="图片"> 文件头 0x10 位 从<br>0x0100 变成了 0x20000,加了1，表示文件被删除 创建文件夹 找到根目录<br><img src="https://uploader.shimo.im/f/PsUig3zvTLo0udp0.png!thumbnail" alt="图片"> 0x31 01<br>D72B08 0x082BD7=4284088 跳到 4284088簇 找到根目录<br><img src="https://uploader.shimo.im/f/SCdpA1Oranm3oDZ2.png!thumbnail" alt="图片"> 找到文件加的索引<br><img src="https://uploader.shimo.im/f/Uvh3OtrXUe1h3uKA.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/krDiWo1bKnnE8oWZ.png!thumbnail" alt="图片"> 0x26=38<br>跳到38编号 <img src="https://uploader.shimo.im/f/WSteTT2y2SV8NTtf.png!thumbnail" alt="图片"> 0x2f<br>= 47 跳到47编号 <img src="https://uploader.shimo.im/f/kzgtbHQ87tzixWHU.png!thumbnail" alt="图片"><br>找到文件 0x2e = 46 跳到46<br><img src="https://uploader.shimo.im/f/JrDW02Ex3w59iVej.png!thumbnail" alt="图片"> 找到文件 ## 隐藏文件<br>DBR <img src="https://uploader.shimo.im/f/WWIOMFJTVqniscRO.png!thumbnail" alt="图片"> 其他文件的MFT<br><img src="https://uploader.shimo.im/f/aOI01P7KgduOckiD.png!thumbnail" alt="图片"> data末尾<br><img src="https://uploader.shimo.im/f/bapWRGt6zw8mij6e.png!thumbnail" alt="图片"> 删掉文件 找到文件<br><img src="https://uploader.shimo.im/f/003hRRe1qylbZW1H.png!thumbnail" alt="图片"> 恢复文件<br>多了个recycle.bin目录 ，文件头发生变化 覆盖文件80属性<br><img src="https://uploader.shimo.im/f/7JrWzSGLkF2gC3HV.png!thumbnail" alt="图片"> 后面肯定是不能覆盖的<br>无法恢复文件 <img src="https://uploader.shimo.im/f/D8uDD8zej02zIa9O.png!thumbnail" alt="图片"><br>之前隐藏的文件还在原来的位置上 ## NTFS文件流隐藏 使用命令 ```plain type flag.txt&gt;&gt;fack.txt:flag.txt</p>
+<pre><code class="隐藏文件">找到文件位置 48编号 ![图片](https://uploader.shimo.im/f/OZediVPSXa1Zjbvg.png!thumbnail)
+找到文件流，常驻属性，后面就是文件的内容 找一个大于1kb的文件，隐藏
+![图片](https://uploader.shimo.im/f/TQzr5pHLeCwjaxD5.png!thumbnail)
+这个文件流的80为非常驻属性 0x31 01 E3D804 0x04D8E3 = 317667 在317667簇
+![图片](https://uploader.shimo.im/f/YqRGxVcjZRIYJl8M.png!thumbnail)找到文件
+![图片](https://uploader.shimo.im/f/OCUykj7z1cvNlRDz.png!thumbnail)
+使用取证大师自动恢复，可以恢复出隐藏文件流
+
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2020/07/17/cnblog_13331754/" data-id="ckhagon51001x2d3qca7b5rh2" class="article-share-link">
+        Share
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E5%9B%AD/" rel="tag">博客园</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%AC%E5%AE%B6/" rel="tag">搬家</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/07/24/cnblog_13374692/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            计网小笔记
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/06/06/cnblog_13054815/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">HSCTF  WP   ——Lun4R</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 sharun&#39;s blogs</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="sharun&#39;s blogs"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

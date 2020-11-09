@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    Lun4R-CyBRICSCTF wp |
+    
+    sharun&#39;s blogs</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-cnblog_13381598" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      Lun4R-CyBRICSCTF wp
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/26/cnblog_13381598/" class="article-date">
+  <time datetime="2020-07-26T03:34:00.000Z" itemprop="datePublished">2020-07-26</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="这是👉Lun4R-CyBRICSCTF-wp👈的摘要"><a href="#这是👉Lun4R-CyBRICSCTF-wp👈的摘要" class="headerlink" title="这是👉Lun4R-CyBRICSCTF wp👈的摘要"></a><a href="../../../../2020/07/26/cnblog_13381598/">这是👉Lun4R-CyBRICSCTF wp👈的摘要</a></h1><a id="more"></a>
+<p>和小伙伴们一起打了这个xctf|俄罗斯战队的比赛，题目质量真心不错hhh，部分题解小伙伴们还没更新，先发出来，嘻嘻。 # <strong>WEB</strong> ## Hunt<br>(Web, Baby, 50 pts) 打断点，然后就一个一个被抓住了… 接着F12就出现了.（这个flag是白色的，藏在下面。。。。）…<br><img src="https://uploader.shimo.im/f/QG9CJnn0cmas7LGn.png!thumbnail" alt="图片"> # <strong>RE</strong> ##<br>Baby Rev 题目给了个github项目链接 看懂就行 一个简单的疑惑加密 ， key 是33 <code>plain c=[92,0,74,66,116,77,126,69,17,17,102,126, 69,79,97,126,18,76,17,98,16,77,18, 86,90,82,66,72,83,67,88,66] flag=&#39;&#39; for i in range(len(c)): c[i]=c[i]^33 flag+=chr(c[i]) print (flag[::-1]) </code> ## polyglot<br>先根据给的code.c改一下key跑出来一个c++的代码<br>因为递归深度限制在900，所以也要改代码，我菜所以直接手算了，t1是乘，t2是加，然后算出key，跑出来是个py+机器语言的代码： <code>plain import types import dis def define_func(argcount, nlocals, code, consts, names): #PYTHON3.8!!! def inner(): return 0 fn_code = inner.__code__ cd_new = types.CodeType(argcount, 0, fn_code.co_kwonlyargcount, nlocals, 1024, fn_code.co_flags, code, consts, names, tuple([&quot;v%d&quot; for i in range(nlocals)]), fn_code.co_filename, fn_code.co_name, fn_code.co_firstlineno, fn_code.co_lnotab, fn_code.co_freevars, fn_code.co_cellvars) inner.__code__ = cd_new return inner f1 = define_func(2,2,b&#39;|\x00|\x01k\x02S\x00&#39;, (None,), ()) f2 = define_func(1,1,b&#39;t\x00|\x00\x83\x01S\x00&#39;, (None,), (&#39;ord&#39;,)) f3 = define_func(0,0,b&#39;t\x00d\x01\x83\x01S\x00&#39;, (None, &#39;Give me flag: &#39;), (&#39;input&#39;,)) f4 = define_func(1, 3, b&#39;d\x01d\x02d\x03d\x04d\x05d\x01d\x06d\x07d\x08d\td\x03d\nd\x0bd\x0cd\rd\x08d\x0cd\x0ed\x0cd\x0fd\x0ed\x10d\x11d\td\x12d\x03d\x10d\x03d\x0ed\x13d\x0bd\nd\x14d\x08d\x13d\x01d\x01d\nd\td\x01d\x12d\x0bd\x10d\x0fd\x14d\x03d\x0bd\x15d\x16g1&#125;\x01t\x00|\x00\x83\x01t\x00|\x01\x83\x01k\x03r\x82t\x01d\x17\x83\x01\x01\x00d\x18S\x00t\x02|\x00|\x01\x83\x02D\x00]$&#125;\x02t\x03|\x02d\x19\x19\x00t\x04|\x02d\x1a\x19\x00\x83\x01\x83\x02d\x18k\x02r\x8c\x01\x00d\x18S\x00q\x8cd\x1bS\x00&#39;, (None, 99, 121, 98, 114, 105, 115, 123, 52, 97, 100, 51, 101, 55, 57, 53, 54, 48, 49, 50, 56, 102, 125, &#39;Length mismatch!&#39;, False, 1, 0, True), (&#39;len&#39;, &#39;print&#39;, &#39;zip&#39;, &#39;f1&#39;, &#39;f2&#39;)) f5 = define_func(0, 1,b&#39;t\x00\x83\x00&#125;\x00t\x01|\x00\x83\x01d\x01k\x08r\x1ct\x02d\x02\x83\x01\x01\x00n\x08t\x02d\x03\x83\x01\x01\x00d\x00S\x00&#39;,(None, False, &#39;Nope!&#39;, &#39;Yep!&#39;), (&#39;f3&#39;, &#39;f4&#39;, &#39;print&#39;)) dis.dis(f4) </code><br>然后dis得到汇编代码（关键就是给了字符串的那个） 运行结果： <code>plain F:\python\venv\py3.8\Scripts\python.exe D:/download/re2.py 7 0 LOAD_CONST 1 (99) 2 LOAD_CONST 2 (121) 4 LOAD_CONST 3 (98) 6 LOAD_CONST 4 (114) 8 LOAD_CONST 5 (105) 10 LOAD_CONST 1 (99) 12 LOAD_CONST 6 (115) 14 LOAD_CONST 7 (123) 16 LOAD_CONST 8 (52) 18 LOAD_CONST 9 (97) 20 LOAD_CONST 3 (98) 22 LOAD_CONST 10 (100) 24 LOAD_CONST 11 (51) 26 LOAD_CONST 12 (101) 28 LOAD_CONST 13 (55) 30 LOAD_CONST 8 (52) 32 LOAD_CONST 12 (101) 34 LOAD_CONST 14 (57) 36 LOAD_CONST 12 (101) 38 LOAD_CONST 15 (53) 40 LOAD_CONST 14 (57) 42 LOAD_CONST 16 (54) 44 LOAD_CONST 17 (48) 46 LOAD_CONST 9 (97) 48 LOAD_CONST 18 (49) 50 LOAD_CONST 3 (98) 52 LOAD_CONST 16 (54) 54 LOAD_CONST 3 (98) 56 LOAD_CONST 14 (57) 58 LOAD_CONST 19 (50) 60 LOAD_CONST 11 (51) 62 LOAD_CONST 10 (100) 64 LOAD_CONST 20 (56) 66 LOAD_CONST 8 (52) 68 LOAD_CONST 19 (50) 70 LOAD_CONST 1 (99) 72 LOAD_CONST 1 (99) 74 LOAD_CONST 10 (100) 76 LOAD_CONST 9 (97) 78 LOAD_CONST 1 (99) 80 LOAD_CONST 18 (49) 82 LOAD_CONST 11 (51) 84 LOAD_CONST 16 (54) 86 LOAD_CONST 15 (53) 88 LOAD_CONST 20 (56) 90 LOAD_CONST 3 (98) 92 LOAD_CONST 11 (51) 94 LOAD_CONST 21 (102) 96 LOAD_CONST 22 (125) 98 BUILD_LIST 49 100 STORE_FAST 1 (v%d) 102 LOAD_GLOBAL 0 (len) 104 LOAD_FAST 0 (v%d) 106 CALL_FUNCTION 1 108 LOAD_GLOBAL 0 (len) 110 LOAD_FAST 1 (v%d) 112 CALL_FUNCTION 1 114 COMPARE_OP 3 (!=) 116 POP_JUMP_IF_FALSE 130 118 LOAD_GLOBAL 1 (print) 120 LOAD_CONST 23 (&#39;Length mismatch!&#39;) 122 CALL_FUNCTION 1 124 POP_TOP 126 LOAD_CONST 24 (False) 128 RETURN_VALUE &gt;&gt; 130 LOAD_GLOBAL 2 (zip) 132 LOAD_FAST 0 (v%d) 134 LOAD_FAST 1 (v%d) 136 CALL_FUNCTION 2 138 GET_ITER &gt;&gt; 140 FOR_ITER 36 (to 178) 142 STORE_FAST 2 (v%d) 144 LOAD_GLOBAL 3 (f1) 146 LOAD_FAST 2 (v%d) 148 LOAD_CONST 25 (1) 150 BINARY_SUBSCR 152 LOAD_GLOBAL 4 (f2) 154 LOAD_FAST 2 (v%d) 156 LOAD_CONST 26 (0) 158 BINARY_SUBSCR 160 CALL_FUNCTION 1 162 CALL_FUNCTION 2 164 LOAD_CONST 24 (False) 166 COMPARE_OP 2 (==) 168 POP_JUMP_IF_FALSE 140 170 POP_TOP 172 LOAD_CONST 24 (False) 174 RETURN_VALUE 176 JUMP_ABSOLUTE 140 &gt;&gt; 178 LOAD_CONST 27 (True) 180 RETURN_VALUE Process finished with exit code 0 </code> 然后写c跑出flag</p>
+<pre><code class="plain">flag[]=&#123;99,121,98,114,105,99,115,123,52,97,98,100,51,101,55,52,101,57,101,53,57,54,48,97,49,98,54,98,57,50,51,100,56,52,50,99,99,100,97,99,49,51,54,53,56,98,51,102,125&#125;;
+cout &lt;&lt;flag; &#125; ``` # CTB ## DockEsc 直接试出来，正确的没回显 # **CRYPTO** 签到题：
+已经告知是加密了，然后windows下常用 rot13解密
+![图片](https://uploader.shimo.im/f/S7POOuQqeAucD3ge.png!thumbnail) 换个flag头即可 #
+NETWORK ## XCorp 导出smb对象 在流里有用户名 直接登录
+![图片](https://uploader.shimo.im/f/0L46yhI6LolNanBh.png!thumbnail) ## Google
+Cloud I am storing some important stuff in Google&#39;s cloud. Nooo no no, not on
+Google&#39;s disks — in the cloud itself.
+![图片](https://uploader.shimo.im/f/STYUsf0JJD8A09Z9.png!thumbnail) 全是ping。。。
+foremost直接读 实际上从data里拼出完整图片应该也是可行的，大佬直接看出来了。。。 # Forensic ## Keyshooter 视频里
+mahchudqotlzeeb 再用openssl解密就行 ## ## Krevedka wireshark过滤 ```http contains
+&quot;User-Agent: UCWEB/2.0 (Linux; U; Opera Mini/7.1.32052/30.3697;
+www1.smart.com.ph/; GT-S5360) U2/1.0.0 UCBrowser/9.8.0.534 Mobile&quot; ``` # rebyC
+## Hellish Reverse
+![图片](https://uploader.shimo.im/f/RVB469GpCafs3tUx.png!thumbnail) 7z就可了。。。
+
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2020/07/26/cnblog_13381598/" data-id="ckhagon5300232d3qej5iek6z" class="article-share-link">
+        Share
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E5%9B%AD/" rel="tag">博客园</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%AC%E5%AE%B6/" rel="tag">搬家</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/08/16/cnblog_13514165/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            爆炒腰花-蓝帽杯
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/07/25/cnblog_13378245/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">Lun4R-dasctf MISC1 welcome</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 sharun&#39;s blogs</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="sharun&#39;s blogs"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

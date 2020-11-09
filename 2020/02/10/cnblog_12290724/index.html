@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    awd平台搭建 |
+    
+    sharun&#39;s blogs</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-cnblog_12290724" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      awd平台搭建
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/02/10/cnblog_12290724/" class="article-date">
+  <time datetime="2020-02-09T21:51:00.000Z" itemprop="datePublished">2020-02-10</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="这是👉awd平台搭建👈的摘要"><a href="#这是👉awd平台搭建👈的摘要" class="headerlink" title="这是👉awd平台搭建👈的摘要"></a><a href="../../../../2020/02/10/cnblog_12290724/">这是👉awd平台搭建👈的摘要</a></h1><a id="more"></a>
+<p>1.先是使用</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/m0xiaoxi/AWD_CTF_Platform">https://github.com/m0xiaoxi/AWD_CTF_Platform</a></p>
+<p>这个平台搭建</p>
+<p>这个平台很好用，是python脚本自动搭建，基本不需要怎么更改，自带了四道题的源码，有两道环境有问题，docker搭不起来，有时间再去解决把。</p>
+<p>2.之后就换成了</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zhl2008/awd-platform">https://github.com/zhl2008/awd-platform</a></p>
+<p>可以看到这个平台好久没更新了，而且有许多小问题。</p>
+<p>这个平台带了好多题目，很大，要是用github那个20kb的下载速度，一晚上差不多把。</p>
+<p>之后也是直接使用自带的python脚本，但是一直给我报错can’t find web_14.04</p>
+<pre><code>python stop_clean.py
+python batch.py web_server 16
+python start.py ./ 16</code></pre>
+<p>用docker image search web_14.04是可以找到的，但是名称不一样，直接下载zhl2008/web_14.04就好。</p>
+<p>但是由于这两个名称不一样，需要修改dockerfile，后来索性就直接把本地的image名称改了，方便。</p>
+<pre><code>sudo docker tag zhl2008/web_14.04 web_14.04</code></pre>
+<p>实际上这个docker是一个ubuntu 14</p>
+<p>然后docker是没什么问题</p>
+<p>但是，之后发现，这个分数可以不受flag更新轮数限制，一个flag可以无限刷分。那不就是比谁脚本跑得快吗= =</p>
+<p>感觉在flag_server里time的脚本有关系，但是不怎么会改。</p>
+<p>于是，百度。。。</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1619455/202002/1619455-20200210132917461-350108307.png"></p>
+<p> 原来有人把坑都给踩好了的，早点百度就不用花那么多时间了</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Triangle-security/p/11332223.html#">https://www.cnblogs.com/Triangle-security/p/11332223.html#</a></p>
+<pre><code>#!/usr/bin/env python
+
+#coding:UTF-8
+
+import time
+
+import os
+
+
+print int(time.time())
+
+Unix_time = int(time.time())
+
+print time.ctime(Unix_time)
+
+while True:
+
+    time_his = []
+
+    time_list = [&quot;00&quot;,&quot;05&quot;,&quot;10&quot;,&quot;15&quot;,&quot;20&quot;,&quot;25&quot;,&quot;30&quot;]
+
+    for i in time_list:
+
+        dt = &quot;2019-04-28 10:&quot;+str(i)+&quot;:00&quot;
+
+        time_his.append(dt)
+
+    a = time_his[0]
+
+    b = time_his[1]
+
+    c = time_his[2]
+
+    d = time_his[3]
+
+    e = time_his[4]
+
+    f = time_his[5]
+
+    g = time_his[6]
+
+    time_stamp = [a,b,c,d,e,f,g]
+
+    for k in time_stamp:
+
+            h = open(&quot;time.txt&quot;, &#39;w+&#39;)
+
+            timeArray = time.strptime(k, &quot;%Y-%m-%d %H:%M:%S&quot;)
+
+            timestamp = time.mktime(timeArray)
+
+            print (int(timestamp))
+
+            data = (int(timestamp))
+
+            separated = &#39;|&#39;
+
+            zero = &#39;0&#39;
+
+            print &gt;&gt;h,(zero),(separated),(data),(separated),(zero),(separated),(data),(separated),(zero),(separated),(zero),(separated),(data),(separated),(zero),(separated),(zero),
+
+            #           0|data|0|data|0|0|data|0|0
+
+            h.close()
+
+            time.sleep(300)</code></pre>
+<p>在flag那里提前启动这个脚本就行了，还要准时提前5min，好像不大聪明的亚子==</p>
+<p>算了，谁让我只会傻瓜操作呢==</p>
+<p>放上我的一键化脚本，稍加修改，不出意外的话，应该是可以成功的。</p>
+<pre><code>#!/bin/bash
+#git clone https://github.com/zhl2008/awd-platform #下载源码
+apt-get install -y curl
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+cd awd-platform/
+docker pull zhl2008/web_14.04
+docker tag zhl2008/web_14.04 web_14.04
+#cd flag_server
+#python time.py(时间的那个脚本)
+#cd ..
+#sleep(300)
+python stop_clean.py
+python batch.py web_server 16
+python start.py ./ 16</code></pre>
+<p>大概就是这样子了，服务器的话，每次都去阿里云买一个按量计费的，一次比赛几个小时也就不到十块钱，十几个队是完全够用的。</p>
+<p>其实这两个平台挺像的，都是python写的自动化脚本，对docker有没什么理解也可以，python脚本修改每个docker的配置脚本，用的docker搭建靶机的环境，python服务生成并检查flag，再加减分数，再写个前端展示分数和攻击过程。诶，说上去很简单的样子。动手能力强的话可以尝试把它改的更完美一些。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2020/02/10/cnblog_12290724/" data-id="ckhagon4n000u2d3q1zgrf7xk" class="article-share-link">
+        Share
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E5%9B%AD/" rel="tag">博客园</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%AC%E5%AE%B6/" rel="tag">搬家</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/03/01/cnblog_12389284/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            n赛 内存取证题解（已更新）
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/10/29/cnblog_11757548/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">实验一</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 sharun&#39;s blogs</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="sharun&#39;s blogs"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

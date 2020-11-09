@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    2020网鼎杯青龙组 MISC 虚幻2 |
+    
+    sharun&#39;s blogs</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-cnblog_12900273" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      2020网鼎杯青龙组 MISC 虚幻2
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/05/16/cnblog_12900273/" class="article-date">
+  <time datetime="2020-05-15T21:59:00.000Z" itemprop="datePublished">2020-05-16</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="这是👉2020网鼎杯青龙组-MISC-虚幻2👈的摘要"><a href="#这是👉2020网鼎杯青龙组-MISC-虚幻2👈的摘要" class="headerlink" title="这是👉2020网鼎杯青龙组 MISC 虚幻2👈的摘要"></a><a href="../../../../2020/05/16/cnblog_12900273/">这是👉2020网鼎杯青龙组 MISC 虚幻2👈的摘要</a></h1><a id="more"></a>
+<p>我也希望misc能输出啊 ，可是实力不允许啊  题目给了一个图片<br><img src="https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200516120720521-645268486.png"><br>查看像素发现是36*12，汉信码应该是正方形，这个图片还是有点规律的，感觉应该是什么压缩之类的，但是没想到是看RGB，其实正常的话还是应该看一下rgb的。。。还是太菜了hhh<br>每个像素有三个rgb，分出来，是255的话就是1，是0的话就是0。 <code>from PIL import Image x = 36 #x坐标 y = 12 #y坐标 im=Image.open(&#39;file.png&#39;) file = open(&#39;11&#39;,&#39;w&#39;) #im.show() z=&#39;&#39; for i in range(0, x): for j in range(0, y): rgb=im.getpixel((i, j)) print(rgb) if(rgb[0]==0): z+=&#39;1&#39; elif(rgb[0]==255): z+=&#39;0&#39; if(rgb[1]==0): z+=&#39;1&#39; elif(rgb[1]==255): z+=&#39;0&#39; if(rgb[2]==0): z+=&#39;1&#39; elif(rgb[2]==255): z+=&#39;0&#39; print(z) file.write(z)</code> 一个读出一个写入。。 <code>from PIL import Image x = 36 #x坐标 y = 36 #y坐标 im = Image.new(&quot;RGB&quot;, (x, y)) file = open(&#39;11&#39;,&#39;r&#39;) a=file.read() z=0 for i in range(0, x): for j in range(0, y): print(a[z]) if(a[z]==&#39;1&#39;): im.putpixel((i, j), (255, 255, 255)) elif(a[z]==&#39;0&#39;): im.putpixel((i, j), (0, 0, 0)) z=z+1 im.show() im.save(&#39;1.png&#39;)</code><br>再组成汉信码，在进行一下小修改，最后空白的一部分提示是爆破，可以直接画两下，分辨的时候会自动修复<br><img src="https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200516135747247-950806998.png"><br>跟二维码一样也有差错校验。。。也是应该的吧</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2020/05/16/cnblog_12900273/" data-id="ckhagon4x001l2d3q0ycc57bc" class="article-share-link">
+        Share
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E5%9B%AD/" rel="tag">博客园</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%AC%E5%AE%B6/" rel="tag">搬家</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/05/19/cnblog_12919431/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            服务器运维抓包练习
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/05/16/cnblog_12898784/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">2020网鼎杯白虎组 MISC 密码柜（未解出）</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 sharun&#39;s blogs</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="sharun&#39;s blogs"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

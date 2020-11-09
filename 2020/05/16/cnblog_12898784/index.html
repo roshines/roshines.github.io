@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    2020网鼎杯白虎组 MISC 密码柜（未解出） |
+    
+    sharun&#39;s blogs</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-cnblog_12898784" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      2020网鼎杯白虎组 MISC 密码柜（未解出）
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/05/16/cnblog_12898784/" class="article-date">
+  <time datetime="2020-05-15T17:23:00.000Z" itemprop="datePublished">2020-05-16</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="这是👉2020网鼎杯白虎组-MISC-密码柜（未解出）👈的摘要"><a href="#这是👉2020网鼎杯白虎组-MISC-密码柜（未解出）👈的摘要" class="headerlink" title="这是👉2020网鼎杯白虎组 MISC 密码柜（未解出）👈的摘要"></a><a href="../../../../2020/05/16/cnblog_12898784/">这是👉2020网鼎杯白虎组 MISC 密码柜（未解出）👈的摘要</a></h1><a id="more"></a>
+<h1 id="2020网鼎杯白虎组-MISC-密码柜-青龙组自闭misc手，过来看看白虎的题目。。-给了两个文件，一个镜像一个Database-kdbx"><a href="#2020网鼎杯白虎组-MISC-密码柜-青龙组自闭misc手，过来看看白虎的题目。。-给了两个文件，一个镜像一个Database-kdbx" class="headerlink" title="2020网鼎杯白虎组 MISC 密码柜 青龙组自闭misc手，过来看看白虎的题目。。 给了两个文件，一个镜像一个Database.kdbx"></a>2020网鼎杯白虎组 MISC 密码柜 青龙组自闭misc手，过来看看白虎的题目。。 给了两个文件，一个镜像一个Database.kdbx</h1><p>首先，这是一个win10的内存镜像，小菜鸡也是第一次见，因为win10特有的内存压缩机制，所以我的vol没法进行内存取证。。去搜了一下，知道了一个项目。是用来进行win10取证的,vol3应该也是支持的。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/fireeye/win10_volatility">https://github.com/fireeye/win10_volatility</a><br>通过VOL查看进程和搜索，可以发现kdbx是keepass的数据库文件。keepass主要是用来储存密码的，数据库用一个密码来加密,从而达到安全的储存密码的目的，同时题目也提示密码柜，看来是这个东西了。<br>那么去找一下文件<br><img src="https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200516092134023-777087109.png"><br>可以找到一个密码柜备份.txt &gt;密码柜的密码可不能忘了，毕竟那里面存着我最重要的东西 &gt;而且我走哪都要带着它 &gt;6s4mxkhvge<br><img src="https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200516092148897-30140278.png"><br>有用的是这个第三个密码，是kgb压缩包的压缩密码，去搜索这个<strong>something.kge</strong>文件，将文件dump下来，用密码解开应该就可以了。这个版本vol我这里dump不下来，所以目前还没做出来，比赛的时候也是做到这里卡住了。具体也还没搞清楚。。<br>-—— 更新一下 <strong>有好多人问我txt是怎么dump下来的，我是通过取证大师的数据恢复功能恢复出文件看的（我承认我菜）</strong><br>用其他数据恢复软件或者直接去看文件应该也是可以的。 谢谢L1n3师傅的指点，师傅也已经解完这道题了。 ```<br><a target="_blank" rel="noopener" href="https://writeup.ctfhub.com/Challenge/2020/%E7%BD%91%E9%BC%8E%E6%9D%AF/%E7%99%BD%E8%99%8E%E7%BB%84/828f7ab8.html">https://writeup.ctfhub.com/Challenge/2020/%E7%BD%91%E9%BC%8E%E6%9D%AF/%E7%99%BD%E8%99%8E%E7%BB%84/828f7ab8.html</a></p>
+</blockquote>
+<pre><code class="这个something,kge文件是通过kee导出的，右键选择import就可以了，我这里kgb怎么装都装不好，就不继续往下面做了">![](https://img2020.cnblogs.com/blog/1619455/202005/1619455-20200518223133752-34064948.png)
+估计也有不少人会有同款报错吧，，，
+
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2020/05/16/cnblog_12898784/" data-id="ckhagon50001u2d3qaxr17z9j" class="article-share-link">
+        Share
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E5%9B%AD/" rel="tag">博客园</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%AC%E5%AE%B6/" rel="tag">搬家</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/05/16/cnblog_12900273/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            2020网鼎杯青龙组 MISC 虚幻2
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/04/26/cnblog_12781871/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">安恒四月春季赛 MISC keyboard</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 sharun&#39;s blogs</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="sharun&#39;s blogs"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
