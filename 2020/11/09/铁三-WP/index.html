@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>sharun&#39;s blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="取证题目1.在   &#x2F;var&#x2F;log&#x2F;httpd&#x2F;access.log 文件中有蚁剑连接php记录  ，在202011月的log中 有 两个ip 192.168.232.1 和 192.168.232.201(?记不清了)  有一个ip是扫描路径 对其User-Agent 过滤并计数 跳过 在www中 db_connect 找到数据库密码 在mysql数据库找到admin用户名密码admin：ad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sharun&#39;s blogs">
+<meta property="og:url" content="http://sharun.xyz/2020/11/09/%E9%93%81%E4%B8%89-WP/index.html">
+<meta property="og:site_name" content="sharun&#39;s blogs">
+<meta property="og:description" content="取证题目1.在   &#x2F;var&#x2F;log&#x2F;httpd&#x2F;access.log 文件中有蚁剑连接php记录  ，在202011月的log中 有 两个ip 192.168.232.1 和 192.168.232.201(?记不清了)  有一个ip是扫描路径 对其User-Agent 过滤并计数 跳过 在www中 db_connect 找到数据库密码 在mysql数据库找到admin用户名密码admin：ad">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-09T05:34:32.190Z">
+<meta property="article:modified_time" content="2020-11-09T05:34:32.190Z">
+<meta property="article:author" content="sharun">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="sharun&#39;s blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">sharun&#39;s blogs</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://sharun.xyz"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-铁三-WP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/09/%E9%93%81%E4%B8%89-WP/" class="article-date">
+  <time datetime="2020-11-09T05:34:32.190Z" itemprop="datePublished">2020-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="取证题目"><a href="#取证题目" class="headerlink" title="取证题目"></a>取证题目</h1><p>1.在   /var/log/httpd/access.log 文件中有蚁剑连接php记录  ，在202011月的log中 有</p>
+<p>两个ip 192.168.232.1 和 192.168.232.201(?记不清了)</p>
+<ol>
+<li>有一个ip是扫描路径 对其User-Agent 过滤并计数</li>
+<li>跳过</li>
+<li>在www中 db_connect 找到数据库密码 在mysql数据库找到admin用户名密码admin：admin123</li>
+<li>跳过</li>
+<li>在www中找到manage_user.php 找到操作为 ajax.php?action=（忘了），在log中在m啥啥啥.log中相应的数据包 hacker：hacker2333</li>
+<li>同上，www中 site_啥啥啥.php  I Got Your Site</li>
+<li>好像是查看webshell文件时间 通过log 找到相应文件 用 ll –full-time 查看<h1 id="企业渗透"><a href="#企业渗透" class="headerlink" title="企业渗透"></a>企业渗透</h1></li>
+</ol>
+<p>Web2 扫描发现ftp弱口令 ftp:123456 登录后发现flag2 和web的登录账号密码。</p>
+<p>Web3 访问80端口，发现是原题，时hack the box的题目，访问 cdn-cgi/login,查看源代码发现flag3，利用修改session登录超级管理员权限，然后上传webshell，发现有flag.php 得到flag4</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sharun.xyz/2020/11/09/%E9%93%81%E4%B8%89-WP/" data-id="ckha42rcf00007f3qf3fz2svr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/11/09/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/11/09/%E9%93%81%E4%B8%89-WP/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/09/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 sharun<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
