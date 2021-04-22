@@ -370,6 +370,72 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/22/linux%20%E7%9A%84%20log%20%E6%96%87%E4%BB%B6/" >
+            
+                <span>linux中log取证</span>
+        </a>
+        <div class="abstract-content">
+            常见的Linux操作系统登录文件有如下几个：
+1）/var/log/secure：记录登录系统存取数据的文件;
+例如pop3，ssh，telnet，ftp等都会记录在此.
+2）/ar/log/wtmp：记录登录这的信息记录，被编码过，所以必须以last解析;
+3）/var/log/message:jihu所有的开机系统发生的错误都会在此记录;
+4）/var/log/boot.log：记录一些开机或者关机启动的一些服务显示的启动或者关闭的信息;
+5）/var/log/maillog：记录邮件的存取和往来;
+6）/var/log/cron：用来记录crontab这个服务的内容;
+7）/var...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "博客园">博客园</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "搬家">搬家</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/" >
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            WEBPHP获取备份后发现有对序列化字符串的操作，经典的反序列化逃逸特征，
+
+
+然后发现过滤的dir并不是数组中的dir，而是我们一开始传进去的get参数，构造payload如下
+?user=ohhhh&amp;pass=a3333&amp;repass=adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin%22;s:3:%22dir%22;s:5:%22/flag%22;}&amp;dir=...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/01</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/11/09/Volatility/" >
             
                 <span>volatility</span>
@@ -436,33 +502,6 @@ Kali安装#123sudo apt-get install volatilityvolatility ...
         <a class="post-tag" href="javascript:void(0);" data-tags = "WP">WP</a>
     
 </div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/09/hello-world/" >
-            
-                <span>Hello World</span>
-        </a>
-        <div class="abstract-content">
-            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;
-
-More info: Writing
-Run server1$ hexo ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/09</span>
-            </div>
-            <!-- tags  -->
             
         </div>
     </article>
@@ -639,37 +678,6 @@ Run server1$ hexo ...
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "博客园">博客园</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "搬家">搬家</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/24/cnblog_13374692/" >
-            
-                <span>计网小笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h1 id="这是👉计网小笔记👈的摘要"><a href="#这是👉计网小笔记👈的摘要" class="headerlink" title="这是👉计网小笔记👈的摘要"></a><a href="../../../../2020/07/24/cnblog_13374692/">这是👉计网小笔记👈的摘要</a></h1>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/24</span>
             </div>
             <!-- tags  -->
             
@@ -1191,9 +1199,14 @@ Run server1$ hexo ...
     
     
     
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 27
+        Total : 28
         </div>
         <!-- search  -->
         
@@ -1203,20 +1216,6 @@ Run server1$ hexo ...
     
     
     
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2020/11/09/hello-world/" >Hello World</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
@@ -1238,6 +1237,25 @@ Run server1$ hexo ...
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2020/11/09/Volatility/" >volatility</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2021/04/22/linux%20%E7%9A%84%20log%20%E6%96%87%E4%BB%B6/" >linux中log取证</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/" >[Untitled Post]</a>
         </li>
     
     

